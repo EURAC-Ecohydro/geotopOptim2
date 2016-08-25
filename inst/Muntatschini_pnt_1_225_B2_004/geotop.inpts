@@ -1,0 +1,225 @@
+!InputforGEOtopVersion1.225.15
+!Plotsimulation
+!StationB2inMontetchini
+
+!Simulationperiod
+!Useexactdateformati.e.not1/4but01/04not0:00but00:00
+
+!Calculationmaxtimestepdtins
+
+TimeStepEnergyAndWater	=	3600
+InitDateDDMMYYYYhhmm	=	15/03/2013 00:00
+EndDateDDMMYYYYhhmm	=	15/11/2013 00:00
+!!!EndDateDDMMYYYYhhmm	=	01/06/2014 00:00
+!Simulationsettings
+RecoverSim	=	0
+PointSim	=	1
+
+WaterBalance	=	1
+EnergyBalance	=	1
+
+!Dtinhours
+DtPlotDischarge	=	1
+DtPlotBasin	=	1
+DtPlotPoint	=	1
+StandardTimeSimulation	=	1
+
+!Catchmentcentroid(forSunposition)
+Latitude	=	46.668
+Longitude	=	10.579
+
+!Energybudgetsettings
+FlagSkyViewFactor	=	1
+LWinParameterization	=	4
+MoninObukhov	=	2
+CanopyStabCorrection	=	1
+!=======================================
+!METEOSTATIONS
+!=======================================
+
+NumberOfMeteoStations	=	1
+MeteoStationCoordinateX	=	620815
+MeteoStationCoordinateY	=	5171506
+MeteoStationElevation	=	1480
+MeteoStationWindVelocitySensorHeight	=	2.5
+MeteoStationTemperatureSensorHeight	=	2
+
+!=======================================
+!METEOHAEDERS
+!=======================================
+
+HeaderDateDDMMYYYYhhmmMeteo	=	"Date"
+HeaderJulianDayfrom0Meteo	=	"JDfrom0"
+HeaderIPrec	=	"Iprec"
+HeaderWindVelocity	="	WindSp"
+HeaderWindDirection	=	"WindDir"
+HeaderWindX	=	"WindX"
+HeaderWindY	=	"WindY"
+HeaderRH	=	"RelHum"
+HeaderAirTemp	=	"AirT"
+HeaderDewTemp	=	"DewT"
+HeaderAirPress	=	"AirP"
+HeaderSWglobal	=	"Swglobal"
+HeaderCloudSWTransmissivity	=	"CloudTrans"
+HeaderLWin	=	"LWin"
+
+!=======================================
+!POINTSETTINGS
+!=======================================
+
+CoordinatePointX	=	620815
+CoordinatePointY	=	5171506
+PointElevation		=	1480
+PointSlope			=	15
+PointAspect			=	225
+
+!=======================================
+!LANDCOVER
+!=======================================
+
+NumLandCoverTypes	=	1
+SoilRoughness	=	100
+ThresSnowSoilRough	=	100
+VegHeight	=	300
+ThresSnowVegUp	=	50
+ThresSnowVegDown	=	10
+LSAI	=	4
+CanopyFraction	=	0.8
+DecayCoeffCanopy	=	2.5
+VegSnowBurying	=	1
+RootDepth	=	300
+MinStomatalRes	=	30
+VegReflectVis	=	0.1
+VegReflNIR	=	0.2
+VegTransVis	=	0.07
+VegTransNIR	=	0.25
+LeafAngles	=	0
+CanDensSurface	=	0.5
+SoilAlbVisDry	=	0.15
+SoilAlbNIRDry	=	0.25
+SoilAlbVisWet	=	0.15
+SoilAlbNIRWet	=	0.25
+SoilEmissiv		=	0.96
+SurFlowResLand	=	0.5
+SurFlowResExp	=	0.667
+
+!=======================================
+!Vegetation
+!=======================================
+TimeDependentVegetationParameterFile	=	"vegetation_par"
+
+!=======================================
+!Numericalparameters
+!=======================================
+
+RichardTol	=	1.E-7
+MinLambdaWater	=	1.E-7
+RichardMaxIter	=	100
+MaxTimesHalvingTimeStepWater	=	20
+MaxCourantSupFlowLand	=	0.1
+MinSupWaterDepthLand	=	1
+MinTimeStepSupFlow	=	1
+HeatEqTol	=	1.E-4
+HeatEqMaxIter	=	200
+MaxTimesHalvingTimeStepEnergy	=	5
+CanopyMaxIter	=	2
+BusingerMaxIter	=	2
+TsMaxIter	=	2
+LocMaxIter	=	2
+
+==============================
+!SNOWANDGLACIERS
+!=======================================
+
+NumMaxSnowLayers	=	5
+InfiniteSnowLayer	=	2
+MinLayerThicknessSnow	=	5,120,30,5,5
+MaxLayerThicknessSnow	=	20,1.E10,150,50,10
+
+!=======================================
+!SOIL
+!=======================================
+PointSoilType	=	1
+SoilLayerTypes	=	1
+![mm]
+!InitWaterTableHeightOverTopoSurface	=	0 
+!!-2000
+![C]
+InitSoilTemp	=	4
+ThermalConductivitySoilSolids	=	1.9
+ThermalCapacitySoilSolids	=	7.56E+5
+![mm^-1]
+HeaderSoilDz	=	"Dz"
+HeaderLateralHydrConductivity	=	"Kh"
+HeaderNormalHydrConductivity	=	"Kv"
+HeaderThetaRes	=	"vwc_r"
+HeaderWiltingPoint	=	"vwc_w"
+HeaderFieldCapacity	=	"vwc_fc"
+HeaderThetaSat	=	"vwc_s"
+HeaderAlpha	=	"alpha"
+HeaderN	=	"n"
+HeaderSpecificStorativity	=	"stor"
+HeaderKthSoilSolids	=	"Kth"
+HeaderCthSoilSolids	=	"Cth"
+HeaderSoilInitPres = "InitPsi"
+
+FreeDrainageAtBottom	=	1
+!=======================================
+!FILENAMES
+!=======================================
+
+!Inputfiles
+
+DemFile	=	"dem"
+MeteoFile	=	"meteo"
+LandCoverMapFile	=	"landcover"
+SkyViewFactorMapFile	=	"sky"
+SlopeMapFile	=	"slope"
+AspectMapFile	=	"aspect"
+CurvaturesMapFile	=	"curvature"
+HorizonMeteoStationFile	=	"horizon"
+RiverNetwork	=	"net60"
+SoilMapFile	=	"soiltype"
+SoilParFile	=	"soil/soil"
+
+!Outputfiles
+
+!Tabs
+DischargeFile	=	"tabs/discharge"
+
+PointOutputFile	=	"tabs/point"
+PointAll	=	1
+
+!SnowProfileFile	=	"tabs/snow"
+SnowDepthLayersFile	="tabs/snowDepth"
+SnowTempProfileFile	=	"tabs/snowT"
+SnowLiqContentProfileFile	=	"tabs/snowLiq"
+SnowIceContentProfileFile	=	"tabs/snowIce"
+SnowAll	=	1
+
+BasinOutputFile	=	"tabs/basin"
+BasinAll	=	1
+
+SoilAveragedTempProfileFile		=	"tabs/soilTz"
+SoilLiqWaterPressProfileFile	=	"tabs/psiz"
+SoilLiqContentProfileFile		=	"tabs/thetaliq"
+SoilIceContentProfileFile		=	"tabs/thetaice"
+SoilAll=1
+
+!Maps
+SoilAveragedTempTensorFile		=	"maps/T"
+SoilLiqContentTensorFile		=	"maps/thetaliq"
+IceLiqContentTensorFile			=	"maps/thetaice"
+SoilLiqWaterPressTensorFile		=	"maps/psiz"
+
+LandSurfaceWaterDepthMapFile	=	"maps/hsup"
+WaterTableDepthMapFile			=	"maps/watertable"
+ChannelSurfaceWaterDepthMapFile =	"maps/hchannel
+
+SWEMapFile						=	"maps/SWE"
+SnowDepthMapFile				=	"maps/snowdepth"
+
+SurfaceHeatFluxMapFile			=	"maps/EB"
+SurfaceSensibleHeatFluxMapFile	=	"maps/H"
+SurfaceLatentHeatFluxMapFile	=	"maps/LE"
+SurfaceTempMapFile				=	"maps/Ts"
