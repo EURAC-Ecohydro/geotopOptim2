@@ -5,12 +5,14 @@
 \alias{geotoplhoat}
 \title{GEOtop calibration through Particle Swam Optimization}
 \usage{
-geotopPSO(fn = geotopGOF, gof.mes = "KGE", final.run = TRUE, upper, lower,
-  ..., hydroPSOfun = c("hydroPSO", "lhoat"))
+geotopPSO(par = NULL, fn = geotopGOF, gof.mes = "KGE", final.run = TRUE,
+  upper, lower, ..., hydroPSOfun = c("hydroPSO", "lhoat"))
 
 geotoplhoat(...)
 }
 \arguments{
+\item{par}{model parameters. ((TO DO) See \code{\link{hydroPSO}},\code{\link{geotopGOF}} and \code{\link{geotopExec}}}
+
 \item{fn}{function to optimize (minimize or maximize). Default is \code{\link{geotopGOF}}. See \code{\link{hydroPSO}}.}
 
 \item{gof.mes}{string(s) containing adopted numerical goodness-of-fit measure. If it is \code{NULL} (Default), all mesasures returned by \code{\link{gof}} are calculated.}

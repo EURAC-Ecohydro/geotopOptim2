@@ -193,7 +193,7 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,whenGOF=NUL
 	lookup_tbl_names <- names(formals(geotopLookUpTable))
 	geotop_exec_names <- names(formals(geotopExec))
 	
-	
+
 	if (run.geotop==TRUE) {
 		
 	

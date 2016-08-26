@@ -201,7 +201,8 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 	#print(names(param))
 	#print(param.soil)
 	#print(names_par)
-
+	##print("rundir:")
+	##print(rundir)
 	if (is.null(SoilType)) SoilType <- NA
 	if (is.na(SoilType)) {
 		

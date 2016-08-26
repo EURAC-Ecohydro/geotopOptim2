@@ -12,7 +12,7 @@ NULL
 #' 
 #' @param fn function to optimize (minimize or maximize). Default is \code{\link{geotopGOF}}. See \code{\link{hydroPSO}}. 
 #' @param gof.mes string(s) containing adopted numerical goodness-of-fit measure. If it is \code{NULL} (Default), all mesasures returned by \code{\link{gof}} are calculated.
-
+#' @param par model parameters. ((TO DO) See \code{\link{hydroPSO}},\code{\link{geotopGOF}} and \code{\link{geotopExec}}
 #' @param final.run logical value. It is \code{TRUE} (default), simulated time series with optimal set of parameteers are added in the list object returned by the function.
 #' @param upper,lower see  \code{upper} and \code{lowe} in \code{\link{hydroPSO}}
 #' @param ... further arguments for \code{\link{hydroPSO}}.
@@ -74,7 +74,7 @@ NULL
 #' @seealso \code{\link{hydroPSO}},\code{\link{gof}}\code{\link{lhoat}}
 #'
 
-geotopPSO <- function(fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,lower,...,hydroPSOfun=c("hydroPSO","lhoat")) {
+geotopPSO <- function(par=NULL,fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,lower,...,hydroPSOfun=c("hydroPSO","lhoat")) {
 
 ###		if (is.charecter(fn)) fn <- get(fn)
 #	   	if (is.null(gof.expected.value.for.optim))	gof.expected.value.for.optim <- NA
@@ -88,12 +88,49 @@ geotopPSO <- function(fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,lower,...,
 		
 		cond_param <- (length(lower)==length(upper)) & setequal(names(lower),names(upper))
 		if (cond_param==TRUE) cond_param <- all(upper[names(lower)]>=lower) & cond_param 
+		
 		if (cond_param==FALSE) {
 			
 			stop("geotopPSO: inconstency between upper and lower values for calibration parameters!")
 			
 		}
+		
+		
+		cond_par <- !is.null(par) & cond_param
+		
+		if (cond_par==TRUE) {
+			
+			cond_par <- (length(par)==length(upper)) & setequal(names(par),names(upper)) & cond_param
+			if (cond_par==TRUE) {
+				
+				cond_par <- all(par[names(lower)]>=lower) & cond_par
+				cond_par <- all(par[names(upper)]<=upper) & cond_par
+				
+				
+			} 
+			
+			if (cond_par!=TRUE) {
+		
+				warning("geotopPSO: inconstency between par (IGNORED) and lower/upper  values for calibration parameters!")
+				cond_par <- FALSE
+				par <- lower
+			}
+			
+	
+		} else {
+			
+			
+			
+			par <- lower
+		}
+		
+		
+		
+		
+		
 		upper <- upper[names(lower)]
+		par <- par[names(lower)]
+		
 		###
 		
 		NLAYER <- upper["NumberOfSoilLayers"]
@@ -160,16 +197,22 @@ geotopPSO <- function(fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,lower,...,
 		cond_all <- (str_detect(names(lower),"_ALL"))
 		names(cond_all) <- names(lower)
 		
+		
+		
 		if (any(cond_all)==TRUE) {
 			
 			index_all <- which(cond_all)
 			upper_all <- upper[index_all]
 			lower_all <- lower[index_all]
+			par_all <- par[index(all)]
+			
 			upper <- upper[-index_all]
 			lower <- lower[-index_all]
-			
+			par <-   par[-index_all]
 			names(lower_all) <- str_replace(names(lower_all),"_ALL","_V_L%04d")
 			names(upper_all) <- str_replace(names(upper_all),"_ALL","_V_L%04d")
+			names(par_all) <- str_replace(names(par_all),"_ALL","_V_L%04d")
+			
 			names_all <- names(lower_all)
 			
 			for (it in names_all) {
@@ -177,7 +220,7 @@ geotopPSO <- function(fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,lower,...,
 				itl <- sprintf(it,1:NLAYER)
 				upper[itl] <- upper_all[it]
 				lower[itl] <- lower_all[it]
-				
+				par[itl]   <- par_all[itl]
 				
 			}
 			
@@ -192,20 +235,34 @@ geotopPSO <- function(fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,lower,...,
 		##print(upper)
 		
 		###
-		cond_param <- (length(lower)==length(upper)) & setequal(names(lower),names(upper))
-		if (cond_param==TRUE) cond_param <- all(upper[names(lower)]>=lower) & cond_param 
-		if (cond_param==FALSE) {
-			
-			stop("geotopPSO: inconstency between upper and lower values for calibration parameters ()!")
-			
-		}
+#		cond_param <- (length(lower)==length(upper)) & setequal(names(lower),names(upper))
+#		if (cond_param==TRUE) cond_param <- all(upper[names(lower)]>=lower) & cond_param 
+#		if (cond_param==FALSE) {
+#			
+#			stop("geotopPSO: inconstency between upper and lower values for calibration parameters ()!")
+#			
+#		}
 		
 		
 		###
 		hydroPSOfun <- hydroPSOfun[1]
 		
 		if (hydroPSOfun=="hydroPSO") {
-			out <- hydroPSO(fn=fn,gof.mes=gof.mes,output_simulation=FALSE,upper=upper,lower=lower,names_par=names(upper),temporary.runpath=temporary.runpath,...)
+			
+			
+			if (cond_par==TRUE) {
+					
+				out <- hydroPSO(par=par,fn=fn,gof.mes=gof.mes,output_simulation=FALSE,upper=upper,lower=lower,names_par=names(upper),temporary.runpath=temporary.runpath,...)
+				
+				
+			} else {
+				
+				out <- hydroPSO(fn=fn,gof.mes=gof.mes,output_simulation=FALSE,upper=upper,lower=lower,names_par=names(upper),temporary.runpath=temporary.runpath,...)
+				
+				
+			}
+			
+			###out <- do.call(what=hydroPSO,args=hydroPSO_list)
 			##print("out:")
 			##print(out)
 			if (final.run==TRUE) {
