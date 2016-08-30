@@ -171,6 +171,7 @@ geotopLookUpTable <- function(wpath, obs="ObservationProfileFile", lookup_tbl_ob
 #  	print("BA")
 #  	str(soil_data)
 #	print("ba")
+	
   	ivarsoil <- integer(0)
  	for (it in geotop_soil_where) {
 	  

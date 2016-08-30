@@ -47,6 +47,8 @@ lower["NormalHydrConductivity"] <- 0
 
 control <- list(maxit=4,npart=2) ## Maximim 4 iterations!! 
 
+x <- (upper+lower)/2
+
 pso <- geotopPSO(par=x,run.geotop=TRUE,bin=bin,
 		simpath=wpath,runpath=runpath,clean=TRUE,data.frame=TRUE,
 		level=1,intern=TRUE,target=var,gof.mes="KGE",lower=lower,upper=upper,control=control)
