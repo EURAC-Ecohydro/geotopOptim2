@@ -12,7 +12,10 @@ NULL
 #' @param soil_files				boolean, \code{TRUE}: soil files are provided as GEOtop input. \code{FALSE}: soil is parameterized in the geotop.inpts file
 #' @param save_rData				(OBSOLATE)boolean, if \code{TRUE} (default) data is stored in working directory (simulation folder)
 #' @param merge.output     logical. If it is \code{TRUE}, the output is a marged in a unique \code{zoo} object. 
-#' @export
+#' @param when vector of time instants (class \code{\link{POSIXct}}.  If it is \code{NULL} all observation/simulated time duration is considered.
+#' @param ... further arguments for \code{\link{approxfunDataFrame}}
+#' 
+#'  @export
 #' @importFrom stringr str_split str_replace str_locate_all str_sub str_detect boundary
 #' @importFrom zoo index as.zoo 'index<-'
 #' @importFrom geotopbricks get.geotop.inpts.keyword.value  
@@ -27,7 +30,7 @@ NULL
 #' 
 #' 
 #' 
-#' @seealso \code{\link{get.geotop.inpts.keyword.value}}
+#' @seealso \code{\link{get.geotop.inpts.keyword.value}}, \code{\link{approxfunDataFrame}}
 #' @author 	Johannes Brenner,Emanuele Cordano
 #' 
 #' @examples 
@@ -61,7 +64,7 @@ NULL
 #  ### ggExtra Geotop_VisSoilWaterRet_gg
 #  obs   <- list(hour=B2_h, day=B2_d)
 
-geotopLookUpTable <- function(wpath, obs="ObservationProfileFile", lookup_tbl_observation="ObservationLookupTblFile",soil_files=TRUE, save_rData=TRUE,tz="Etc/GMT-1",level=1,inpts.file="geotop.inpts",merge.output=TRUE)
+geotopLookUpTable <- function(wpath, obs="ObservationProfileFile", lookup_tbl_observation="ObservationLookupTblFile",soil_files=TRUE, save_rData=TRUE,tz="Etc/GMT-1",level=1,inpts.file="geotop.inpts",merge.output=TRUE,when=NULL,...)
 
 {
   # source lookup_tbl
@@ -160,14 +163,17 @@ geotopLookUpTable <- function(wpath, obs="ObservationProfileFile", lookup_tbl_ob
   if (length(geotop_soil_where)>1) {
 	  
   	names(geotop_soil_where) <- geotop_soil_where
-  	
+	zlayer.formatter="z%04d"
 
   	soil_data <- lapply(X=geotop_soil_where,FUN=get.geotop.inpts.keyword.value,wpath=wpath,
 		  raster=FALSE,
 		  data.frame=TRUE,
 		  level=level, 
 		  date_field="Date12.DDMMYYYYhhmm.",
-		  tz=tz,inpts.file=inpts.file,zlayer.formatter="z%04d") ###"Etc/GMT+1")
+		  tz=tz,inpts.file=inpts.file,zlayer.formatter=zlayer.formatter) ###"Etc/GMT+1")
+  
+  
+     
 #  	print("BA")
 #  	str(soil_data)
 #	print("ba")
@@ -181,17 +187,42 @@ geotopLookUpTable <- function(wpath, obs="ObservationProfileFile", lookup_tbl_ob
   	}
   
   #####ivarsoil <- which(any(str_detect(lookup_tbl_observation$geotop_where %in% geotop_soil_where)
+  ##TEMPORARY:
+  #return(ivarsoil)
   
+  	
   ####
   	gnamessoil <- as.character(lookup_tbl_observation$geotop_where[ivarsoil])
+	
  	gdepthsoil <-  as.character(lookup_tbl_observation$geotop_what[ivarsoil])
+	
   	onamessoil <- as.character(lookup_tbl_observation$obs_var[ivarsoil])
+	
+	
   	names(gnamessoil) <- onamessoil
   	names(gdepthsoil) <- onamessoil
+	
+	###return(list(soil_data=soil_data,gnamessoil=gnamessoil,gdepthsoil=gdepthsoil,onamessoil=onamessoil))
 	index_time <- index(soil_data[[1]])
 
 	
-	soil_data <- lapply(X=soil_data,FUN=as.data.frame)
+	soil_data <- lapply(X=soil_data,FUN=function(x,gdepthsoil,...) {
+				
+					out <- as.data.frame(x)
+					###names__ <- names(out)
+					### SE GOF previous version 
+					print(gdepthsoil)
+					out <- approxfunDataFrame(df=out,zout=gdepthsoil,...)
+				    #### VEDI APPROXDATAFRAMEFUN !!!!!!
+					
+					
+					
+					###
+					return(out)
+			
+				},gdepthsoil=gdepthsoil)
+	##TEMPORARY:
+	###return(list(soil_data=soil_data,gnamessoil=gnamessoil,gdepthsoil=gdepthsoil,onamessoil=onamessoil))
 	
 
   	evals_gnamessoil <- lapply(X=gnamessoil,FUN=function(x,envir){
@@ -350,6 +381,17 @@ geotopLookUpTable <- function(wpath, obs="ObservationProfileFile", lookup_tbl_ob
 	  out <- merge(obs_data,point_data)
 	  index(out) <- start+index(out)
 	  
+	  if(!is.null(when)) {
+		  
+		  iwhen <- which(index(out) %in% when)
+		  
+		  out <- out[iwhen,]
+		  
+		  
+		  
+	  }
+	  
+	  
 	  ##INSERT ATTRIBUTE
 	  attr(out,"observation_var") <- str_replace(names(obs_data),"OBS_","")
 	  attr(out,"simulation_var") <- str_replace(names(point_data),"SIM_","")
@@ -368,7 +410,7 @@ geotopLookUpTable <- function(wpath, obs="ObservationProfileFile", lookup_tbl_ob
 	  
 	  
   } else { 
-  
+  	  stop("Option not yet implemented, set merge.output=TRUE!")
 	  out <- list(observation=obs_data,simulation=point_data)
   
   }

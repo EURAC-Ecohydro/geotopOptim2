@@ -12,7 +12,7 @@ NULL
 #' @param run.geotop logical value. Default is \code{TRUE}. It it is \code{TRUE} GEOtop is runned though \code{\link{geotopExec}}.
 #' @param target variables used for comparasion. The name of the variable must be in accordance with observation names returned by \code{\link{geotopLookUpTable}}.
 #' @param uscale unit scale value for each target variable. (...)
-#' @param whenGOF not yet used
+#' @param when vector of time instants (class \code{\link{POSIXct}}. It is passed as \code{when} to \code{\link{geotopLookUpTable}}. If it is \code{NULL} all observation/simulated time duration is considered.
 #' @param gof.mes measure (index) of godness of fit. The measure must be one of the row names of \code{\link{gof}}   
 #' @param np exponent for te p-norm used. It must be an integer greater or equal to 1. It can be 1 (Manhattan), 2 (Euclidean) or \code{Inf} (Component of the Maximum absoulte value).  Default is 2.
 #' @param nosuccess.return value thet function returns in case of non-0 (e.g. 1) exit of GEOtop simulation. Default is \code{Inf}.
@@ -177,9 +177,9 @@ NULL
 #' #
 
 ######geotopGOF <- function(x=NULL,geotop.model=NULL,approx.list=list(),sim=NULL,obs,layer=c("z0005","z0020"),obs_field="mean",gof.mes=NULL,gof.expected.value.for.optim=NULL,weights=NULL,output_simulation=FALSE,names_par=NULL,useSoilIntegratedValues=FALSE,temporary.runpath=FALSE,multiaggr=TRUE,...) {
-geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,whenGOF=NULL,gof.mes="RMSE",np=2,nosuccess.return=Inf,...)	{
+geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,gof.mes="RMSE",np=2,nosuccess.return=Inf,...)	{
 	
-	args <- list(param=x,run.geotop=run.geotop,...)
+	args <- list(param=x,run.geotop=run.geotop,when=when,...)
 	
 #	if (!is.null(args[["wpath"]])) {
 #		args[["simpath"]] <- args[["wpath"]] 
@@ -190,7 +190,8 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,whenGOF=NUL
 #		
 #	}
 		
-	lookup_tbl_names <- names(formals(geotopLookUpTable))
+	lookup_tbl_names <- union(names(formals(geotopLookUpTable)),names(formals(approxfunDataFrame))) 
+	lookup_tbl_names <- union(lookup_tbl_names,names(formals(approx)))
 	geotop_exec_names <- names(formals(geotopExec))
 	
 
@@ -312,6 +313,8 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,whenGOF=NUL
 	}  ## chiedere Samuel
 	#str(obs)
 	##str(sim)
+	
+	## INSERT whenGOF here 
 	
 	out <- gof(obs=obs,sim=sim)
 	

@@ -7,7 +7,7 @@
 geotopLookUpTable(wpath, obs = "ObservationProfileFile",
   lookup_tbl_observation = "ObservationLookupTblFile", soil_files = TRUE,
   save_rData = TRUE, tz = "Etc/GMT-1", level = 1,
-  inpts.file = "geotop.inpts", merge.output = TRUE)
+  inpts.file = "geotop.inpts", merge.output = TRUE, when = NULL, ...)
 }
 \arguments{
 \item{wpath}{path into simulation folder}
@@ -27,6 +27,12 @@ geotopLookUpTable(wpath, obs = "ObservationProfileFile",
 \item{inpts.file}{name of the GEOtop configuration file. Default is \code{"geotop.inpts"}}
 
 \item{merge.output}{logical. If it is \code{TRUE}, the output is a marged in a unique \code{zoo} object.}
+
+\item{when}{vector of time instants (class \code{\link{POSIXct}}.  If it is \code{NULL} all observation/simulated time duration is considered.}
+
+\item{...}{further arguments for \code{\link{approxfunDataFrame}}
+
+ @export}
 }
 \description{
 Read point output from GEOtop for verification of the model results
@@ -47,6 +53,6 @@ out <- geotopLookUpTable(wpath = wpath , save_rData = TRUE)
 Johannes Brenner,Emanuele Cordano
 }
 \seealso{
-\code{\link{get.geotop.inpts.keyword.value}}
+\code{\link{get.geotop.inpts.keyword.value}}, \code{\link{approxfunDataFrame}}
 }
 

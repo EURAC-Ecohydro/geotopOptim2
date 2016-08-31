@@ -132,7 +132,7 @@ approxfunDataFrame <- function(df,z=NULL,zout,formatter="z%04d",factor=10,...) {
 		#print("END")
 		out <- df[,rep_len(1:2,length.out=nzl)] 
 	
-		#names(out) <- zoutc
+		names(out) <- zoutc
 		#print(zout)
 		#str(out)
 		out[,] <- NA

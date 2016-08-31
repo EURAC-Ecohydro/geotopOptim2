@@ -5,7 +5,7 @@
 \title{GEOtop Goodnes of fit}
 \usage{
 geotopGOF(x = NULL, run.geotop = TRUE, target = NULL, uscale = NULL,
-  whenGOF = NULL, gof.mes = "RMSE", np = 2, nosuccess.return = Inf, ...)
+  when = NULL, gof.mes = "RMSE", np = 2, nosuccess.return = Inf, ...)
 }
 \arguments{
 \item{x}{vector with parameters to calibrate. See \code{param} in \code{\link{geotopExec}}.}
@@ -16,7 +16,7 @@ geotopGOF(x = NULL, run.geotop = TRUE, target = NULL, uscale = NULL,
 
 \item{uscale}{unit scale value for each target variable. (...)}
 
-\item{whenGOF}{not yet used}
+\item{when}{vector of time instants (class \code{\link{POSIXct}}. It is passed as \code{when} to \code{\link{geotopLookUpTable}}. If it is \code{NULL} all observation/simulated time duration is considered.}
 
 \item{gof.mes}{measure (index) of godness of fit. The measure must be one of the row names of \code{\link{gof}}}
 
