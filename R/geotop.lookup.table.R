@@ -15,7 +15,7 @@ NULL
 #' @param when vector of time instants (class \code{\link{POSIXct}}.  If it is \code{NULL} all observation/simulated time duration is considered.
 #' @param ... further arguments for \code{\link{approxfunDataFrame}}
 #' 
-#'  @export
+#' @export
 #' @importFrom stringr str_split str_replace str_locate_all str_sub str_detect boundary
 #' @importFrom zoo index as.zoo 'index<-'
 #' @importFrom geotopbricks get.geotop.inpts.keyword.value  

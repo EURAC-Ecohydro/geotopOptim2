@@ -30,9 +30,7 @@ geotopLookUpTable(wpath, obs = "ObservationProfileFile",
 
 \item{when}{vector of time instants (class \code{\link{POSIXct}}.  If it is \code{NULL} all observation/simulated time duration is considered.}
 
-\item{...}{further arguments for \code{\link{approxfunDataFrame}}
-
- @export}
+\item{...}{further arguments for \code{\link{approxfunDataFrame}}}
 }
 \description{
 Read point output from GEOtop for verification of the model results
