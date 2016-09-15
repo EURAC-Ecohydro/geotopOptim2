@@ -45,13 +45,34 @@ For other versions of GEOtop, please see the related URLs.
 
 GEOtopOptim2 is a package which is able to enter a GEOtop simulation folder and calibarate some parameters (set by user) optimizing a Goodnes-of-Fit measure between point results and point and observations. eotopOptim2 is a set of functions that calls dependency function and the user can work with all or some of these functions as it in his or her preferences. Before entering geotopOptim2, here is a  list of the main finctions: 
 
-* [geotopExec] :  bla 
+* [geotopExec] :  This function executes a simulation of GEOtop given a certain set of parameters:
 
-* [geotopLookUpTable] : bla 
+```{r echo=TRUE,eval=FALSE}
+  library(geotopOptim2)
+  help(geotopExec,help_type="html")
+  help(get.geotop.keyword.inpts.value,help_type = "html")
+```
+* [geotopLookUpTable] : It read the lookup table that can be inserted within a GEOtop point simulation according Read point output from GEOtop for verification of the model results: 
+```{r echo=TRUE,eval=FALSE}
+  
+  help(geotopLookUpTable,help_type="html")
+```
+* [geotoGOF] : It is a wrapper for gof function, it calculates the goodness of fit index for the variables choosen in the data frame returned by geotopLookUpTable; it includes geotopExec and geotopLookukUpTale. Main arguments of geotopGOF are passed to geotopExec as main arguments. 
+```{r echo=TRUE,eval=FALSE}
+  
+  help(geotoGOF,help_type="html")
+  help(gof,help_type="gof")
+  
+```
 
-* [geotoGOF] : bla 
 
-* [geotopPSO] : bla 
+* [geotopPSO] : It is a wrapper for hydroPSO function, it calculates the goodness of fit index for the variables choosen in the data frame returned by geotopLookUpTable:
+```{r echo=TRUE,eval=FALSE}
+  
+  help(geotoGOF,help_type="html")
+  help(gof,help_type="gof")
+  
+```
 
 These functions call other functions and methods of geotopOptim2 and its dependecies. Before entering geotopOptim2 in details, the readers' atentions must be focused on the main depency widely used in geotopOptim2: 
 
@@ -211,8 +232,7 @@ Note the various macros within the `vignette` section of the metadata block abov
 
 ## Exercise
 
-```
-###{r echo=TRUE,}
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
 
 #!/usr/bin/env Rscript
 # file pso_example_script.R
