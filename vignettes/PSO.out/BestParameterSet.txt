@@ -1,0 +1,2 @@
+BestParticle  GoF     SOIL__N  SOIL__Alpha  SOIL__ThetaSat  SOIL__ThetaRes  SOIL__LateralHydrConductivity  SOIL__NormalHydrConductivity  
+4   2.4000000E-01   1.9523227E+00   7.1534465E-03   6.9662963E-01   6.0406644E-02   7.4956802E-01   5.3165609E-02  

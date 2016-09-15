@@ -1,0 +1,5 @@
+Neigh1  Neigh2  Neigh3  Neigh4
+Part1  1  2  3  4
+Part2  2  4    
+Part3  1  2  3  
+Part4  1  2  3  4
