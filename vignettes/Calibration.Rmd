@@ -47,6 +47,8 @@ GEOtopOptim2 is a package which is able to enter a GEOtop simulation folder and 
 
 * [geotopExec] :  bla 
 
+* [geotopLookUpTable] : bla 
+
 * [geotoGOF] : bla 
 
 * [geotopPSO] : bla 
@@ -64,7 +66,7 @@ These functions call other functions and methods of geotopOptim2 and its depende
  A package can be drawn as a citation where functions depend on others. In the following the code lines can reproduce the dependency grapck of geotopOptim2 package:
  
  
-```{r,fig.height=8, fig.width=6,echo=TRUE}
+```{r,fig.height=8, fig.width=6,echo=TRUE,results='hide',collapse=TRUE}
 #!/usr/bin/env Rscript
 # file appendSmetData.R
 #
@@ -193,7 +195,7 @@ V(gg)$color <- color_[vnames]
 vcodes <- sprintf("%02d",1:length(vnames))
 names(vcodes) <- vnames
 V(gg)$name <- vcodes
-main <- "geeotopOptim2 is a set of functions that calls dependency function and the user can work with all or some of these functions as it in his or her preferences. otopOptime Internal Functions"
+main <- "geeotopOptim2  Internal Functions"
 plot(gg,main=main)
 legend("bottomleft",legend=unique(env_),fill=unique(color_),ncol=2)
 legend("topleft",legend=paste(vcodes,vnames,sep=" : "),ncol=1,cex=0.6)
@@ -209,7 +211,8 @@ Note the various macros within the `vignette` section of the metadata block abov
 
 ## Exercise
 
-```{r echo=TRUE}
+```
+###{r echo=TRUE,}
 
 #!/usr/bin/env Rscript
 # file pso_example_script.R
