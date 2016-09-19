@@ -84,7 +84,7 @@ These functions call other functions and methods of geotopOptim2 and its depende
 *  [hydroPSO](https://cran.r-project.org/web/packages/hydroGPSO/index.html) : "This package implements a state-of-the-art version of the Particle Swarm Optimisation (PSO) algorithm (SPSO-2011 and SPSO-2007 capable). hydroPSO can be used as a replacement of the 'optim' R function for (global) optimization of non-smooth and non-linear functions. However, the main focus of hydroPSO is the calibration of environmental and other real-world models that need to be executed from the system console. hydroPSO is model-independent, allowing the user to easily interface any computer simulation model with the calibration engine (PSO). hydroPSO communicates with the model through the model's own input and output files, without requiring access to the model's source code. Several PSO variants and controlling options are included to fine-tune the performance of the calibration engine to different calibration problems. An advanced sensitivity analysis function together with user-friendly plotting summaries facilitate the interpretation and assessment of the calibration results. hydroPSO is parallel-capable, to alleviate the computational burden of complex models with "long" execution time. Bugs reports/comments/questions are very welcomed (in English, Spanish or Italian)." (Zambrano & Rojas, 2013)
 
  
- A package can be drawn as a citation where functions depend on others. In the following the code lines can reproduce the dependency grapck of geotopOptim2 package:
+ A package can be drawn as a citation where functions depend on others. In the following the code lines can reproduce the dependency graph of geotopOptim2 package:
  
  
 ```{r,fig.height=8, fig.width=6,echo=TRUE,results='hide',collapse=TRUE}
@@ -295,15 +295,31 @@ if (USE_RMPI==TRUE) {
 }
 
 
+```
 
+Here is a GEOtop simulation  folder with observation: 
 
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
 tz <- "Etc/GMT-1"
 
 wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
 
 
-###bin  <-  'geotop'
+```
+
+Here is the full name (with complete path) of GEOtop executable built file: 
+
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+
+
 bin  <-'/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
+
+```
+
+In most cases, geotopOptim2 copies the simulation folder 
+
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+
 
 ## LOcal path where to write output for PSO
 runpath <- "/home/lv70864/ecordano/temp/geotopOptim_tests"
