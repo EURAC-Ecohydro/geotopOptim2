@@ -232,7 +232,7 @@ Note the various macros within the `vignette` section of the metadata block abov
 
 ## Exercise
 
-```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+```{r echo=TRUE,eval=TRUE,collapse=TRUE}
 
 #!/usr/bin/env Rscript
 # file pso_example_script.R
@@ -309,36 +309,93 @@ wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
 
 Here is the full name (with complete path) of GEOtop executable built file: 
 
-```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+```{r echo=TRUE,eval=TRUE,collapse=TRUE}
 
 
 bin  <-'/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
 
 ```
 
-In most cases, geotopOptim2 copies the simulation folder 
+In most cases, geotopOptim2 copies the simulation folder and run GEOtop with modified calibration input parameters in temporary directories:  
 
-```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+```{r echo=TRUE,eval=TRUE,collapse=TRUE}
 
 
 ## LOcal path where to write output for PSO
 runpath <- "/home/lv70864/ecordano/temp/geotopOptim_tests"
 runpath <- "/home/ecor/temp/geotopOptim_tests"
 
-geotop.soil.param.file <-  system.file('examples-script/param/param_pso_c001.csv',package="geotopOptim2") ###'/home/ecor/Dropbox/R-packages/geotopOptim/inst/examples_2rd/param/param_pso_test3.csv' 
+
+```
+
+
+
+
+```{r echo=TRUE,eval=TRUE,collapse=TRUE}
+
+geotop.soil.param.file <-  system.file('examples-script/param/param_pso_c003.csv',package="geotopOptim2") 
 geotop.soil.param <- read.table(geotop.soil.param.file,header=TRUE,sep=",",stringsAsFactors=FALSE)
 lower <- geotop.soil.param$lower
 upper <- geotop.soil.param$upper
+suggested <- geotop.soil.param$suggested
 names(lower) <- geotop.soil.param$name
 names(upper) <- geotop.soil.param$name
+names(suggested) <-  geotop.soil.param$name
+
+
+
+knitr::kable(geotop.soil.param)
+
+```
+
+
+An example for CSV file requested by the option "-optim-soil-param" or the environment variable "GM_OPTIM_PARAM_CSV_FILE" is the following: 
+
+
+
+```
+prefix__name,lower,upper
+SOIL__N,1.45,1.89
+SOIL__Alpha,0.00131,0.0131
+SOIL__ThetaSat,0.41,0.53
+SOIL__ThetaSat_bottomlayer,0.08,0.09
+SOIL__ThetaRes,0.05,0.07
+SOIL__LateralHydrConductivity,0.0923,0.1
+SOIL__NormalHydrConductivity,0.0923,0.1
+SOIL__LateralHydrConductivity_bottomlayer,0.00923,0.01
+SOIL__NormalHydrConductivity_bottomlayer,0.00923,0.01
+SOIL__SoilInitPresL0001,-10000,100
+SOIL__SoilInitPresL0002,-10000,100
+SOIL__SoilInitPresL0003,-10000,100
+SOIL__SoilInitPresL0004,-10000,100
+SOIL__SoilInitPresL0005,-10000,100
+SOIL__SoilInitPresL0006,-10000,100
+SOIL__SoilInitPresL0007,-10000,1000
+SOIL__SoilInitPresL0008,-10000,1000
+SOIL__SoilInitPresL0009,-10000,0
+SOIL__PsiGamma,0.5,1
+SOIL__SoilDepth,3000,30000
+SOIL__NumberOfSoilLayers,9,20
+VECTOR_1_LSAI,2,4
+```
+
+where "N", "Alpha", "ThetaSat", "LateralHydrConductivity", "NormalHydrConductivity", "ThetaRes",,.. are GEOtop keyword referred to the respective soil parameters. By default, "geotopPSO" considers soil parameters uniformly distributed within the soil profile unless they are repated in the CSV file with some suffixes, like "_bottomlayer"  or "_ALL". In "_bottomlayer" case, the parameter (upper and lower) values are referred to the first (near surface) layer and the last (bottom) layer and the values of internal layers are exponentially interpolated. In this case a decrease of hydraulic conductivity or soil porosity can be modeled. In "_ALL" case, soil parameter is taken as variables with soil layers. So the reported values refer to a range for so many soil parameter of the same type how many the soil layers are.
+ The keyword "SoilInitPres" refers to the initial soil water pressure head. If the formatter "L%04d" is appended as a suffix, the value is referred to the indicated layer. The keyword "PsiGamma" refers to the soil water pressure gradient along the terrain-normal downward direction and is applied to calculate initial soil water pressure head in the above layers assuming a continuous profile. 
+"SoilDepth" and "NumberOfSoilLayers" refer to the whole soil depth (which now corresponds to the whole soil column used as domain for balance equation integration) and the number of soil layers in which the soil column is divided. Soil layer thickness increase with depth following a geometric progression.
 
 
 
 
+
+
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
 
 
 var <- 'soil_moisture_content_50'
 x <- (upper+lower)/2
+
+
+
 
 pso <- geotopPSO(par=x,run.geotop=TRUE,bin=bin,
 		simpath=wpath,runpath=runpath,clean=TRUE,data.frame=TRUE,
