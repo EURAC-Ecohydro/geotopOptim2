@@ -57,6 +57,13 @@ GEOtopOptim2 is a package which is able to enter a GEOtop simulation folder and 
   
   help(geotopLookUpTable,help_type="html")
 ```
+To use this function, the observation point value must be set in the GEOtop simulation :
+
+```
+## geotop.inpts here
+
+```
+
 * [geotoGOF] : It is a wrapper for gof function, it calculates the goodness of fit index for the variables choosen in the data frame returned by geotopLookUpTable; it includes geotopExec and geotopLookukUpTale. Main arguments of geotopGOF are passed to geotopExec as main arguments. 
 ```{r echo=TRUE,eval=FALSE}
   
@@ -74,7 +81,7 @@ GEOtopOptim2 is a package which is able to enter a GEOtop simulation folder and 
   
 ```
 
-These functions call other functions and methods of geotopOptim2 and its dependecies. Before entering geotopOptim2 in details, the readers' atentions must be focused on the main depency widely used in geotopOptim2: 
+These functions call other functions and methods of **geotopOptim2** and its dependecies. Before entering geotopOptim2 in details, the readers' attentions must be focused on the main depency widely used in geotopOptim2: 
 
 
 
@@ -84,7 +91,7 @@ These functions call other functions and methods of geotopOptim2 and its depende
 *  [hydroPSO](https://cran.r-project.org/web/packages/hydroGPSO/index.html) : "This package implements a state-of-the-art version of the Particle Swarm Optimisation (PSO) algorithm (SPSO-2011 and SPSO-2007 capable). hydroPSO can be used as a replacement of the 'optim' R function for (global) optimization of non-smooth and non-linear functions. However, the main focus of hydroPSO is the calibration of environmental and other real-world models that need to be executed from the system console. hydroPSO is model-independent, allowing the user to easily interface any computer simulation model with the calibration engine (PSO). hydroPSO communicates with the model through the model's own input and output files, without requiring access to the model's source code. Several PSO variants and controlling options are included to fine-tune the performance of the calibration engine to different calibration problems. An advanced sensitivity analysis function together with user-friendly plotting summaries facilitate the interpretation and assessment of the calibration results. hydroPSO is parallel-capable, to alleviate the computational burden of complex models with "long" execution time. Bugs reports/comments/questions are very welcomed (in English, Spanish or Italian)." (Zambrano & Rojas, 2013)
 
  
- A package can be drawn as a citation where functions depend on others. In the following the code lines can reproduce the dependency graph of geotopOptim2 package:
+ A package can be drawn as a citation graph in whch functions depend on others.  In the following the code lines can reproduce the dependency graph of **geotopOptim2** package and the main functions belong to dependency packages.
  
  
 ```{r,fig.height=8, fig.width=6,echo=TRUE,results='hide',collapse=TRUE}
@@ -225,7 +232,12 @@ legend("topleft",legend=paste(vcodes,vnames,sep=" : "),ncol=1,cex=0.6)
  
  
  
+The  graph show
 
+geotopExec 
+geotopGOF
+geotopLook
+geotopPSO
 
 Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
 
@@ -328,8 +340,14 @@ runpath <- "/home/ecor/temp/geotopOptim_tests"
 
 ```
 
+The function **geotopExec** running a GEOtop simulation can enter a vector of paratermers which are replaced with the ones formerly set in the original simulation directory **wpath** . Analogously the function **geotopPSO** performing a PSO calibration of GEOtop through **geotopExec** and **geotopGOF** needs two vectors: one for upper values, the other for lower values.   A set of soil calibration parameters can be set though a csv file.  
+```{r}
 
-
+help(geotopExec,help_type="html")
+help(geotopGOF,help_type="html")
+help(geotopPSO,help_type="html")
+```
+Here is an example that can be downloaded by package examples:
 
 ```{r echo=TRUE,eval=TRUE,collapse=TRUE}
 
@@ -348,13 +366,10 @@ knitr::kable(geotop.soil.param)
 
 ```
 
-
-An example for CSV file requested by the option "-optim-soil-param" or the environment variable "GM_OPTIM_PARAM_CSV_FILE" is the following: 
-
-
+Here is the columns **lower** and **upper** stand for lowe and upper values whereas the **suggested** column contains initial guess values for **geotopPSO**.  Generally a good practical examples on how to set  thiese parameters is given below: 
 
 ```
-prefix__name,lower,upper
+prefix__name,lower,upperGrenarally 
 SOIL__N,1.45,1.89
 SOIL__Alpha,0.00131,0.0131
 SOIL__ThetaSat,0.41,0.53
@@ -383,8 +398,7 @@ where "N", "Alpha", "ThetaSat", "LateralHydrConductivity", "NormalHydrConductivi
  The keyword "SoilInitPres" refers to the initial soil water pressure head. If the formatter "L%04d" is appended as a suffix, the value is referred to the indicated layer. The keyword "PsiGamma" refers to the soil water pressure gradient along the terrain-normal downward direction and is applied to calculate initial soil water pressure head in the above layers assuming a continuous profile. 
 "SoilDepth" and "NumberOfSoilLayers" refer to the whole soil depth (which now corresponds to the whole soil column used as domain for balance equation integration) and the number of soil layers in which the soil column is divided. Soil layer thickness increase with depth following a geometric progression.
 
-
-
+Then,the target variables are here set :
 
 
 
@@ -396,8 +410,12 @@ x <- (upper+lower)/2
 
 
 
+```
 
-pso <- geotopPSO(par=x,run.geotop=TRUE,bin=bin,
+
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+
+pso <- geotopPSO(par=suggested,run.geotop=TRUE,bin=bin,
 		simpath=wpath,runpath=runpath,clean=TRUE,data.frame=TRUE,
 		level=1,intern=TRUE,target=var,gof.mes="RMSE",lower=lower,upper=upper,control=control)
 

@@ -1,0 +1,288 @@
+---
+title: "Verification of a GEOtop point simulation in B2 LTER Site - Match - South Tyrol - Italy"
+author: "Johannes Brenner, Emanuele Cordano"
+date: "June 2016"
+output: html_document
+runtime: shiny
+---
+
+***
+
+This R Markdown document is made interactive using Shiny. To learn more, see [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
+
+***
+
+```{r, include=FALSE}
+
+library(geotopbricks)
+if(!require("geotopbricks"))
+{
+  if(!require("devtools"))
+  {
+    install.packages(devtools)
+    require("devtools")
+  }
+  install_github("ecor/geotopbricks")
+  require("geotopbricks")
+}
+
+
+if(!require("geotopAnalytics"))
+{
+  if(!require("devtools"))
+  {
+    install.packages(devtools)
+    require("devtools")
+  }
+  install_github("ecor/geotopAnalytics")
+  require("geotopAnalytics")
+}
+
+if(!require("dygraphs"))
+{
+  install.packages(dygraphs)
+  require("dygraphs")
+}
+
+if(!require("hydroGOF"))
+{
+  install.packages(hydroGOF)
+  require("hydroGOF")
+}
+
+if(!require("ggplot2"))
+{
+  install.packages(ggplot2)
+  require("ggplot2")
+}
+
+
+######wpath <- '/home/ecor/temp/geotopOptim_tests/B2_BeG_017_DVM_001' 
+####wpath <- '/home/ecor/temp/geotopOptim_tests/B2_BeG_017_DVM_001_test_1' 
+####'/home/ecor/activity/2016/eurac2016/Incarico_EURAC/Simulations/B2/B2_BeG_017_DVM_001_test_2' 
+#### TO CHECK ...
+##wpath <- '/home/ecor/activity/2016/eurac2016/Incarico_EURAC/results/B2_BeG_017_DVM_001_test_1' 
+
+#wpath <- "/run/user/1000/gvfs/smb-share:server=sdcalp01.eurac.edu,share=data2/Simulations/Simulation_GEOtop_1_225_ZH/Vinschgau/SimTraining/BrJ/HiResAlp/1D/Montecini_pnt_1_225_B2_007/"
+#wpath <- "/run/user/1000/gvfs/smb-share:server=sdcalp01.eurac.edu,share=data2/Simulations/Simulation_GEOtop_1_225_ZH/Vinschgau/SimTraining/BrJ/HiResAlp/1D/Montecini_pnt_1_225_P2_003/"
+#wpath <- "/run/user/1000/gvfs/smb-share:server=sdcalp01.eurac.edu,share=data2/Simulations/Simulation_GEOtop_1_225_ZH/Vinschgau/SimTraining/BrJ/MonaLisa/1D/Kaltern/sim006/"
+
+# obs data
+#load(file.path(wpath, "obs", "observation.RData"))
+#names(observation) <- c("hour", "day")
+#obs <- observation
+#time(obs$hour) <- as.POSIXlt(time(obs$hour))
+
+# sim data  ### WORK HERE 
+#if (file.exists(file.path(wpath,"PointOutValidation.RData"))) {
+#  load(file.path(wpath,"PointOutValidation.RData"))
+#} else {
+
+#}
+
+#varout <- var_out
+
+# adjust datetime: observations -1 hour
+#time(obs$hour) <- as.POSIXlt(time(obs$hour))
+#time(obs$hour)$mday <- time(obs$hour)$mday - 1
+#time(obs$day) <- time(obs$day) - 1
+
+# get hourly lag between obs and sim
+## ccf_temp <- stats::ccf(var_out[["air_temperature"]], obs$hour[,"air_temperature"], plot = F, na.action = na.pass)
+## lag <- round(ccf_temp$acf[which.max(ccf_temp$acf)],0)
+## time(obs$hour)$hour <- time(obs$hour)$hour + lag
+
+# load lookup table
+##data("lookup_tbl_observation")
+
+wpath <-  '/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1' 
+alldata <- GEOtop_ReadValidationData(wpath = wpath, save_rData = T)
+
+obsnames <- attr(alldata,"observation_var")
+simnames <- attr(alldata,"simulation_var")
+
+fun_names <- c("min","mean","max","sum")
+```
+
+#### Interactive Inputs
+
+```{r, echo=FALSE}
+inputPanel(
+  ##textInput(inputId = "simFolder", label = "Simulation folder", value = ""),
+  
+  selectInput(inputId = "variable", label = "discover variable", choices = obsnames,selected=obsnames[8]),
+  
+  selectInput(inputId = "add_variable", label = "additional variable (sim)", choices = simnames, selected = simnames[2]),
+  
+  radioButtons(inputId = "aggregation", label = "aggregation", choices = c("hourly","daily","monthly"), selected = "hourly", inline = FALSE),
+  
+  selectInput(inputId = "aggregation_function_var", label = "Aggregation Function", choices = fun_names, selected = "mean"),
+  
+  selectInput(inputId = "aggregation_function_add_var", label = "Aggregation Function (add_var)", choices = fun_names, selected = "sum")
+  
+  
+  
+  
+#  radioButtons(inputId = "flux_amount", label = "flux or amount", choices = c("flux","amount"), selected = "flux", inline = FALSE)
+  
+#  # radioButtons(inputId = "cum", label = "cumulated or time series", choices = c("time series","cumulated over time"), selected = "time series", inline = FALSE)
+  
+)
+
+```
+
+***
+
+#### Time Series Plot
+
+Dynamic plots of observed vs simulated time series. 
+
+```{r, echo=FALSE}
+
+
+renderDygraph({
+  
+  
+  ## TO GO ON .....
+  	iiv <- input$variable
+  	aiiv <- input$add_variable
+  	aggregation <- input$aggregation
+  	aggr_fun_1 <- input$aggregation_function_var
+  	aggr_fun_2 <-  input$aggregation_function_add_var
+    data <- extractGeotopVar(x=alldata,InputVar=iiv,Add_InputVar=aiiv,aggregate=aggregation,aggregate_fun=c(aggr_fun_1,aggr_fun_2)) 
+    unit <- attr(alldata,"var_unit")[iiv]
+    add_unit <- attr(alldata,"var_unit")[aiiv]
+    ## 
+    
+   dygraph(data, ylab=paste(iiv,"[",unit,"]",sep="")) %>%
+		dyRangeSelector() %>%
+		dyRoller() %>%
+		dySeries(name = "additional.var", axis = "y2", stepPlot = TRUE, fillGraph = TRUE, label = paste(aiiv,"[",add_unit,"]",sep="")) %>%
+		dyAxis(name="y2",label=paste("[",add_unit,"]",sep=""))
+
+
+
+
+#  }
+ 
+})
+
+```
+  
+***
+
+####Summary Table on Goodness of Fit (GOF)
+
+Measures for GOF are given for seasons and for the whole data series. Calculations were performed with the hydroGOF R-Package. Type ?gof in the R console for information on specific GOFs.
+
+```{r, echo=FALSE}
+
+renderDataTable({
+
+#renderText({
+# if (input$aggregation=="hour" | input$aggregation=="day")
+#  {
+#    observation <- obs[[input$aggregation]][,input$variable]
+#  } else {
+#  	observation <- obs[["day"]][,input$variable]
+#  }
+#  
+#  simulation <- varout[[input$variable]]
+#  
+# 	if (input$aggregation=="day" & input$flux_amount=="flux") simulation <- aggregate(simulation, as.Date(time(simulation)), mean, na.rm=T) 
+#  	if (input$aggregation=="day" & input$flux_amount=="amount") simulation <- aggregate(simulation, as.Date(time(simulation)), sum, na.rm=F)
+#  	if (input$aggregation=="month" & input$flux_amount=="flux") 
+#  {
+#    simulation <- aggregate(simulation, as.yearmon(time(simulation)), mean, na.rm=T)
+#    observation <- aggregate(observation, as.yearmon(time(observation)), mean, na.rm=T)
+#  } 
+#  if (input$aggregation=="month" & input$flux_amount=="amount") 
+#  {
+#    simulation <- aggregate(simulation, as.yearmon(time(simulation)), sum, na.rm=F)
+#    observation <- aggregate(observation, as.yearmon(time(observation)), sum, na.rm=F)
+#  } 
+  
+#  time(observation) <- as.POSIXct(time(observation))
+#  time(simulation) <- as.POSIXct(time(simulation))
+  
+#  data <- merge(observation, simulation)
+ 
+ iiv <- input$variable
+    aiiv <- input$add_variable
+  	nnn <- c("simulation","observation")
+  	
+  	aggregation <- input$aggregation
+  	aggr_fun_1 <- input$aggregation_function_var
+  	aggr_fun_2 <-  input$aggregation_function_add_var
+    data <- extractGeotopVar(x=alldata,InputVar=iiv,Add_InputVar=aiiv,aggregate=aggregation,aggregate_fun=c(aggr_fun_1,aggr_fun_2)) 
+    
+  	data <- data[,nnn]
+ 
+  
+  
+  
+  data <- extractGeotopVar(x=alldata,InputVar=iiv,Add_InputVar=aiiv)[,nnn]
+  
+  gofs <- gofg(sim = data$simulation, obs=data$observation, na.rm = TRUE)
+  gofs <- as.data.frame(gofs)
+  names(gofs) <- "YEAR"
+  gofs$GOF <- dimnames(gofs)[[1]]
+  
+  mon <- as.numeric(as.character(index(data),format="%m")) ####as.numeric(format(time(data), "%m"))
+  
+  datadjf <-  data[mon==12 | mon==1 | mon==2,]
+  gofs$DJF <-  c(gofg(sim = datadjf$simulation, obs=datadjf$observation, na.rm = TRUE))
+  datamam <-  data[mon==3 | mon==4 | mon==5,]
+  gofs$MAM <-  c(gofg(sim = datamam$simulation, obs=datamam$observation, na.rm = TRUE))
+  datajja <-  data[mon==6 | mon==7 | mon==8,]
+  gofs$JJA <-  c(gofg(sim = datajja$simulation, obs=datajja$observation, na.rm = TRUE))
+  datason <-  data[mon==9 | mon==10 | mon==11,]
+  gofs$SON <-  c(gofg(sim = datason$simulation, obs=datason$observation, na.rm = TRUE))
+  
+  gofs <- gofs[,c(2,3,4,5,6,1)]
+
+}, options = list(pageLength=5, lengthMenu=c(5, 10, 15, 20)))
+
+```
+
+***
+
+####Scatterplot
+
+```{r, echo=FALSE}
+
+renderPlot({
+  
+	iiv <- input$variable
+    aiiv <- input$add_variable
+  	nnn <- c("simulation","observation")
+  	
+  	aggregation <- input$aggregation
+  	aggr_fun_1 <- input$aggregation_function_var
+  	aggr_fun_2 <-  input$aggregation_function_add_var
+    data <- extractGeotopVar(x=alldata,InputVar=iiv,Add_InputVar=aiiv,aggregate=aggregation,aggregate_fun=c(aggr_fun_1,aggr_fun_2)) 
+    
+  	data <- data[,nnn]
+	
+	if (all(is.na(data$observation))==TRUE) {
+	
+				data$observation <- -9999
+	}
+	if (all(is.na(data$simulation))==TRUE) {
+	
+				data$simulation <- -9999
+	}
+	
+	
+    ##data <- merge(observation, simulation)
+    ##names(data) <- c("observation", "simulation")
+    
+    
+    data <- as.data.frame(data)
+    
+    ggplot(data = data, aes(x=observation, y=simulation)) +
+      geom_point() +
+      geom_abline(intercept=0, slope=1, col=rgb(1,0,0,.5), lwd=2)
+
+})     
+```
