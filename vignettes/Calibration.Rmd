@@ -83,7 +83,26 @@ In the observation section, two now keywords are set (the symbols *!>>!* means t
   knitr::kable(ltk)
 
   
+```
+
+This table contains the following columns: 
+dl>
+  <dt>**obs_var**</dt>
+  <dd>name of the observed variables as reported in the csv file for observations;</dd>
+
+  <dt>**geotop_what**</dt>
+  <dd>GEOtop keyword corresponding for the oitput point file where the variable is written;</dd>
   
+  <dt>**geotop_here**</dt>
+  <dd>name of the corresponding variable simulated by GEOtop as reported in the output csv file;</dd>
+  
+  <dt>**unit**</dt>
+  <dd>measurement unit.</dd>
+</dl>
+
+
+
+The keywords in **geotop_where** or **geotop_what** can be more than one and can be operated through simple mathematical operations. 
 
 
 
@@ -91,13 +110,6 @@ In the observation section, two now keywords are set (the symbols *!>>!* means t
 
 
 
-```
-
-LOREM IPSUM
-
-## geotop.inpts here
-
-```
 
 * [geotoGOF] : It is a wrapper for gof function, it calculates the goodness of fit index for the variables choosen in the data frame returned by geotopLookUpTable; it includes geotopExec and geotopLookukUpTale. Main arguments of geotopGOF are passed to geotopExec as main arguments. 
 ```{r echo=TRUE,eval=FALSE}

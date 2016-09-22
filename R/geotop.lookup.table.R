@@ -211,7 +211,7 @@ geotopLookUpTable <- function(wpath, obs="ObservationProfileFile", lookup_tbl_ob
 					out <- as.data.frame(x)
 					###names__ <- names(out)
 					### SE GOF previous version 
-					print(gdepthsoil)
+					###print(gdepthsoil)
 					out <- approxfunDataFrame(df=out,zout=gdepthsoil,...)
 				    #### VEDI APPROXDATAFRAMEFUN !!!!!!
 					

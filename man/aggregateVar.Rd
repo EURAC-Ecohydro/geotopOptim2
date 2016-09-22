@@ -17,8 +17,6 @@ aggregateVar(x, InputVar = NULL, aggregate = c("hourly", "daily", "monthly",
 \item{aggregate_fun}{aggregate function for \code{InputVar} and \code{Add_InputVar} respectively. Deafault is \code{c("mean","sum")}.}
 
 \item{...}{further arguments}
-
-\item{Add_InputVar}{additional variable (simulated)}
 }
 \description{
 Extract variable from an object returend by \code{\link{geotopLookUpTable}}
@@ -27,8 +25,7 @@ Extract variable from an object returend by \code{\link{geotopLookUpTable}}
 It is assumed that \code{x} already contains hourly aggregated time series, so in case \code{aggregare=="hourly"} no aggragetion is calculated.
 }
 \examples{
-wpath <- '/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1' 
-
+wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
 
 ex <- geotopLookUpTable(wpath = wpath)
  

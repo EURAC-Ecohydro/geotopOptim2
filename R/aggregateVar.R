@@ -3,7 +3,6 @@ NULL
 #' 
 #' @param x objectect returned by \code{\link{geotopLookUpTable}} with \code{merge==TRUE}
 #' @param InputVar discover variable
-#' @param Add_InputVar additional variable (simulated) 
 #' @param aggregate aggregate option. Default it is \code{c("hourly","daily","monthly","yearly")} and it is considered the first element. 
 #' @param aggregate_fun aggregate function for \code{InputVar} and \code{Add_InputVar} respectively. Deafault is \code{c("mean","sum")}.
 #' @param ... further arguments
@@ -16,8 +15,7 @@ NULL
 #' @seealso \code{\link{geotopLookUpTable}}
 #' 
 #' @examples 
-#' wpath <- '/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1' 
-#' 
+#' wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
 #' 
 #' ex <- geotopLookUpTable(wpath = wpath)
 #'  
