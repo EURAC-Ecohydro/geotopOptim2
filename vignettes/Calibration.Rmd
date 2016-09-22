@@ -57,9 +57,44 @@ GEOtopOptim2 is a package which is able to enter a GEOtop simulation folder and 
   
   help(geotopLookUpTable,help_type="html")
 ```
-To use this function, the observation point value must be set in the GEOtop simulation :
+To use this function, the observation point value must be set in the GEOtop simulation and inserted as additional keywords in the **geotop.inpts** file , see the following file for the package example simulation (look at the final OBSERVATION section):
+```{r echo=TRUE,eval=TRUE}
+  wpath_sim <- system.file('geotop-simulation/B2site',package="geotopOptim2")
+  inpts.file.path <- paste(wpath_sim,"geotop.inpts",sep="/")
+  inpts <- readLines(inpts.file.path)
+  writeLines(inpts)
+```
+In the observation section, two now keywords are set (the symbols *!>>!* means that the keyword is not read by GEOtop!): 
+*ObservationProfileFile*, *ObservationLookupTblFile*. The first is similar to *PointFile* or *SoilLiqContentProfileFile* and refers to a set of csv files containing time series of observed variable values.
+
+
+```{r echo=TRUE,eval=TRUE}
+  library(geotopbricks)
+  
+  obs <- get.geotop.inpts.keyword.value("ObservationProfileFile",wpath=wpath_sim,data.frame=TRUE,date_field='Date12.DDMMYYYYhhmm.')
+ 	str(obs)
+ ```
+ The second one refers to a txt file containing a table with the correspondance between the observation variables and the variables simulated by GEOtop: 
+ (NOTE: here there is no formatter in the file neme and the seperator is *;* , so please set *formatter="",col_sep=";"* instead of default values):
+  
+ ```{r echo=TRUE,eval=TRUE} 
+  ltk <- get.geotop.inpts.keyword.value("ObservationLookupTblFile",wpath=wpath_sim,data.frame=TRUE,formatter="",col_sep=";")
+  head(ltk)
+  knitr::kable(ltk)
+
+  
+  
+
+
+
+
+
+
 
 ```
+
+LOREM IPSUM
+
 ## geotop.inpts here
 
 ```
@@ -139,7 +174,7 @@ df <- do.call(what=rbind,args=list_df)
 
 ##### SEMPLIFICATE DF
 
-onlyfun <- list(hydroGOF=c("gof"),hydroPSO=c("hydroPSO","lhoat"),geotopbricks=c("get.geotop.inpts.keyword.value","declared.geotop.inpts.keywords"),
+onlyfun <- list(hydroGOF=c("gof"),hydroPSO=c("hydroPSO","lhoat"),geotopbricks=c("get.geotop.inpts.keyword.value"),
 		base=c("writeLines","readLines"),utils=c("read.table"),raster="raster") ### read.table was removed
 
 for (it in names(onlyfun)) {
@@ -203,7 +238,7 @@ for (it in names(lfunx)) {
 	lfunx[[it]] <- array(c(rep(it,nl),temp),c(nl,2))
 	
 }
-#####edgeed
+#####edges
 edges <- do.call(rbind,lfunx)
 vertices <- unique(edges)
 #####
@@ -226,7 +261,7 @@ V(gg)$name <- vcodes
 main <- "geeotopOptim2  Internal Functions"
 plot(gg,main=main)
 legend("bottomleft",legend=unique(env_),fill=unique(color_),ncol=2)
-legend("topleft",legend=paste(vcodes,vnames,sep=" : "),ncol=1,cex=0.6)
+legend("topleft",legend=paste(vcodes,vnames,sep=" : "),ncol=3,cex=0.6)
 ```
  
  
@@ -340,7 +375,7 @@ runpath <- "/home/ecor/temp/geotopOptim_tests"
 
 ```
 
-The function **geotopExec** running a GEOtop simulation can enter a vector of paratermers which are replaced with the ones formerly set in the original simulation directory **wpath** . Analogously the function **geotopPSO** performing a PSO calibration of GEOtop through **geotopExec** and **geotopGOF** needs two vectors: one for upper values, the other for lower values.   A set of soil calibration parameters can be set though a csv file.  
+The function **geotopExec** running a GEOtop simulation can enter a vector of paratemers which are replaced with the ones formerly set in the original simulation directory **wpath** . Analogously the function **geotopPSO** performing a PSO calibration of GEOtop through **geotopExec** and **geotopGOF** needs two vectors: one for upper values, the other for lower values.   A set of soil calibration parameters can be set though a csv file.  
 ```{r}
 
 help(geotopExec,help_type="html")
@@ -366,7 +401,7 @@ knitr::kable(geotop.soil.param)
 
 ```
 
-Here is the columns **lower** and **upper** stand for lowe and upper values whereas the **suggested** column contains initial guess values for **geotopPSO**.  Generally a good practical examples on how to set  thiese parameters is given below: 
+Here is the columns **lower** and **upper** stand for lower and upper values whereas the **suggested** column contains initial guess values for **geotopPSO**.  Generally a good practical examples on how to set  these parameters is given below: 
 
 ```
 prefix__name,lower,upperGrenarally 
@@ -429,6 +464,29 @@ if (USE_RMPI==TRUE) mpi.finalize()
 
 
 Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+
+
+
+
+
+## References: 
+
+* Endrizzi, S., Gruber, S., Dall'Amico, M., and Rigon, R. (2014): GEOtop 2.0: simulating the combined energy and water balance at and below the land surface accounting for soil freezing, snow cover and terrain effects, Geosci. Model Dev., 7, 2831-2857, doi:10.5194/gmd-7-2831-2014, 2014, http://www.geosci-model-dev.net/7/2831/2014/gmd-7-2831-2014.html
+
+* Zambrano-Bigiarini, M.; R. Rojas (2013), A model-independent Particle Swarm Optimisation software for model
+ calibration, Environmental Modelling & Software, 43, 5-25, doi:10.1016/j.envsoft.2013.01.004
+
+*  Zambrano-Bigiarini, M., Rojas, R.(2014). hydroPSO: Particle Swarm Optimisation, with focus on Environmental Models. R
+  package version 0.3-4.
+
+* Cordano E.,  Andreis D. and Zottele F. (2015). geotopbricks: An R Plug-in for the Distributed
+  Hydrological Model GEOtop. R package version 1.3.6. http://CRAN.R-project.org/package=geotopbricks
+
+
+
+
+
+
 
 
 
