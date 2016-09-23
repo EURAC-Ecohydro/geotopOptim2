@@ -4,30 +4,27 @@ author: "Emanuele Cordano"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{GEOtop Calibration through Optimization (hydroPSO)}
+  %\VignetteIndexEntry{geotopOptim2}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-BLA BLA Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
 
 ## Introduction
 
 Why this work ....
 Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+LOREM IPUSUM ....
 
 ## GEOtop Hydrological Model
 
 
 GEOtop (Endrizzi et al, 2014 and references therein) is a distributed model of the mass and energy balance of the hydrological cycle. GEOtop is applicable to simulations in continuum in small or relatively large montain catchments. GEOtop deals with the effects of topography on the interaction between energy balance and hydrological cycle (water, glacier and snow) with peculiar solutions. The source code of GEOtop 2.0 with detailed documentation is available for researchers and environmental/software engineers through the following links:
 
-* https://code.google.com/p/geotop/
+
 * https://github.com/se27xx/GEOtop/
-* https://github.com/skyglobe/geotop
+* https://github.com/geotopmodel/geotop
+
 
 For  Unix-like OS users, a C source code can be rapidly downloaded and built with the following instrunctions (https://github.com/se27xx/GEOtop/):
 
@@ -41,18 +38,22 @@ For  Unix-like OS users, a C source code can be rapidly downloaded and built wit
 GEOtop executable will be created in the subdirectory "bin". 
 For other versions of GEOtop, please see the related URLs. 
 
+For the version supported by a larger community, please read detailed information  on [GEOtop](www.geotop.org) site. 
+
+
+
 ## Overview of the main function
 
 GEOtopOptim2 is a package which is able to enter a GEOtop simulation folder and calibarate some parameters (set by user) optimizing a Goodnes-of-Fit measure between point results and point and observations. eotopOptim2 is a set of functions that calls dependency function and the user can work with all or some of these functions as it in his or her preferences. Before entering geotopOptim2, here is a  list of the main finctions: 
 
-* [geotopExec] :  This function executes a simulation of GEOtop given a certain set of parameters:
+* **geotopExec** :  This function executes a simulation of GEOtop given a certain set of parameters:
 
 ```{r echo=TRUE,eval=FALSE}
   library(geotopOptim2)
   help(geotopExec,help_type="html")
   help(get.geotop.keyword.inpts.value,help_type = "html")
 ```
-* [geotopLookUpTable] : It read the lookup table that can be inserted within a GEOtop point simulation according Read point output from GEOtop for verification of the model results: 
+* **geotopLookUpTable**: It read the lookup table that can be inserted within a GEOtop point simulation according Read point output from GEOtop for verification of the model results: 
 ```{r echo=TRUE,eval=FALSE}
   
   help(geotopLookUpTable,help_type="html")
@@ -111,7 +112,7 @@ The keywords in **geotop_where** or **geotop_what** can be more than one and can
 
 
 
-* [geotoGOF] : It is a wrapper for gof function, it calculates the goodness of fit index for the variables choosen in the data frame returned by geotopLookUpTable; it includes geotopExec and geotopLookukUpTale. Main arguments of geotopGOF are passed to geotopExec as main arguments. 
+* **geotoGOF** : It is a wrapper for gof function, it calculates the goodness of fit index for the variables choosen in the data frame returned by geotopLookUpTable; it includes geotopExec and geotopLookukUpTale. Main arguments of geotopGOF are passed to geotopExec as main arguments. 
 ```{r echo=TRUE,eval=FALSE}
   
   help(geotoGOF,help_type="html")
@@ -120,7 +121,8 @@ The keywords in **geotop_where** or **geotop_what** can be more than one and can
 ```
 
 
-* [geotopPSO] : It is a wrapper for hydroPSO function, it calculates the goodness of fit index for the variables choosen in the data frame returned by geotopLookUpTable:
+* **geotopPSO** : It is a wrapper for hydroPSO function, it calculates the goodness of fit index for the variables choosen in the data frame returned by geotopLookUpTable:
+
 ```{r echo=TRUE,eval=FALSE}
   
   help(geotoGOF,help_type="html")
@@ -388,7 +390,7 @@ runpath <- "/home/ecor/temp/geotopOptim_tests"
 ```
 
 The function **geotopExec** running a GEOtop simulation can enter a vector of paratemers which are replaced with the ones formerly set in the original simulation directory **wpath** . Analogously the function **geotopPSO** performing a PSO calibration of GEOtop through **geotopExec** and **geotopGOF** needs two vectors: one for upper values, the other for lower values.   A set of soil calibration parameters can be set though a csv file.  
-```{r}
+```{r,eval=FALSE}
 
 help(geotopExec,help_type="html")
 help(geotopGOF,help_type="html")

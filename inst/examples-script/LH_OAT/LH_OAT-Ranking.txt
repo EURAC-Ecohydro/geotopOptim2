@@ -1,0 +1,7 @@
+RankingNmbr ParameterName RelativeImportance RelativeImportance.Norm
+1           SOIL__N                       254.933954933955 0.724945522873786
+2           SOIL__ThetaSat                57.5294167622446 0.163594108623678
+3           SOIL__ThetaRes                27.8966585597305 0.079328615645784
+4           SOIL__Alpha                   5.6497175141243 0.0160658764283757
+5           SOIL__NormalHydrConductivity  5.6497175141243 0.0160658764283757
+6           SOIL__LateralHydrConductivity 0 0
