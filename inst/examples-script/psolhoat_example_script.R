@@ -27,6 +27,14 @@ rm(list=ls())
 
 library(zoo)
 library(geotopOptim2)
+
+Rpath <- '/home/ecor/Dropbox/R-packages/geotopOptim2/R' 
+lf <- list.files(Rpath,pattern=".R",full.names=TRUE)
+for (it in lf) source(it)
+
+#source('/home/ecor/Dropbox/R-packages/geotopOptim2/R/geotop.pso.2.R')
+#source('/home/ecor/Dropbox/R-packages/geotopOptim2/R/geotop.execution.R') 
+
 set.seed(7988)
 
 USE_RMPI <- FALSE 
@@ -52,7 +60,7 @@ if (USE_RMPI==TRUE) {
 	
 } else {
 	
-	parellel <- "none"
+	parallel <- "none"
 	npart <- 4
 	control <- list(N=5,parallel="parallel",REPORT=10) ##list(maxit=5,npart=npart)
 	

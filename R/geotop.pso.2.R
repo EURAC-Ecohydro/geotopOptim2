@@ -143,7 +143,7 @@ geotopPSO <- function(par=NULL,fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,l
 			temporary.runpath <- TRUE
 		} else if (is.na(temporary.runpath)){
 			
-			temporaray.runpath <- TRUE
+			temporary.runpath <- TRUE
 			
 		}
 		
@@ -275,6 +275,7 @@ geotopPSO <- function(par=NULL,fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,l
 		
 		} else if (hydroPSOfun=="lhoat") {
 			
+			print(temporary.runpath)
 			out <- lhoat(fn=fn,gof.mes=gof.mes,output_simulation=FALSE,upper=upper,lower=lower,names_par=names(upper),temporary.runpath=temporary.runpath,...)
 			
 			

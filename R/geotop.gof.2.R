@@ -227,14 +227,26 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 	if (is.null(status)) status <- 0
 	if (is.na(status))   status <- 0
 	
+	
+	wpath_ <- args[["wpath"]]
+	filelog <- paste(wpath_,"_START_EVALUATION.log",sep="") 
+	print(filelog)
+	writeLines(wpath_,con=filelog)
+	
 	if (status!=0) {
 		
 		msg <- sprintf("Goodness of fit non-successful (return %s))beceause of GEOtop non-0 exit : %s !",as.character(nosuccess.return),as.character(args[["wpath"]]))
-		
+		filelog <- paste(wpath_,"_UNSUCCESSFUL_EVALUATION.log",sep="") 
+		print(filelog)
+		writeLines(wpath_,con=filelog)
 		warning(msg)
 		return(nosuccess.return)
 		
 	}
+	
+	### 
+	
+	
 	
 	out <- do.call(what=geotopLookUpTable,args=args[names(args) %in% lookup_tbl_names])
 	
@@ -317,7 +329,6 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 	## INSERT whenGOF here 
 	
 	out <- gof(obs=obs,sim=sim)
-	
 	if (length(gof.mes)==1)  {
 		
 		
@@ -358,7 +369,8 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 #		
 #	
 #	}
-		
+	filelog <- paste(wpath_,"_END_EVALUATION.log",sep="") 
+	writeLines(c("end"),con=filelog)	
 	return(out)
 	
 	

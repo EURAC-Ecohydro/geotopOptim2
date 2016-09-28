@@ -1,0 +1,24 @@
+Name,Suggested,lower,upper
+INTEGER__LWinParameterization,4,1,6
+INTEGER__MoninObukhov,2,1,4
+INTEGER__CanopyStabCorrection,1,0,1
+SCALAR__SoilRoughness,100,10,1000
+SCALAR__VegHeight,400,10,0.8*MeteoStationTemperatureSensorHeight
+SCALAR__LSAI,4,0,8
+SCALAR__CanopyFraction,1,0,1,
+SCALAR__DecayCoeffCanopy,2,0,100
+SCALAR__RootDepth,250,50,min( soil_depth
+SCALAR__MinStomatalRes,25,10,100
+SCALAR__VegReflectVis,0.1,0.05,0.3
+SCALAR__VegReflNIR,0.2,0.05,0.5
+SCALAR__VegTransVis,0.07,0.01,0.2
+SCALAR__VegTransNIR,0.25,0.05,0.5
+SCALAR__LeafAngles,0,-1,0
+SCALAR__CanDensSurface,0.5,0.1,10
+SCALAR__SoilAlbVisDry,0.15,0.05,0.3
+SCALAR__SoilAlbNIRDry,0.25,0.05,0.5
+SCALAR__SoilAlbVisWet,0.15,0.05,0.3
+SCALAR__SoilAlbNIRWet,0.25,0.05,0.5
+SCALAR__SoilEmissiv,1.36,0.8,1.39,1
+SCALAR__CanopyMaxIter,2,1,4
+

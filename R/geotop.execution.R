@@ -120,7 +120,8 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 	
 	
 	message("Preparing a GEOtop Simulation!!")
-	
+	msg <- sprintf("wpath:%s",simpath)
+	print(msg)
 	
 	t <- str_split(simpath,"/")[[1]]
 	simdir <- t[length(t)]
@@ -232,7 +233,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 			
 			ScalarPrefix <- "SCALAR__"
 			VectorPrefix <- "VECTOR__"
-
+			IntegerPrefix <- "INTEGER__"
 ###			print(any(str_detect(names(param),ScalarPrefix)))
 			
 			
@@ -274,7 +275,51 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 						
 				
 			}
-			##### INSERT SCALAR VALUE 
+			
+			if (any(str_detect(names(param),IntegerPrefix))) {
+				
+				
+				message('param with INTEGER')
+				print(param)
+				##### CHECK Scalar Keywords 
+				
+				## wanrnig: Do not put comments with ! in the same row of the keyword called with SCALAR__...
+				inpts.path <- paste(rundir,inpts.file,sep="/")
+				inpts.vv   <- readLines(inpts.path)
+				inpts.list <- str_split(inpts.vv,"=")
+				kws <- sapply(X=inpts.list,FUN=function(x){str_trim(x[[1]])})
+				
+				n_params <- str_replace(names(param),IntegerPrefix,"")
+				names(n_params) <- names(param)
+				
+				ikws <- which(kws %in% n_params) 
+				
+				#	print(n_params)
+				
+				
+				#	print(kws[ikws])
+				integernames <- paste(IntegerPrefix,kws[ikws],sep="")
+				inpts.vv[ikws] <- paste(kws[ikws],param[integernames],sep="=")
+								
+				writeLines(inpts.vv,con=inpts.path)
+				
+				
+				stop("THIS IS STILL TO DO!!!!")
+				param <- param[!(names(param) %in% integernames)]
+				
+				
+				##	print(inpts.vv)
+				
+				
+				## .....
+				
+				
+			}
+			
+			
+			
+			
+			
 			if (any(str_detect(names(param),"VECTOR__"))) {
 				
 				
@@ -733,6 +778,8 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 		
 	}
 	message("GEOtop is running!!")
+	msg <- sprintf("rundir:%s",rundir)
+	print(msg)
 	command.line <- paste(bin,rundir,sep=" ")
 	
 	cc <- system(command.line,intern=intern)
