@@ -4,7 +4,7 @@ hydroPSO Built       :  R 3.3.0; ; 2016-08-25 09:18:20 UTC; unix
 R version            :  R version 3.3.0 (2016-05-03)  
 Platform             :  x86_64-pc-linux-gnu  
 ================================================================================
-Starting Time        :  Fri Sep 23 17:35:04 2016  
+Starting Time        :  Fri Sep 30 13:34:33 2016  
 ================================================================================
 N (number of strata) : 5 
 f (changing factor)  : 0.15 
@@ -17,9 +17,11 @@ do.plots             : FALSE
 write2disk           : TRUE 
 verbose              : TRUE 
 normalise            : FALSE 
-parallel             : none 
+parallel             : parallel 
+par.nnodes           : 4 
+par.pkgs             : 
 ================================================================================
-Ending Time          : Fri Sep 23 17:57:53 2016 
+Ending Time          : Fri Sep 30 13:51:00 2016 
 ================================================================================
-Elapsed Time         : 22.82 mins 
+Elapsed Time         : 16.45 mins 
 ================================================================================

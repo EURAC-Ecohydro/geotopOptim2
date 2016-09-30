@@ -120,8 +120,8 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 	
 	
 	message("Preparing a GEOtop Simulation!!")
-	msg <- sprintf("wpath:%s",simpath)
-	print(msg)
+	msg <- sprintf("wpath:%s at",simpath)
+	message(msg)
 	
 	t <- str_split(simpath,"/")[[1]]
 	simdir <- t[length(t)]
@@ -148,7 +148,11 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 			
 				runpath <- paste(runpath0,runstring,sep="/")
 				
+				runpath <- tempfile(pattern = "xx", tmpdir = runpath0,fileext = "")
+			#####	print(runpath)
 				if (file.exists(runpath)!=TRUE) {
+					print(param)
+					print(sprintf("exiting %s at %s",runpath,Sys.time()))
 					break
 				}
 				
@@ -241,7 +245,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 				
 				
 			            message('param with SCALAR')
-						print(param)
+						messaget(param)
 						##### CHECK Scalar Keywords 
 						
 						## wanrnig: Do not put comments with ! in the same row of the keyword called with SCALAR__...
@@ -280,7 +284,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 				
 				
 				message('param with INTEGER')
-				print(param)
+				message(param)
 				##### CHECK Scalar Keywords 
 				
 				## wanrnig: Do not put comments with ! in the same row of the keyword called with SCALAR__...
@@ -778,13 +782,14 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 		
 	}
 	message("GEOtop is running!!")
-	msg <- sprintf("rundir:%s",rundir)
-	print(msg)
+	msg <- sprintf("rundir:%s at %s",rundir,Sys.time())
+	message(msg)
 	command.line <- paste(bin,rundir,sep=" ")
 	
 	cc <- system(command.line,intern=intern)
 	######cca <- cc
-	
+	msg <- sprintf("FINISH rundir:%s at %s",rundir,Sys.time())
+	message(msg)
  
 	
 	

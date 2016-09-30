@@ -369,7 +369,8 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 #		
 #	
 #	}
-	filelog <- paste(wpath_,"_END_EVALUATION.log",sep="") 
+	filelog <- paste(wpath_,"_END_EVALUATION.log",sep="")
+	print(filelog)
 	writeLines(c("end"),con=filelog)	
 	return(out)
 	

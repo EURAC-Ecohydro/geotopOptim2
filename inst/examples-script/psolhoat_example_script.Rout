@@ -17,6 +17,8 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+[Previously saved workspace restored]
+
 > #!/usr/bin/env Rscript
 > # file pso_example_script.R
 > #
@@ -62,6 +64,14 @@ Loading required package: hydroPSO
 Type 'citation('hydroPSO')' to see how to cite this package
 Loading required package: hydroGOF
 Loading required package: soilwater
+> 
+> Rpath <- '/home/ecor/Dropbox/R-packages/geotopOptim2/R' 
+> lf <- list.files(Rpath,pattern=".R",full.names=TRUE)
+> for (it in lf) source(it)
+> 
+> #source('/home/ecor/Dropbox/R-packages/geotopOptim2/R/geotop.pso.2.R')
+> #source('/home/ecor/Dropbox/R-packages/geotopOptim2/R/geotop.execution.R') 
+> 
 > set.seed(7988)
 > 
 > USE_RMPI <- FALSE 
@@ -87,7 +97,7 @@ Loading required package: soilwater
 + 	
 + } else {
 + 	
-+ 	parellel <- "none"
++ 	parallel <- "none"
 + 	npart <- 4
 + 	control <- list(N=5,parallel="parallel",REPORT=10) ##list(maxit=5,npart=npart)
 + 	
@@ -131,13 +141,11 @@ Loading required package: soilwater
 Warning (get.geotop.inpts.keyword.value): keyword PointFile without value:
 Warning (get.geotop.inpts.keyword.value): keyword HeaderCoordinatePointX without value:
 Warning (get.geotop.inpts.keyword.value): keyword HeaderCoordinatePointY without value:
+[1] TRUE
                                                               
 [ Number of strata for each parameter (N) : 5 ]
                                                               
 [ Number of Parameter Sets to be run      : 35 ]
-                                            
-[ Output directory 'LH_OAT' was created on: '/home/ecor/Dropbox/R-packages/geotopOptim2/inst/examples-script' ]
-                                            
 Loading required package: parallel
                                
 [ Parallel initialization ... ]
@@ -179,14 +187,27 @@ Error::Error 1 in tridiag
 Error::Run time error
 Error::Error 1 in tridiag
 ........exiting...
-
-Error::Run time error
-Error::Error 1 in tridiag
-........exiting...
-Error in checkForRemoteErrors(val) : 
-  2 nodes produced errors; first error: new index needs to be sorted
-Calls: geotoplhoat ... clusterApply -> staticClusterApply -> checkForRemoteErrors
-In addition: Warning message:
+==============================================================
+[  5)   Writing output files ...                             ]
+==============================================================
+                             |                                
+                             |                                
+==============================================================
+[==================    LH-OAT finished !    =================]
+==============================================================
+Warning message:
 In file(con, "r") :
   cannot open file '/home/ecor/R/x86_64-pc-linux-gnu-library/3.3/geotopOptim2/geotop-simulation/B2site/soiltype.asc': No such file or directory
-Execution halted
+> 
+> 
+> file_lhoat <-  '/home/ecor/Dropbox/R-packages/geotopOptim2/inst/examples-script/outrda/lhoat_n.rda' 
+> 
+> 
+> save(lhoat,file=file_lhoat)
+> 
+> 
+> if (USE_RMPI==TRUE) mpi.finalize()
+> 
+> proc.time()
+   user  system elapsed 
+316.641  29.023 990.907 
