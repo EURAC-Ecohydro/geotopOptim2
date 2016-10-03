@@ -120,7 +120,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 	
 	
 	message("Preparing a GEOtop Simulation!!")
-	msg <- sprintf("wpath:%s at",simpath)
+	msg <- sprintf("wpath:%s at %s",simpath,Sys.time())
 	message(msg)
 	
 	t <- str_split(simpath,"/")[[1]]
@@ -151,7 +151,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 				runpath <- tempfile(pattern = "xx", tmpdir = runpath0,fileext = "")
 			#####	print(runpath)
 				if (file.exists(runpath)!=TRUE) {
-					print(param)
+					##print(param)
 					print(sprintf("exiting %s at %s",runpath,Sys.time()))
 					break
 				}
