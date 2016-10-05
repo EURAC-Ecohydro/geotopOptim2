@@ -38,17 +38,11 @@ CanopyStabCorrection	=	1
 !=======================================
 
 NumberOfMeteoStations	=	1
-MeteoStationCoordinateX=620815.
-MeteoStationCoordinateY=	5171506
-MeteoStationElevation=	1480
+MeteoStationCoordinateX	=	620815
+MeteoStationCoordinateY	=	5171506
+MeteoStationElevation	=	1480
 MeteoStationWindVelocitySensorHeight	=	2.5
 MeteoStationTemperatureSensorHeight	=	2
-
-
-MeteoStationLatitude=46.55 
-MeteoStationLongitude=7.99 
-
-
 
 !=======================================
 !METEO HAEDERS
@@ -177,7 +171,7 @@ FreeDrainageAtBottom	=	1
 ! Input files 
 
 DemFile					=	"dem"
-MeteoFile="meteoB2_irr_"
+MeteoFile				=	"meteoB2_irr_"
 LandCoverMapFile		=	"landcover"
 SkyViewFactorMapFile	=	"sky"
 SlopeMapFile			=	"slope"
@@ -187,11 +181,6 @@ HorizonMeteoStationFile	=	"horizon"
 RiverNetwork			=	"net60"
 SoilMapFile				=	"soiltype"
 SoilParFile				=	"soil/soil"
-
-
-HeaderHorizonAngle          = "AngleFromNorthClockwise" 
-HeaderHorizonHeight         = "HorizonHeight" 
-
  
 ! Output files 
 
