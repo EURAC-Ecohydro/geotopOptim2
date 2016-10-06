@@ -1,10 +1,10 @@
 Name,Suggested,lower,upper
-SOIL__N,1.2,2.5
-SOIL__Alpha,0.00001,0.1
-SOIL__ThetaSat,0.50,0.70
-SOIL__ThetaRes,0.05,0.07
-SOIL__LateralHydrConductivity,0.001,1.0
-SOIL__NormalHydrConductivity_ALL,0.001,1.0
+SOIL__N,1.4,1.2,2.5
+SOIL__Alpha,0.001,0.00001,0.1
+SOIL__ThetaSat,0.50,0.40,0.70
+SOIL__ThetaRes,0.06,0.05,0.07
+SOIL__LateralHydrConductivity,0.01,0.001,1.0
+SOIL__NormalHydrConductivity_ALL,0.01,0.001,1.0
 SCALAR__SoilRoughness,100,10,1000
 SCALAR__LSAI,4,0,8
 SCALAR__CanopyFraction,1,0,1,
