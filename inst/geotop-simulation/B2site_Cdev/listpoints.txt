@@ -1,2 +1,0 @@
-ID,xcoord,ycoord,landcover
-1,621227,5171306,1
