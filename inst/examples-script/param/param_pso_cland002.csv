@@ -1,4 +1,4 @@
-Name,Suggested,lower,upper
+name,suggested,lower,upper
 SOIL__N,1.4,1.2,2.5
 SOIL__Alpha,0.001,0.00001,0.1
 SOIL__ThetaSat,0.50,0.40,0.70
@@ -21,6 +21,6 @@ SCALAR__SoilAlbVisDry,0.15,0.05,0.3
 SCALAR__SoilAlbNIRDry,0.25,0.05,0.5
 SCALAR__SoilAlbVisWet,0.15,0.05,0.3
 SCALAR__SoilAlbNIRWet,0.25,0.05,0.5
-SCALAR__SoilEmissiv,1.36,0.8,1.39,1
+SCALAR__SoilEmissiv,1.36,0.8,1.39
 SCALAR__CanopyMaxIter,2,1,4
 

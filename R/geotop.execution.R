@@ -245,7 +245,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 				
 				
 			            message('param with SCALAR')
-						messaget(param)
+						message(param)
 						##### CHECK Scalar Keywords 
 						
 						## wanrnig: Do not put comments with ! in the same row of the keyword called with SCALAR__...
