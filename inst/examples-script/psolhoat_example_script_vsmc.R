@@ -78,8 +78,8 @@ bin  <-  'geotop'
 ##bin  <-'/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
 
 ## LOcal path where to write output for PSO
-runpath <- "/home/ecor/temp/geotopOptim_tests"
-##runpath <- Sys.getenv("GEOTOPOTIM2_TEMP_DIR")
+##runpath <- "/home/ecor/temp/geotopOptim_tests"
+runpath <- Sys.getenv("GEOTOPOTIM2_TEMP_DIR")
 
 
 geotop.soil.param.file <-  system.file('examples-script/param/param_pso_cland002.csv',package="geotopOptim2") ###'/home/ecor/Dropbox/R-packages/geotopOptim/inst/examples_2rd/param/param_pso_test3.csv' 
