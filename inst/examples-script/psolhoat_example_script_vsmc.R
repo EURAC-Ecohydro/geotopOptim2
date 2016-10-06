@@ -82,7 +82,7 @@ bin  <-  'geotop'
 runpath <- Sys.getenv("GEOTOPOTIM2_TEMP_DIR")
 
 
-geotop.soil.param.file <-  system.file('examples-script/param/param_pso_c001.csv',package="geotopOptim2") ###'/home/ecor/Dropbox/R-packages/geotopOptim/inst/examples_2rd/param/param_pso_test3.csv' 
+geotop.soil.param.file <-  system.file('examples-script/param/param_pso_cland002.csv',package="geotopOptim2") ###'/home/ecor/Dropbox/R-packages/geotopOptim/inst/examples_2rd/param/param_pso_test3.csv' 
 geotop.soil.param <- read.table(geotop.soil.param.file,header=TRUE,sep=",",stringsAsFactors=FALSE)
 lower <- geotop.soil.param$lower
 upper <- geotop.soil.param$upper
