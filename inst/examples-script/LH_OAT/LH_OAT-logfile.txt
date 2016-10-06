@@ -4,9 +4,9 @@ hydroPSO Built       :  R 3.3.0; ; 2016-08-25 09:18:20 UTC; unix
 R version            :  R version 3.3.0 (2016-05-03)  
 Platform             :  x86_64-pc-linux-gnu  
 ================================================================================
-Starting Time        :  Fri Sep 30 13:34:33 2016  
+Starting Time        :  Thu Oct  6 18:50:01 2016  
 ================================================================================
-N (number of strata) : 5 
+N (number of strata) : 2 
 f (changing factor)  : 0.15 
 drty.in              : PSO.in 
 drty.out             : /home/ecor/Dropbox/R-packages/geotopOptim2/inst/examples-script/LH_OAT 
@@ -20,8 +20,3 @@ normalise            : FALSE
 parallel             : parallel 
 par.nnodes           : 4 
 par.pkgs             : 
-================================================================================
-Ending Time          : Fri Sep 30 13:51:00 2016 
-================================================================================
-Elapsed Time         : 16.45 mins 
-================================================================================

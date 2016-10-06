@@ -1,0 +1,13 @@
+In the current version of GEOtop the LE output to be compared with EC observation is missed and should be back-calculated from the single components:
+ 
+We use the following equation:
+ 
+ 
+LE_over_canopy =  Canopy_fraction * (LEg_veg + LEv) + (1 - canopy_fraction) * LEg_unveg
+ 
+H_over_canopy =  Canopy_fraction * (Hg_veg + Hv) + (1 - canopy_fraction) * Hg_unveg
+ 
+ 
+Ema, in realta non sono sicuro al 100% che queste equazioni siano giuste …. Forse la versione giusta e´ leggermente piu complicata … servirebbe un feedback con Stefano su questo.
+Stefano pero dice che sono cose che ha fatto cosi tanti anni fa che si ricorda poco …
+ 

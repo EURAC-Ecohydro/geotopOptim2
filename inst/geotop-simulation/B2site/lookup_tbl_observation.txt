@@ -13,7 +13,7 @@ diffuse_downwelling_shortwave_flux_in_air;PointOutputFile;SWdiff.W.m2.;W/m2
 net_downward_shortwave_flux;PointOutputFile;SWin.W.m2.-SWup.W.m2.;W/m2
 net_downward_longwave_flux;PointOutputFile;LWin.W.m2.-LWup.W.m2.;W/m2
 downward_heat_flux_in_soil;PointOutputFile;Soil_heat_flux.W.m2.;W/m1
-soil_moisture_content_200;SoilLiqContentProfileFile+SoilIceContentProfileFile;z0029; 
-soil_moisture_content_50;SoilLiqContentProfileFile+SoilIceContentProfileFile;z0004;
-latent_heat_flux_in_air;n.a.;postprocess_H;W/m2
-sensible_heat_flux_in_air;n.a.;postprocess_LE;W/m2
+soil_moisture_content_200;SoilLiqContentProfileFile+SoilIceContentProfileFile;z0020; 
+soil_moisture_content_50;SoilLiqContentProfileFile+SoilIceContentProfileFile;z0005;
+latent_heat_flux_in_air;PointOutputFile;Canopy_fraction...*(LEg_veg.W.m2.+LEv.W.m2.)+(1-Canopy_fraction...)*LEg_unveg.W.m2.;W/m2
+sensible_heat_flux_in_air;PointOutputFile;Canopy_fraction...*(Hg_veg.W.m2.+Hv.W.m2.)+(1-Canopy_fraction...)*Hg_unveg.W.m2.;W/m2
