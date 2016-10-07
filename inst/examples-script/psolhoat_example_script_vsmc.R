@@ -62,7 +62,7 @@ if (USE_RMPI==TRUE) {
 	
 	parallel <- "none"
 	npart <- 4
-	control <- list(N=5,parallel="none",REPORT=10) ##list(maxit=5,npart=npart)
+	control <- list(N=5,parallel="parallel",REPORT=10) ##list(maxit=5,npart=npart)
 	
 }
 
