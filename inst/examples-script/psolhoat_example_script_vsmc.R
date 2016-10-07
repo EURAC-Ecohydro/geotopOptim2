@@ -73,9 +73,17 @@ tz <- "Etc/GMT-1"
 
 wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
 
+USE27XX <- TRUE
 
-bin  <-  'geotop'
-##bin  <-'/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
+if (USE_SE27XX==TRUE) {
+	
+	bin <- ' geotop-2.0.0'
+	
+} else {
+	
+	bin  <-  'geotop'
+	
+}  ##bin  <-'/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
 
 ## LOcal path where to write output for PSO
 ##runpath <- "/home/ecor/temp/geotopOptim_tests"
