@@ -1,0 +1,27 @@
+================================================================================
+hydroPSO version     :  0.3-4-6  
+hydroPSO Built       :  R 3.2.3; ; 2016-09-23 16:30:38 UTC; unix  
+R version            :  R version 3.2.3 (2015-12-10)  
+Platform             :  x86_64-pc-linux-gnu  
+================================================================================
+Starting Time        :  Thu Oct  6 21:57:38 2016  
+================================================================================
+N (number of strata) : 5 
+f (changing factor)  : 0.15 
+drty.in              : PSO.in 
+drty.out             : /home/lv70864/ecordano/local/geotopOptim2/inst/examples-script/LH_OAT 
+param.ranges         : ParamRanges.txt 
+digits               : 7 
+gof.name             : GoF 
+do.plots             : FALSE 
+write2disk           : TRUE 
+verbose              : TRUE 
+normalise            : FALSE 
+parallel             : parallel 
+par.nnodes           : 16 
+par.pkgs             : 
+================================================================================
+Ending Time          : Thu Oct  6 22:19:56 2016 
+================================================================================
+Elapsed Time         : 22.29 mins 
+================================================================================
