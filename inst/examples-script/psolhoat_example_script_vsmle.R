@@ -73,7 +73,7 @@ tz <- "Etc/GMT-1"
 
 wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
 
-USE_SE27XX <- TRUE
+USE_SE27XX <- FALSE
 
 if (USE_SE27XX==TRUE) {
 	
