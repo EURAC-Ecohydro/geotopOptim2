@@ -77,11 +77,12 @@ USE_SE27XX <- TRUE
 
 if (USE_SE27XX==TRUE) {
 	
-	bin <- ' geotop-2.0.0'
+	##bin <- ' geotop-2.0.0'
+	bin <- 'geotop_se27xx'
 	
 } else {
 	
-	bin  <-  'geotop'
+	bin  <-  'geotop_dev'
 	
 }  ##bin  <-'/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
 
@@ -101,15 +102,18 @@ if (!is.null(x)) names(x) <- geotop.soil.param$name
 
 
 
+### http://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed
 
 
+var <- c('soil_moisture_content_50','soil_moisture_content_200','latent_heat_flux_in_air','sensible_heat_flux_in_air')
+uscale <- c(0.03,0.03,25,25)/0.03
 
-var <- c('soil_moisture_content_50','soil_moisture_content_200')
-
+names(var)  <- var
+names(uscale) <- var
 
 lhoat <- geotoplhoat(par=x,run.geotop=TRUE,bin=bin,
 		simpath=wpath,runpath=runpath,clean=TRUE,data.frame=TRUE,
-		level=1,intern=TRUE,target=var,gof.mes="RMSE",lower=lower,upper=upper,control=control)
+		level=1,intern=TRUE,target=var,gof.mes="RMSE",uscale=uscale,lower=lower,upper=upper,control=control)
 
 
 file_lhoat <-  '~/local/geotopOptim2/inst/examples-script/outrda/lhoat_n.rda' 
