@@ -13,6 +13,8 @@ From R console:
 >library(devtools)
 
 >install_github("ecor/geotopbricks")
+>install.packages("hydroGOF")
+>install.packages("hydroPSO")
 >install_github("ecor/geotopOptim2")
 ```
 
