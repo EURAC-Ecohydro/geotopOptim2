@@ -12,9 +12,8 @@ vignette: >
 
 ## Introduction
 
-Why this work ....
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-LOREM IPUSUM ....
+The 'geotopOptim2' package has been  built to perform a PSO Calibration through [hydroPSO](https://cran.r-project.org/package=hydroPSO)  package of the the results of the physically-based hydrological model GEOtop. 
+The package makes use of the GEOtop-R plugin  [geotopbricks](https://cran.r-project.org/package=geotopbricks), which import/export GEOtop Data into R. 
 
 ## GEOtop Hydrological Model
 
@@ -202,7 +201,7 @@ for (it in names(onlyfun)) {
 
 fun_names <- df$funx
 		
-###stop("MI FERMO QUI")
+
 names(fun_names) <- fun_names
 
 ########################################
