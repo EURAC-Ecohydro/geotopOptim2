@@ -1,9 +1,9 @@
 #!/usr/bin/env Rscript
-# file pso_example_script.R
+# file psol_example_script_vsmle.R
 #
-# This script is an examples of a GEOtop lhoat via geotopOptim2
+# This script is an examples of a GEOtop PSO Calibration via geotopOptim2
 #
-# author: Emanuele Cordano on 09-09-2015
+# author: Emanuele Cordano on 16-10-2016
 
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
@@ -28,15 +28,11 @@ rm(list=ls())
 library(zoo)
 library(geotopOptim2)
 
-Rpath <- '/home/ecor/Dropbox/R-packages/geotopOptim2/R' 
-#lf <- list.files(Rpath,pattern=".R",full.names=TRUE)
-#for (it in lf) source(it)
-
-#source('/home/ecor/Dropbox/R-packages/geotopOptim2/R/geotop.pso.2.R')
-#source('/home/ecor/Dropbox/R-packages/geotopOptim2/R/geotop.execution.R') 
-
+## Set a seed for the random generation
 set.seed(7988)
-
+## This 'if' loop was introduced if hydroPSO has been worked on a MPI/parallel way 
+## to optimize VSC performances.
+## In these lines 'control' argument for 'lhoat' or 'hydroPSO' ('geotoplhoat' or 'geotopPSO') is set. See documentation: help(lhoat) or help(hydropso)  
 USE_RMPI <- FALSE 
 
 if (USE_RMPI==TRUE) {
@@ -56,22 +52,17 @@ if (USE_RMPI==TRUE) {
 	
 	parallel <- "parallel"
     npart <- 16
-	control <- list(N=5) ###list(maxit=5,npart=npart,parallel=parallel)
+	control <- list(maxit=5,npart=npart,parallel=parallel)
 	
 } else {
 	
 	parallel <- "none"
 	npart <- 4
-	control <- list(N=5,parallel="parallel",REPORT=10) ##list(maxit=5,npart=npart)
+	control <- list(maxit=5,npart=npart)
 	
 }
 
-
-
-
-tz <- "Etc/GMT-1"
-
-wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
+## This 'if' loop was introduced to set the GEOtop binary file which be used in GEOtop 
 
 USE_SE27XX <- FALSE
 
@@ -84,15 +75,31 @@ if (USE_SE27XX==TRUE) {
 	
 	bin  <-  'geotop_dev'
 	
-}  ##bin  <-'/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
+}  
 
-## LOcal path where to write output for PSO
-##runpath <- "/home/ecor/temp/geotopOptim_tests"
+
+## Set time zone: here GMT+1 (solar time in Rome/Berlin/Zurich/Brussel)
+
+tz <- "Etc/GMT-1"
+
+## Set the full path for GEOtop simulation template
+
+wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
+
+
+## Set a temporary path where to run GEOtop simulations
+
 runpath <- Sys.getenv("GEOTOPOTIM2_TEMP_DIR")
 
+## Set/get  parameter calibartion values (upper and lower values and names)
+## Here parameters are read from a CSV ascii files and then imported as a data frame
 
 geotop.soil.param.file <-  system.file('examples-script/param/param_pso_cland002.csv',package="geotopOptim2") ###'/home/ecor/Dropbox/R-packages/geotopOptim/inst/examples_2rd/param/param_pso_test3.csv' 
 geotop.soil.param <- read.table(geotop.soil.param.file,header=TRUE,sep=",",stringsAsFactors=FALSE)
+
+
+## Parametrer value are saved as separate vactors: one for upper values , one for lower values, another for suggested value (only PSO not lhoat)
+## Each vector elements must be named with parameter name in accordance with geotopOptim2 documention (see vignette)
 lower <- geotop.soil.param$lower
 upper <- geotop.soil.param$upper
 x <- geotop.soil.param$suggested
@@ -101,25 +108,26 @@ names(upper) <- geotop.soil.param$name
 if (!is.null(x)) names(x) <- geotop.soil.param$name
 
 
-
-### http://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed
-
-
+### Set Target Observed Variables (here are used the same names of observation file!)
+### Set a scale value for each target values (here these values are proportial to its respenctive uncertainity error!) 
 var <- c('soil_moisture_content_50','soil_moisture_content_200','latent_heat_flux_in_air','sensible_heat_flux_in_air')
 uscale <- c(0.03,0.03,25,25)/0.03
 
 names(var)  <- var
 names(uscale) <- var
 
-lhoat <- geotoplhoat(par=x,run.geotop=TRUE,bin=bin,
+
+### Here 'lhoat' is triggered!
+
+lhoat <- geotoppso(par=x,run.geotop=TRUE,bin=bin,
 		simpath=wpath,runpath=runpath,clean=TRUE,data.frame=TRUE,
 		level=1,intern=TRUE,target=var,gof.mes="RMSE",uscale=uscale,lower=lower,upper=upper,control=control)
 
+### You can save the output in an RDA file!!! (if the following lines are uncommented) 
+#file_lhoat <-  '~/local/geotopOptim2/inst/examples-script/outrda/lhoat_n.rda' 
 
-file_lhoat <-  '~/local/geotopOptim2/inst/examples-script/outrda/lhoat_n.rda' 
 
-
-save(lhoat,file=file_lhoat)
+#save(lhoat,file=file_lhoat)
 
 
 if (USE_RMPI==TRUE) mpi.finalize()
