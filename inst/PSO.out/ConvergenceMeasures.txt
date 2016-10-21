@@ -1,0 +1,3 @@
+Iter Gbest GbestRate[%] IterBestFit normSwarmRadius |gbest-mean(pbest)|/mean(pbest)[%] 
+1   6.4686203E+04  100.000   6.4686203E+04   2.9331258E-01   10.336  
+2   6.4686203E+04    0.000   6.5857510E+04   1.9438143E-01    8.782  

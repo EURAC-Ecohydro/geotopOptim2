@@ -230,16 +230,18 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 	
 	wpath_ <- args[["wpath"]]
 	filelog <- paste(wpath_,"_START_EVALUATION.log",sep="") 
-	print(filelog)
+	##print(filelog)
 	writeLines(wpath_,con=filelog)
 	
 	if (status!=0) {
 		
-		msg <- sprintf("Goodness of fit non-successful (return %s))beceause of GEOtop non-0 exit : %s !",as.character(nosuccess.return),as.character(args[["wpath"]]))
+		wrn <- sprintf("Goodness of fit non-successful (return %s))beceause of GEOtop non-0 exit : %s !",as.character(nosuccess.return),as.character(args[["wpath"]]))
 		filelog <- paste(wpath_,"_UNSUCCESSFUL_EVALUATION.log",sep="") 
-		print(filelog)
+		
+		msg <- sprintf("Finish GOF unsuccessfully :%s at %s",wpath_,Sys.time())
+		message(msg)
 		writeLines(wpath_,con=filelog)
-		warning(msg)
+		warning(wrn)
 		return(nosuccess.return)
 		
 	}
@@ -370,7 +372,11 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 #	
 #	}
 	filelog <- paste(wpath_,"_END_EVALUATION.log",sep="")
-	print(filelog)
+	
+	
+	msg <- sprintf("Finish GOF %s :%s at %s",as.character(out),wpath_,Sys.time())
+	message(msg)
+	
 	writeLines(c("end"),con=filelog)	
 	return(out)
 	

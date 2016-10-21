@@ -149,10 +149,10 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 				runpath <- paste(runpath0,runstring,sep="/")
 				
 				runpath <- tempfile(pattern = "xx", tmpdir = runpath0,fileext = "")
-			#####	print(runpath)
+			
 				if (file.exists(runpath)!=TRUE) {
 					##print(param)
-					print(sprintf("exiting %s at %s",runpath,Sys.time()))
+					##print(sprintf("Create %s at %s",runpath,Sys.time()))
 					break
 				}
 				
@@ -244,8 +244,8 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 			if (any(str_detect(names(param),ScalarPrefix))) {
 				
 				
-			            message('param with SCALAR')
-						message(param)
+			            #message('param with SCALAR')
+						#message(param)
 						##### CHECK Scalar Keywords 
 						
 						## wanrnig: Do not put comments with ! in the same row of the keyword called with SCALAR__...

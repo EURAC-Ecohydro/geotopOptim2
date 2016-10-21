@@ -64,12 +64,13 @@ if (USE_RMPI==TRUE) {
 
 ## This 'if' loop was introduced to set the GEOtop binary file which be used in GEOtop 
 
-USE_SE27XX <- FALSE
+USE_SE27XX <- TRUE
 
 if (USE_SE27XX==TRUE) {
 	
 	##bin <- ' geotop-2.0.0'
 	bin <- 'geotop_se27xx'
+	bin<- '/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0'
 	
 } else {
 	
@@ -94,7 +95,7 @@ runpath <- Sys.getenv("GEOTOPOTIM2_TEMP_DIR")
 ## Set/get  parameter calibartion values (upper and lower values and names)
 ## Here parameters are read from a CSV ascii files and then imported as a data frame
 
-geotop.soil.param.file <-  system.file('examples-script/param/param_pso_cland002.csv',package="geotopOptim2") ###'/home/ecor/Dropbox/R-packages/geotopOptim/inst/examples_2rd/param/param_pso_test3.csv' 
+geotop.soil.param.file <-  system.file('examples_script/param/param_pso_cland002.csv',package="geotopOptim2") ###'/home/ecor/Dropbox/R-packages/geotopOptim/inst/examples_2rd/param/param_pso_test3.csv' 
 geotop.soil.param <- read.table(geotop.soil.param.file,header=TRUE,sep=",",stringsAsFactors=FALSE)
 
 
@@ -119,7 +120,7 @@ names(uscale) <- var
 
 ### Here 'lhoat' is triggered!
 
-lhoat <- geotoppso(par=x,run.geotop=TRUE,bin=bin,
+lhoat <- geotopPSO(par=x,run.geotop=TRUE,bin=bin,
 		simpath=wpath,runpath=runpath,clean=TRUE,data.frame=TRUE,
 		level=1,intern=TRUE,target=var,gof.mes="RMSE",uscale=uscale,lower=lower,upper=upper,control=control)
 
