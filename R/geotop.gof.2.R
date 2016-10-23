@@ -274,10 +274,11 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 	}
 	
 	if (is.null(uscale)) uscale <- NA
-	if (is.na(uscale)) uscale <- 1
-	if (length(uscale)==1) { 
 	
+	if (length(uscale)==1) { 
+		if (is.na(uscale)) uscale <- 1
 		uscale <- array(uscale,length(target))
+		
 	} else if (length(uscale)!=length(target)) { 
 	
 		uscalem  <- paste(uscale,collapse=";")

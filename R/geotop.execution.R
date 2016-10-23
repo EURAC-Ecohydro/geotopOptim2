@@ -134,19 +134,19 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 	if (temporary.runpath==TRUE) {
 		
 		## EC 20150611
-		    runpath <- paste(runpath,simdir,sep="/")
-			runpath0 <- runpath
+		    runpath0 <- paste(runpath,simdir,sep="/")
+			#runpath0 <- runpath
 			
 			 
 			 repeat {
 				 
-				runstring <- c(letters,0:9)
-				runstring <- sample(c(sample(runstring),sample(runstring),sample(runstring),sample(runstring)))
-			    nchar <- 20
-				runstring <- paste(runstring[1:nchar],collapse="")
+				#runstring <- c(letters,0:9)
+				#runstring <- sample(c(sample(runstring),sample(runstring),sample(runstring),sample(runstring)))
+			    #nchar <- 20
+				#runstring <- paste(runstring[1:nchar],collapse="")
 						 
 			
-				runpath <- paste(runpath0,runstring,sep="/")
+				#runpath <- paste(runpath0,runstring,sep="/")
 				
 				runpath <- tempfile(pattern = "xx", tmpdir = runpath0,fileext = "")
 			
@@ -208,6 +208,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 	#print(names_par)
 	##print("rundir:")
 	##print(rundir)
+	##message(as.character(SoilType))
 	if (is.null(SoilType)) SoilType <- NA
 	if (is.na(SoilType)) {
 		
@@ -450,8 +451,11 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 			SoilPrefix <- "SOIL__"
 			if (!all(str_detect(names(param),SoilPrefix))) {
 				
-				warning("Add SOIL__ prefix for the keywords referring to soil proprties!!!")
 				
+				xxxx <- paste(names(param),sep=";")
+				msg <- sprintf("Add SOIL__ prefix for the keywords referring to soil properties: %s !!!",xxxx)
+				
+				warning(msq)
 			}
 			names(param) <- str_replace(names(param),SoilPrefix,"")
 			
