@@ -455,7 +455,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 				xxxx <- paste(names(param),sep=";")
 				msg <- sprintf("Add SOIL__ prefix for the keywords referring to soil properties: %s !!!",xxxx)
 				
-				warning(msq)
+				warning(msg)
 			}
 			names(param) <- str_replace(names(param),SoilPrefix,"")
 			
