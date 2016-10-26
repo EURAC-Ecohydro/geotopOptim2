@@ -6,7 +6,8 @@
 \title{GEOtop calibration through Particle Swam Optimization}
 \usage{
 geotopPSO(par = NULL, fn = geotopGOF, gof.mes = "KGE", final.run = TRUE,
-  upper, lower, ..., hydroPSOfun = c("hydroPSO", "lhoat"))
+  upper, lower, temporary.runpath = TRUE, ..., hydroPSOfun = c("hydroPSO",
+  "lhoat"))
 
 geotoplhoat(...)
 }
@@ -20,6 +21,8 @@ geotoplhoat(...)
 \item{final.run}{logical value. It is \code{TRUE} (default), simulated time series with optimal set of parameteers are added in the list object returned by the function.}
 
 \item{upper, lower}{see  \code{upper} and \code{lowe} in \code{\link{hydroPSO}}}
+
+\item{temporary.runpath}{see \code{\link{geotopExec}}. Default is \code{TRUE}.}
 
 \item{...}{further arguments for \code{\link{hydroPSO}}.}
 

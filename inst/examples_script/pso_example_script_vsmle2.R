@@ -27,6 +27,7 @@ rm(list=ls())
 
 library(zoo)
 library(geotopOptim2)
+source('/home/ecor/Dropbox/R-packages/geotopOptim2/R/geotop.gof.2.R') 
 
 ## Set a seed for the random generation
 set.seed(7988)
@@ -120,9 +121,9 @@ names(uscale) <- var
 
 ### Here 'lhoat' is triggered!
 
-lhoat <- geotopPSO(par=x,run.geotop=TRUE,bin=bin,
+pso <- geotopPSO(par=x,run.geotop=TRUE,bin=bin,
 		simpath=wpath,runpath=runpath,clean=TRUE,data.frame=TRUE,
-		level=1,intern=TRUE,target=var,gof.mes="RMSE",uscale=uscale,lower=lower,upper=upper,control=control)
+		level=1,intern=TRUE,target=var,gof.mes="RMSE",uscale=uscale,lower=lower,upper=upper,control=control,temporary.runpath=TRUE)
 
 ### You can save the output in an RDA file!!! (if the following lines are uncommented) 
 #file_lhoat <-  '~/local/geotopOptim2/inst/examples-script/outrda/lhoat_n.rda' 

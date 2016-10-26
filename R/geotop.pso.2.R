@@ -17,6 +17,7 @@ NULL
 #' @param upper,lower see  \code{upper} and \code{lowe} in \code{\link{hydroPSO}}
 #' @param ... further arguments for \code{\link{hydroPSO}}.
 #' @param hydroPSOfun  used function name of \code{hydroPSO} package: \code{\link{hydroPSO}} or \code{\link{lhoat}}.
+#' @param temporary.runpath see \code{\link{geotopExec}}. Default is \code{TRUE}.
 #' @details The function \code{fn}, in case it is different from the default value \code{\link{geotopGOF}} , must always have the arguments \code{gof.mes} and \code{gof.expected.value.for.optim}.
 #' 
 #' 
@@ -74,7 +75,7 @@ NULL
 #' @seealso \code{\link{hydroPSO}},\code{\link{gof}}\code{\link{lhoat}}
 #'
 
-geotopPSO <- function(par=NULL,fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,lower,...,hydroPSOfun=c("hydroPSO","lhoat")) {
+geotopPSO <- function(par=NULL,fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,lower,temporary.runpath=TRUE,...,hydroPSOfun=c("hydroPSO","lhoat")) {
 
 ###		if (is.charecter(fn)) fn <- get(fn)
 #	   	if (is.null(gof.expected.value.for.optim))	gof.expected.value.for.optim <- NA
@@ -136,7 +137,7 @@ geotopPSO <- function(par=NULL,fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,l
 		NLAYER <- upper["NumberOfSoilLayers"]
 		
 		geotop.model <- list(...)  #### [["geotop.model"]]
-		temporary.runpath <- geotop.model[["temporary.runpath"]]
+		#temporary.runpath <- geotop.model[["temporary.runpath"]]
 		## ec 20160822
 		if (is.null(temporary.runpath)) {
 			
@@ -275,7 +276,7 @@ geotopPSO <- function(par=NULL,fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,l
 		
 		} else if (hydroPSOfun=="lhoat") {
 			
-			print(temporary.runpath)
+			
 			out <- lhoat(fn=fn,gof.mes=gof.mes,output_simulation=FALSE,upper=upper,lower=lower,names_par=names(upper),temporary.runpath=temporary.runpath,...)
 			
 			

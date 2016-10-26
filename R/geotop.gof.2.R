@@ -208,9 +208,22 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 		exit <- attr(out,"output_execution") <- 0
 	}
 	
-	
-	
 	args[["wpath"]] <- out
+	
+	if (is.null(args[["temporary.runpath"]])) {
+		
+		temporary.runpath <- FALSE
+		runpath <- args[["wpath"]]
+		
+	}	else { 
+	
+		temporary.runpath <- args[["temporary.runpath"]]
+		runpath <- args[["wpath"]]
+				
+	}
+		
+	
+	
 	
 	exit <- attr(args[["wpath"]],"output_execution") 
 	
@@ -379,7 +392,24 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 	message(msg)
 	
 	writeLines(c("end"),con=filelog)	
+	###print(temporary.runpath)
+	if   (temporary.runpath==TRUE) {
+		
+		#print(runpath)
+		#print(wpath_)
+		msg <- sprintf("Deleting %s",wpath_)
+		message(msg)
+		commanddel <- (paste("rm -Rf",wpath_,sep=" "))
+		message(commanddel)
+		system(commanddel)
+		##unlink(wpath_,recursive=TRUE,force=TRUE)
+		
+	}
+	
+	
 	return(out)
+	
+	
 	
 	
 	}

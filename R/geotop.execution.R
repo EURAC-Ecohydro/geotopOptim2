@@ -891,10 +891,10 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 				},time.aggregate=time.aggregate)
 	
 		
-		
+#	## ec 20161026	
 		if (temporary.runpath==TRUE) {
 			
-			unlink(runpath,recursive=TRUE)
+			unlink(runpath,recursive=TRUE,force=TRUE)
 			
 			
 		}
@@ -914,7 +914,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 		
 	}
 	
-	
+
 	
 	
 	attr(out,"output_execution") <- cc
