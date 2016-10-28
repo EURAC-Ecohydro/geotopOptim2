@@ -397,11 +397,21 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 		
 		#print(runpath)
 		#print(wpath_)
+		
 		msg <- sprintf("Deleting %s",wpath_)
 		message(msg)
-		commanddel <- (paste("rm -Rf",wpath_,sep=" "))
-		message(commanddel)
-		system(commanddel)
+		wpath__ <- str_split(wpath_,"/")[[1]]
+		wpath___ <- paste(wpath__[-length(wpath__)],collapse="/")
+		
+		ccc <- list.files(wpath___,recursive=TRUE,full.name=TRUE)
+		file.remove(ccc)
+		
+		unlink(wpath___,recursive=TRUE)
+		
+		##unlink(paste(wpath_,"/..",sep=""),recursive=TRUE)
+		#commanddel <- (paste("rm -Rf",wpath_,sep=" "))
+		#message(commanddel)
+		#system(commanddel)
 		##unlink(wpath_,recursive=TRUE,force=TRUE)
 		
 	}
