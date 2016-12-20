@@ -15,7 +15,7 @@ From R console:
 >install_github("ecor/geotopbricks")
 >install.packages("hydroGOF")
 >install.packages("hydroPSO")
->install_github("ecor/geotopOptim2")
+>install_github("EURAC-Ecohydro/geotopOptim2")
 ```
 
 ## Package Documentetion: Vignette
