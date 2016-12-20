@@ -8,6 +8,7 @@ library(geotopAnalytics)
 library(dygraphs)
 
 
+
 wpath <-  '/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1' 
 alldata <- GEOtop_ReadValidationData(wpath = wpath, save_rData = T)
 

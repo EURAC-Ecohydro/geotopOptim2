@@ -1,7 +1,7 @@
 ---
-title: "Verification of a GEOtop point simulation in B2 LTER Site - Match - South Tyrol - Italy"
-author: "Johannes Brenner, Emanuele Cordano"
-date: "June 2016"
+title: "Verification of a generic GEOtop point simulation"
+author: "Johannes Brenner, Emanuele Cordano, Samuel Senoner"
+date: "November 2016"
 output: html_document
 runtime: shiny
 ---
@@ -76,17 +76,21 @@ fun_names <- c("min","mean","max","sum")
 inputPanel(
 #  ##textInput(inputId = "simFolder", label = "Simulation folder", value = ""),
   
+		
+		
+  
+		
   selectInput(inputId = "variable", label = "discover variable", choices = obsnames,selected=obsnames[8]),
   
 #  #####selectInput(inputId = "add_variable", label = "additional variable (sim)", choices = simnames, selected = simnames[2]),
   
   radioButtons(inputId = "aggregation", label = "aggregation", choices = c("hourly","daily","monthly"), selected = "hourly", inline = FALSE),
   
-  selectInput(inputId = "aggregation_function_var", label = "Aggregation Function", choices = fun_names, selected = "mean")
+  selectInput(inputId = "aggregation_function_var", label = "Aggregation Function", choices = fun_names, selected = "mean"),
   
 #  selectInput(inputId = "aggregation_function_add_var", label = "Aggregation Function (add_var)", choices = fun_names, selected = "sum")
   
-  
+  textInput(inputId="wpath", label = h3("GEOtop working directory:"),value = wpath)
   
   
 #  radioButtons(inputId = "flux_amount", label = "flux or amount", choices = c("flux","amount"), selected = "flux", inline = FALSE)
@@ -108,7 +112,14 @@ Dynamic plots of observed vs simulated time series.
 
 renderDygraph({
   
-  
+	wpath <-  input$wpath
+			
+    alldata <- geotopLookUpTable(wpath = wpath)
+			
+	obsnames <- attr(alldata,"observation_var")
+	simnames <- attr(alldata,"simulation_var")
+			
+	##fun_names <- c("min","mean","max","sum")
   ## TO GO ON .....
   
   	iiv <- input$variable
@@ -149,6 +160,13 @@ Measures for GOF are given for seasons and for the whole data series. Calculatio
 
 renderDataTable({
 
+			
+ wpath <- input$wpath
+			
+ alldata <- geotopLookUpTable(wpath = wpath)
+			
+#			obsnames <- attr(alldata,"observation_var")
+#			simnames <- attr(alldata,"simulation_var")
 #renderText({
 # if (input$aggregation=="hour" | input$aggregation=="day")
 #  {
@@ -224,6 +242,11 @@ renderDataTable({
 
 renderPlot({
   
+	wpath <-  '/home/ecor/Dropbox/activity/2016/geotop_simulation/Latsch1_Calib_001' 
+			
+	alldata <- geotopLookUpTable(wpath = wpath)		
+			
+			
 	iiv <- input$variable
     aiiv <- input$add_variable
   	nnn <- c("simulation","observation")

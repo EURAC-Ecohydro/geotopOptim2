@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Interactive Inputs</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<hr/>
+
+<p>This R Markdown document is made interactive using Shiny. To learn more, see <a href="http://rmarkdown.rstudio.com/authoring_shiny.html">Interactive Documents</a>.</p>
+
+<hr/>
+
+<pre><code class="r, include=FALSE">
+library(geotopbricks)
+library(geotopOptim2)
+
+#if(!require(&quot;geotopbricks&quot;))
+#{
+#  if(!require(&quot;devtools&quot;))
+#  {
+#    install.packages(devtools)
+#    require(&quot;devtools&quot;)
+#  }
+#  install_github(&quot;ecor/geotopbricks&quot;)
+#  require(&quot;geotopbricks&quot;)
+#}
+#
+#
+#if(!require(&quot;geotopOptim2&quot;))
+#{
+#  if(!require(&quot;devtools&quot;))
+#  {
+#    install.packages(devtools)
+#    require(&quot;devtools&quot;)
+#  }
+#  install_github(&quot;ecor/geotopOptim2&quot;)
+#  require(&quot;geotopOptim2&quot;)
+#}
+
+if(!require(&quot;dygraphs&quot;))
+{
+  install.packages(dygraphs)
+  require(&quot;dygraphs&quot;)
+}
+
+if(!require(&quot;hydroGOF&quot;))
+{
+  install.packages(hydroGOF)
+  require(&quot;hydroGOF&quot;)
+}
+
+if(!require(&quot;ggplot2&quot;))
+{
+  install.packages(ggplot2)
+  require(&quot;ggplot2&quot;)
+}
+
+
+#wpath &lt;-  &#39;/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1&#39; 
+wpath &lt;-  &#39;/home/ecor/Dropbox/activity/2016/geotop_simulation/Latsch1_Calib_001&#39; 
+
+alldata &lt;- geotopLookUpTable(wpath = wpath)
+
+obsnames &lt;- attr(alldata,&quot;observation_var&quot;)
+simnames &lt;- attr(alldata,&quot;simulation_var&quot;)
+
+fun_names &lt;- c(&quot;min&quot;,&quot;mean&quot;,&quot;max&quot;,&quot;sum&quot;)
+</code></pre>
+
+<h4>Interactive Inputs</h4>
+
+<pre><code class="r, echo=FALSE">inputPanel(
+#  ##textInput(inputId = &quot;simFolder&quot;, label = &quot;Simulation folder&quot;, value = &quot;&quot;),
+
+
+
+  fluidRow(textInput(inputId=&quot;wpath&quot;, label = h3(&quot;GEOtop working directory:&quot;),value = wpath)),  
+
+  fluidRow(selectInput(inputId = &quot;variable&quot;, label = &quot;discover variable&quot;, choices = obsnames,selected=obsnames[8]),
+
+#  #####selectInput(inputId = &quot;add_variable&quot;, label = &quot;additional variable (sim)&quot;, choices = simnames, selected = simnames[2]),
+
+  radioButtons(inputId = &quot;aggregation&quot;, label = &quot;aggregation&quot;, choices = c(&quot;hourly&quot;,&quot;daily&quot;,&quot;monthly&quot;), selected = &quot;hourly&quot;, inline = FALSE),
+
+  selectInput(inputId = &quot;aggregation_function_var&quot;, label = &quot;Aggregation Function&quot;, choices = fun_names, selected = &quot;mean&quot;)
+  )
+#  selectInput(inputId = &quot;aggregation_function_add_var&quot;, label = &quot;Aggregation Function (add_var)&quot;, choices = fun_names, selected = &quot;sum&quot;)
+
+
+
+
+#  radioButtons(inputId = &quot;flux_amount&quot;, label = &quot;flux or amount&quot;, choices = c(&quot;flux&quot;,&quot;amount&quot;), selected = &quot;flux&quot;, inline = FALSE)
+
+#  # radioButtons(inputId = &quot;cum&quot;, label = &quot;cumulated or time series&quot;, choices = c(&quot;time series&quot;,&quot;cumulated over time&quot;), selected = &quot;time series&quot;, inline = FALSE)
+
+)
+
+</code></pre>
+
+<hr/>
+
+<h4>Time Series Plot</h4>
+
+<p>Dynamic plots of observed vs simulated time series. </p>
+
+<pre><code class="r, echo=FALSE">
+
+renderDygraph({
+
+    wpath &lt;-  input$wpath
+
+    alldata &lt;- geotopLookUpTable(wpath = wpath)
+
+    obsnames &lt;- attr(alldata,&quot;observation_var&quot;)
+    simnames &lt;- attr(alldata,&quot;simulation_var&quot;)
+
+    ##fun_names &lt;- c(&quot;min&quot;,&quot;mean&quot;,&quot;max&quot;,&quot;sum&quot;)
+  ## TO GO ON .....
+
+    iiv &lt;- input$variable
+
+    aggregation &lt;- input$aggregation
+    aggr_fun_1 &lt;- input$aggregation_function_var
+    aggr_fun_2 &lt;-  input$aggregation_function_add_var
+
+    data &lt;- aggregateVar(x=alldata,InputVar=iiv,aggregate=aggregation,aggregate_fun=c(aggr_fun_1)) 
+
+    unit &lt;- attr(alldata,&quot;var_unit&quot;)[iiv]
+    ###add_unit &lt;- attr(alldata,&quot;var_unit&quot;)[aiiv]
+    ## 
+
+   dygraph(data, ylab=paste(iiv,&quot;[&quot;,unit,&quot;]&quot;,sep=&quot;&quot;)) %&gt;%
+        dyRangeSelector() %&gt;%
+        dyRoller() 
+#       %&gt;%
+#       dySeries(name = &quot;additional.var&quot;, axis = &quot;y2&quot;, stepPlot = TRUE, fillGraph = TRUE, label = paste(aiiv,&quot;[&quot;,add_unit,&quot;]&quot;,sep=&quot;&quot;)) %&gt;%
+#       dyAxis(name=&quot;y2&quot;,label=paste(&quot;[&quot;,add_unit,&quot;]&quot;,sep=&quot;&quot;))
+
+
+
+
+#  }
+
+})
+
+</code></pre>
+
+<hr/>
+
+<p>####Summary Table on Goodness of Fit (GOF)</p>
+
+<p>Measures for GOF are given for seasons and for the whole data series. Calculations were performed with the hydroGOF R-Package. Type ?gof in the R console for information on specific GOFs.</p>
+
+<pre><code class="r, echo=FALSE">
+renderDataTable({
+
+
+ wpath &lt;- input$wpath
+
+ alldata &lt;- geotopLookUpTable(wpath = wpath)
+
+#           obsnames &lt;- attr(alldata,&quot;observation_var&quot;)
+#           simnames &lt;- attr(alldata,&quot;simulation_var&quot;)
+#renderText({
+# if (input$aggregation==&quot;hour&quot; | input$aggregation==&quot;day&quot;)
+#  {
+#    observation &lt;- obs[[input$aggregation]][,input$variable]
+#  } else {
+#   observation &lt;- obs[[&quot;day&quot;]][,input$variable]
+#  }
+#  
+#  simulation &lt;- varout[[input$variable]]
+#  
+#   if (input$aggregation==&quot;day&quot; &amp; input$flux_amount==&quot;flux&quot;) simulation &lt;- aggregate(simulation, as.Date(time(simulation)), mean, na.rm=T) 
+#   if (input$aggregation==&quot;day&quot; &amp; input$flux_amount==&quot;amount&quot;) simulation &lt;- aggregate(simulation, as.Date(time(simulation)), sum, na.rm=F)
+#   if (input$aggregation==&quot;month&quot; &amp; input$flux_amount==&quot;flux&quot;) 
+#  {
+#    simulation &lt;- aggregate(simulation, as.yearmon(time(simulation)), mean, na.rm=T)
+#    observation &lt;- aggregate(observation, as.yearmon(time(observation)), mean, na.rm=T)
+#  } 
+#  if (input$aggregation==&quot;month&quot; &amp; input$flux_amount==&quot;amount&quot;) 
+#  {
+#    simulation &lt;- aggregate(simulation, as.yearmon(time(simulation)), sum, na.rm=F)
+#    observation &lt;- aggregate(observation, as.yearmon(time(observation)), sum, na.rm=F)
+#  } 
+
+#  time(observation) &lt;- as.POSIXct(time(observation))
+#  time(simulation) &lt;- as.POSIXct(time(simulation))
+
+#  data &lt;- merge(observation, simulation)
+
+ iiv &lt;- input$variable
+
+    nnn &lt;- c(&quot;simulation&quot;,&quot;observation&quot;)
+
+    aggregation &lt;- input$aggregation
+    aggr_fun_1 &lt;- input$aggregation_function_var
+    ####aggr_fun_2 &lt;-  input$aggregation_function_add_var
+
+
+#    ######data &lt;- extractGeotopVar(x=alldata,InputVar=iiv,Add_InputVar=aiiv,aggregate=aggregation,aggregate_fun=c(aggr_fun_1,aggr_fun_2)) 
+    data &lt;- aggregateVar(x=alldata,InputVar=iiv,aggregate=aggregation,aggregate_fun=c(aggr_fun_1))
+    data &lt;- data[,nnn]
+
+
+
+
+
+  gofs &lt;- gofg(sim = data$simulation, obs=data$observation, na.rm = TRUE)
+  gofs &lt;- as.data.frame(gofs)
+  names(gofs) &lt;- &quot;YEAR&quot;
+  gofs$GOF &lt;- dimnames(gofs)[[1]]
+
+  mon &lt;- as.numeric(as.character(index(data),format=&quot;%m&quot;)) ####as.numeric(format(time(data), &quot;%m&quot;))
+
+  datadjf &lt;-  data[mon==12 | mon==1 | mon==2,]
+  gofs$DJF &lt;-  c(gofg(sim = datadjf$simulation, obs=datadjf$observation, na.rm = TRUE))
+  datamam &lt;-  data[mon==3 | mon==4 | mon==5,]
+  gofs$MAM &lt;-  c(gofg(sim = datamam$simulation, obs=datamam$observation, na.rm = TRUE))
+  datajja &lt;-  data[mon==6 | mon==7 | mon==8,]
+  gofs$JJA &lt;-  c(gofg(sim = datajja$simulation, obs=datajja$observation, na.rm = TRUE))
+  datason &lt;-  data[mon==9 | mon==10 | mon==11,]
+  gofs$SON &lt;-  c(gofg(sim = datason$simulation, obs=datason$observation, na.rm = TRUE))
+
+  gofs &lt;- gofs[,c(2,3,4,5,6,1)]
+
+}, options = list(pageLength=5, lengthMenu=c(5, 10, 15, 20)))
+
+</code></pre>
+
+<hr/>
+
+<p>####Scatterplot</p>
+
+<pre><code class="r, echo=FALSE">
+renderPlot({
+
+    wpath &lt;-  &#39;/home/ecor/Dropbox/activity/2016/geotop_simulation/Latsch1_Calib_001&#39; 
+
+    alldata &lt;- geotopLookUpTable(wpath = wpath)     
+
+
+    iiv &lt;- input$variable
+    aiiv &lt;- input$add_variable
+    nnn &lt;- c(&quot;simulation&quot;,&quot;observation&quot;)
+
+    aggregation &lt;- input$aggregation
+    aggr_fun_1 &lt;- input$aggregation_function_var
+
+    data &lt;- aggregateVar(x=alldata,InputVar=iiv,aggregate=aggregation,aggregate_fun=c(aggr_fun_1))[,nnn]
+    data &lt;- data[,nnn]
+
+    if (all(is.na(data$observation))==TRUE) {
+
+                data$observation &lt;- -9999
+    }
+    if (all(is.na(data$simulation))==TRUE) {
+
+                data$simulation &lt;- -9999
+    }
+
+
+    ##data &lt;- merge(observation, simulation)
+    ##names(data) &lt;- c(&quot;observation&quot;, &quot;simulation&quot;)
+
+
+    data &lt;- as.data.frame(data)
+
+    ggplot(data = data, aes(x=observation, y=simulation)) +
+      geom_point() +
+      geom_abline(intercept=0, slope=1, col=rgb(1,0,0,.5), lwd=2)
+
+})     
+</code></pre>
+
+</body>
+
+</html>
