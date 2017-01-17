@@ -14,7 +14,7 @@ From R console:
 
 >install_github("ecor/geotopbricks")
 >install.packages("hydroGOF")
->install.packages("hydroPSO")
+>install_git("https://gitlab.inf.unibz.it/Samuel.Senoner/hydroPSO")
 >install_github("EURAC-Ecohydro/geotopOptim2")
 ```
 
