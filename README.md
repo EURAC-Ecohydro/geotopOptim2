@@ -18,6 +18,10 @@ From R console:
 >install_github("EURAC-Ecohydro/geotopOptim2")
 ```
 
+## You need before to intall also MPI under R
+
+
+
 ## Package Documentetion: Vignette
 
 LOREMM IPSUM
