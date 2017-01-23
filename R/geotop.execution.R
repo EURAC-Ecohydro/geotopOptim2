@@ -152,7 +152,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 			
 				if (file.exists(runpath)!=TRUE) {
 					##print(param)
-					##print(sprintf("Create %s at %s",runpath,Sys.time()))
+					#print(sprintf("Create %s at %s",runpath,Sys.time()))
 					break
 				}
 				
@@ -209,6 +209,8 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 	##print("rundir:")
 	##print(rundir)
 	##message(as.character(SoilType))
+	message(sprintf("RUNDIR: %s",rundir))
+	
 	if (is.null(SoilType)) SoilType <- NA
 	if (is.na(SoilType)) {
 		
