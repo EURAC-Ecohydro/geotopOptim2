@@ -798,123 +798,123 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 	
 	
 	
-	
-	
-	if (length(getKeywords)>0) {
-		
-		
-		getKeywords00 <- getKeywords
-		###  Set Particlar Keywords: 
-		
-		### SET AVAILABLE WATER CONTENT (AGRO-METEOROLOGY) 
-		use_AvailableSWC_keyword <- "AvailableSoilWaterContent"
-		if (c(use_AvailableSWC_keyword) %in% getKeywords) {
-			
-			
-			
-			getKeywords <- unique(c(getKeywords,"SoilLiqContentProfileFile"))
-			getKeywords <- getKeywords[!(getKeywords %in% c(use_AvailableSWC_keyword))]
-			use_AvailableSWC = TRUE
-			
-			
-		} else {
-			
-			use_AvailableSWC = FALSE
-		}
-			
-			
-			
-			
-			
-	    ### END Set Particular Keywords
-		
-		
-		
-		
-		
-	
-		out <- lapply(X=getKeywords,FUN=get.geotop.inpts.keyword.value,wpath=rundir,inpts.file=inpts.file,data.frame=data.frame,date_field=date_field,formatter=formatter,level=level,...)
-		names(out) <- getKeywords
-		
-		if (use_AvailableSWC==TRUE) {
-			
-			## Reread the soil parameters file
-	
-			
-			out[[use_AvailableSWC_keyword]] <- NULL 
-			
-			param.soil.df.filename <- get.geotop.inpts.keyword.value("SoilParFile",wpath=rundir,inpts.file=inpts.file,add_wpath=TRUE)
-			param.soil.df.filename <- paste(param.soil.df.filename,formatter,".txt",sep="")
-#			layer <- 1 
-			param.soil.df.filename <- sprintf(param.soil.df.filename,SoilType)
-			param.soil.df <- read.table(param.soil.df.filename,header=TRUE,sep=",")
-			## wilting point label
-			
-			WiltingPoint <- get.geotop.inpts.keyword.value(paste(paramPrefix,"WiltingPoint",sep=""),wpath=rundir,inpts.file=inpts.file)
-			
-		
-			out[[use_AvailableSWC_keyword]] <- out[["SoilLiqContentProfileFile"]]
-			
-			zcol <- which(str_detect(names(out[[use_AvailableSWC_keyword]]),"X"))
-			
-			for (iz in 1:length(zcol)) {
-				##message(param.soil.df[iz,WiltingPoint])
-				awc <- as.vector(out[["SoilLiqContentProfileFile"]][,zcol[iz]]-param.soil.df[iz,WiltingPoint])
-				awc[awc<0.0] <- 0.0
-				out[[use_AvailableSWC_keyword]][,zcol[iz]] <- awc
-			    
-#				if (out[[use_AvailableSWC_keyword]][,zcol[iz]]==out[["SoilLiqContentProfileFile"]][,zcol[iz]]) {
+#	
+#	
+#	if (length(getKeywords)>0) {
+#		
+#		
+#		getKeywords00 <- getKeywords
+#		###  Set Particlar Keywords: 
+#		
+#		### SET AVAILABLE WATER CONTENT (AGRO-METEOROLOGY) 
+#		use_AvailableSWC_keyword <- "AvailableSoilWaterContent"
+#		if (c(use_AvailableSWC_keyword) %in% getKeywords) {
+#			
+#			
+#			
+#			getKeywords <- unique(c(getKeywords,"SoilLiqContentProfileFile"))
+#			getKeywords <- getKeywords[!(getKeywords %in% c(use_AvailableSWC_keyword))]
+#			use_AvailableSWC = TRUE
+#			
+#			
+#		} else {
+#			
+#			use_AvailableSWC = FALSE
+#		}
+#			
+#			
+#			
+#			
+#			
+#	    ### END Set Particular Keywords
+#		
+#		
+#		
+#		
+#		
+#	
+#		out <- lapply(X=getKeywords,FUN=get.geotop.inpts.keyword.value,wpath=rundir,inpts.file=inpts.file,data.frame=data.frame,date_field=date_field,formatter=formatter,level=level,...)
+#		names(out) <- getKeywords
+#		
+#		if (use_AvailableSWC==TRUE) {
+#			
+#			## Reread the soil parameters file
+#	
+#			
+#			out[[use_AvailableSWC_keyword]] <- NULL 
+#			
+#			param.soil.df.filename <- get.geotop.inpts.keyword.value("SoilParFile",wpath=rundir,inpts.file=inpts.file,add_wpath=TRUE)
+#			param.soil.df.filename <- paste(param.soil.df.filename,formatter,".txt",sep="")
+##			layer <- 1 
+#			param.soil.df.filename <- sprintf(param.soil.df.filename,SoilType)
+#			param.soil.df <- read.table(param.soil.df.filename,header=TRUE,sep=",")
+#			## wilting point label
+#			
+#			WiltingPoint <- get.geotop.inpts.keyword.value(paste(paramPrefix,"WiltingPoint",sep=""),wpath=rundir,inpts.file=inpts.file)
+#			
+#		
+#			out[[use_AvailableSWC_keyword]] <- out[["SoilLiqContentProfileFile"]]
+#			
+#			zcol <- which(str_detect(names(out[[use_AvailableSWC_keyword]]),"X"))
+#			
+#			for (iz in 1:length(zcol)) {
+#				##message(param.soil.df[iz,WiltingPoint])
+#				awc <- as.vector(out[["SoilLiqContentProfileFile"]][,zcol[iz]]-param.soil.df[iz,WiltingPoint])
+#				awc[awc<0.0] <- 0.0
+#				out[[use_AvailableSWC_keyword]][,zcol[iz]] <- awc
+#			    
+##				if (out[[use_AvailableSWC_keyword]][,zcol[iz]]==out[["SoilLiqContentProfileFile"]][,zcol[iz]]) {
+##					
+##					stop(iz)
+##				}
+#			}
+#			
+#			
+#			
+#			#str(param.soil.df) 
+#			
+#			
+#		}
+#		
+#### TEMPORAL AGGREGATION 
+#		
+#	if (!is.null(time.aggregate)) {
+#		
+#		out <- lapply(X=out,FUN=function(x,time.aggregate) {
 #					
-#					stop(iz)
-#				}
-			}
-			
-			
-			
-			#str(param.soil.df) 
-			
-			
-		}
-		
-### TEMPORAL AGGREGATION 
-		
-	if (!is.null(time.aggregate)) {
-		
-		out <- lapply(X=out,FUN=function(x,time.aggregate) {
-					
-					if ((class(time.aggregate[["by"]])=="character") & (length(time.aggregate[["by"]])==1))   {
-						time.aggregate[["by"]] <- as.character(index(x),format=time.aggregate[["by"]])
-					}
-					time.aggregate[["x"]]		<- x 
-					out <- do.call(what="aggregate",args=time.aggregate)
-					
-				},time.aggregate=time.aggregate)
+#					if ((class(time.aggregate[["by"]])=="character") & (length(time.aggregate[["by"]])==1))   {
+#						time.aggregate[["by"]] <- as.character(index(x),format=time.aggregate[["by"]])
+#					}
+#					time.aggregate[["x"]]		<- x 
+#					out <- do.call(what="aggregate",args=time.aggregate)
+#					
+#				},time.aggregate=time.aggregate)
+#	
+#		
+##	## ec 20161026	
+#		if (temporary.runpath==TRUE) {
+#			
+#			unlink(runpath,recursive=TRUE,force=TRUE)
+#			
+#			
+#		}
+#		
+#		
+#		
+#		
+#	}
+#
+#
+#
+#		
+#		
+#	} else {
+#		
+#		out <- rundir
+#		
+#	}
 	
-		
-#	## ec 20161026	
-		if (temporary.runpath==TRUE) {
-			
-			unlink(runpath,recursive=TRUE,force=TRUE)
-			
-			
-		}
-		
-		
-		
-		
-	}
-
-
-
-		
-		
-	} else {
-		
-		out <- rundir
-		
-	}
-	
-
+	out <- rundir
 	
 	
 	attr(out,"output_execution") <- cc
