@@ -19,7 +19,8 @@ From R console:
 ```
 
 ## You need before to intall also MPI under R
-
+install.packages("Rmpi") #or from outside R if the system needs it
+install.packages("snow")
 
 
 ## Package Documentetion: Vignette
