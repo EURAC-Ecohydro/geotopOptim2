@@ -20,9 +20,10 @@ From R console:
 
 ### You might need before to intall also MPI under R and the R package snow
 
-
+```
 >install.packages("Rmpi") 
 >install.packages("snow")
+```
 
 ## Package Documentetion: Vignette
 
