@@ -484,7 +484,10 @@ if (USE_RMPI==TRUE) mpi.finalize()
 Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
 
 
+## Examples: 
 
+Examples of scripts to launch optimization in background on a cluster for the EURAC Monalisa dataset could be found here:
+<https://github.com/EURAC-Ecohydro/MonaLisa/tree/master/Rscript>
 
 
 ## References: 
