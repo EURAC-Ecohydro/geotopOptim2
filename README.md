@@ -25,6 +25,6 @@ From R console:
 >install.packages("snow")
 ```
 
-## [Package Documentetion: Vignette](https://github.com/EURAC-Ecohydro/geotopOptim2/blob/master/geotopOptim2/vignettes/Calibration.Rmd)
+## [Package Documentetion: Vignette](https://github.com/EURAC-Ecohydro/geotopOptim2/blob/master/vignettes/Calibration.Rmd)
 
 
