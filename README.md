@@ -25,6 +25,6 @@ From R console:
 >install.packages("snow")
 ```
 
-## Package Documentetion: Vignette
+## [Package Documentetion: Vignette](geotopOptim2/vignettes/Calibration.Rmd)
 
-<geotopOptim2/vignettes/Calibration.Rmd>
+
