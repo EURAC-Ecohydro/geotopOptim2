@@ -15,17 +15,21 @@ vignette: >
 The 'geotopOptim2' package has been  built to perform a PSO Calibration through [hydroPSO](https://cran.r-project.org/package=hydroPSO)  package of the the results of the physically-based hydrological model GEOtop. 
 The package makes use of the GEOtop-R plugin  [geotopbricks](https://cran.r-project.org/package=geotopbricks), which import/export GEOtop Data into R. 
 
+You need to have the following softwares installed: **R**, **git** and **GEOtop**
+
 ## GEOtop Hydrological Model
 
 
-GEOtop (Endrizzi et al, 2014 and references therein) is a distributed model of the mass and energy balance of the hydrological cycle. GEOtop is applicable to simulations in continuum in small or relatively large montain catchments. GEOtop deals with the effects of topography on the interaction between energy balance and hydrological cycle (water, glacier and snow) with peculiar solutions. The source code of GEOtop 2.0 with detailed documentation is available for researchers and environmental/software engineers through the following links:
+[GEOtop](http://geotopmodel.github.io/geotop/) (Endrizzi et al, 2014 and references therein) is a distributed model of the mass and energy balance of the hydrological cycle. GEOtop is applicable to simulations in continuum in small or relatively large montain catchments. GEOtop deals with the effects of topography on the interaction between energy balance and hydrological cycle (water, glacier and snow) with peculiar solutions. The source code of GEOtop 2.0 with detailed documentation is available for researchers and environmental/software engineers through the following links:
 
 
-* https://github.com/se27xx/GEOtop/
 * https://github.com/geotopmodel/geotop
+* https://github.com/se27xx/GEOtop/
 
+So far, goeotpOpintm2 has been usend only with the se27xx version under linux.
 
-For  Unix-like OS users, a C source code can be rapidly downloaded and built with the following instrunctions (https://github.com/se27xx/GEOtop/):
+For  Unix-like OS users, a C source code can be rapidly downloaded and built with the following instrunctions
+(https://github.com/se27xx/GEOtop/):
 
 
 1. Open a console and go to the drectory where to clone GEOtop source code;
@@ -37,7 +41,8 @@ For  Unix-like OS users, a C source code can be rapidly downloaded and built wit
 GEOtop executable will be created in the subdirectory "bin". 
 For other versions of GEOtop, please see the related URLs. 
 
-For the version supported by a larger community, please read detailed information  on [GEOtop](www.geotop.org) site. 
+It is ongoing the testing for the [GEOtop2.1](https://github.com/geotopmodel/geotop) version supported by a larger community.
+Please read detailed information  on  the [installation](https://github.com/geotopmodel/geotop/blob/master/doc/Install.rst).
 
 
 
