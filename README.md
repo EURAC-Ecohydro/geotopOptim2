@@ -1,7 +1,11 @@
 # geotopOptim2
 ============
 
-The R package geotopOtim2 is a plugin for the automatic calibration and sensitivity analisis of GEOtop 2.x hydrological model via the  R package hydroPSO, which has been modified in order to support MPI
+The R package geotopOtim2 is a plugin for the automatic calibration and sensitivity analisis of GEOtop 2.x hydrological model, based on the "Particle Swarm Optimisation" approach and the LHOAT "Latin-Hypercube One-factor-At-a-Time approach.
+
+The package is a wrapper for GEOtop of the  R package:
+
+[hydroPSO](https://cran.r-project.org/web/packages/hydroPSO/index.html) "Enhanced Particle Swarm Optimisation algorithm", wich has been updated to support MPI <https://gitlab.inf.unibz.it/Samuel.Senoner/hydroPSO>
 
 To install this package on R fram R console:
 
