@@ -60,7 +60,9 @@ if(!require("ggplot2"))
 
 
 #wpath <-  '/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1' 
-wpath <-  '/home/ecor/Dropbox/activity/2016/geotop_simulation/Latsch1_Calib_001' 
+#wpath <-  '/home/ecor/Dropbox/activity/2016/geotop_simulation/Latsch1_Calib_001'
+
+wpath <- "C:/Users/GBertoldi/Documents/Simulations_local/geotopOptim2_tests/DOMEF_1500_Optim_001_PSO" 
 
 alldata <- geotopLookUpTable(wpath = wpath)
 
