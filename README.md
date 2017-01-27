@@ -18,14 +18,11 @@ From R console:
 >install_github("EURAC-Ecohydro/geotopOptim2")
 ```
 
-### You might need before to intall also MPI under R
-...
+### You might need before to intall also MPI under R and the R package snow
+
+
 >install.packages("Rmpi") 
-...
-### If you run R in background you might alos to install:
-...
 >install.packages("snow")
-...
 
 ## Package Documentetion: Vignette
 
