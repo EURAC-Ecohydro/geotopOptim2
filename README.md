@@ -1,7 +1,7 @@
 # geotopOptim2
 ============
 
-Development of CRAN R package geotopOtim2: A plugin for a calibration of GEOtop hydrological model via R package hydroPSO 
+The R package geotopOtim2 is a plugin for the automatic calibration and sensitivity analisis of GEOtop 2.x hydrological model via the  R package hydroPSO, which has been modified in order to support MPI
 
 To install this package on R fram R console:
 
@@ -18,8 +18,10 @@ From R console:
 >install_github("EURAC-Ecohydro/geotopOptim2")
 ```
 
-## You need before to intall also MPI under R
-install.packages("Rmpi") #or from outside R if the system needs it
+## You might need before to intall also MPI under R
+install.packages("Rmpi") 
+
+## If you run R in background you might alos to install:
 install.packages("snow")
 
 
