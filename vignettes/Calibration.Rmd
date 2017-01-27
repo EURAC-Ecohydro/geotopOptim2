@@ -486,8 +486,15 @@ Note the various macros within the `vignette` section of the metadata block abov
 
 ## Examples: 
 
+Examples of simulations to optimize could be found here <https://github.com/EURAC-Ecohydro/geotopOptim2/tree/master/inst/examples_script>
+
 Examples of scripts to launch optimization in background on a cluster for the EURAC Monalisa dataset could be found here:
 <https://github.com/EURAC-Ecohydro/MonaLisa/tree/master/Rscript>
+
+
+## Visulatization tools: 
+R-based graphical visualization tool of the optimized simulations could be found here:
+<https://github.com/EURAC-Ecohydro/geotopOptim2/tree/master/inst/examples_animation>
 
 
 ## References: 
