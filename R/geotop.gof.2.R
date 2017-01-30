@@ -276,8 +276,8 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 	} else if (all(target %in% nvar)==FALSE) {
 		
 		cnt <- which(!(target %in% nvar))
-		tmasg <- paste(target[cnt],collapse=" ")
-		msg <- sprintf("The target vars %s are not included in the lookup table or observation is nissing and than removed!!")
+		tamsg <- paste(target[cnt],collapse=" ")
+		msg <- sprintf("The target vars %s are not included in the lookup table or observation is nissing and than removed!!",tamsg)
 		
 		warning(msg)
 		
