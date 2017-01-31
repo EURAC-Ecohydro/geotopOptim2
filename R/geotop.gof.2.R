@@ -280,7 +280,7 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 		msg <- sprintf("The target vars %s are not included in the lookup table or observation is nissing and than removed!!",tamsg)
 		
 		warning(msg)
-		
+		if (length(uscale)==length(target)) uscale <- uscale[-cnt]
 		target <- target[-cnt]
 		
 		
