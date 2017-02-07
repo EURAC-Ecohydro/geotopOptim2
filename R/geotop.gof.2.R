@@ -200,8 +200,8 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 	
 		out <- try(do.call(what=geotopExec,args=args[names(args) %in% geotop_exec_names]),silent=TRUE)
 		
-	print("exit exec")
-	print(out)
+	###print("exit exec") COMMENTED BY EC ON 20170207
+	####print(out)
 	}  else {
 		
 		out <- args[["wpath"]]
