@@ -160,7 +160,8 @@ geotopLookUpTable <- function(wpath, obs="ObservationProfileFile", lookup_tbl_ob
   
   ##### INSERT SOIL DATA
   geotop_soil_where <- geotop_where[str_detect(geotop_where,"Soil")]
-  if (length(geotop_soil_where)>1) {
+  ####print(geotop_soil_where)
+  if (length(geotop_soil_where)>=1) {
 	  
   	names(geotop_soil_where) <- geotop_soil_where
 	zlayer.formatter="z%04d"
@@ -179,10 +180,12 @@ geotopLookUpTable <- function(wpath, obs="ObservationProfileFile", lookup_tbl_ob
 #	print("ba")
 	
   	ivarsoil <- integer(0)
+#	print(ivarsoil)
  	for (it in geotop_soil_where) {
 	  
 		ivarsoil <-   c(ivarsoil,which(str_detect(lookup_tbl_observation$geotop_where,it)))
 		ivarsoil <- unique(ivarsoil)
+	##	print(ivarsoil)
 	  
   	}
   
