@@ -232,6 +232,23 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 			
 		}
 		
+		
+		### EC INSERT LOIG OPTIOMN 20170216 ## TO BE TESTED 
+		
+		logprefix <- "LOG10_"
+		
+		islogvar <- str_detect(names(param),logprefix)
+	    indexlogvar <- which(islogvar)
+		
+		param[indexlogvar] <- 10^(param[indexlogvar])
+		nnnl <- str_replace(names(param)[indexlogvar],logprefix,"")
+		names(param)[indexlogvar] <- nnnl
+		
+		### END EC INSERT LOIG OPTIOMN 20170216 ## TO BE TESTED 
+		
+		
+		
+		
 		if (is.null(names(param))) {
 			
 			warning("param has NO NAMES and will be ignored!")
