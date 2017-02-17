@@ -239,11 +239,12 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 		
 		islogvar <- str_detect(names(param),logprefix)
 	    indexlogvar <- which(islogvar)
-		
+		###print(param)
 		param[indexlogvar] <- 10^(param[indexlogvar])
+		
 		nnnl <- str_replace(names(param)[indexlogvar],logprefix,"")
 		names(param)[indexlogvar] <- nnnl
-		
+		####print(param)
 		### END EC INSERT LOIG OPTIOMN 20170216 ## TO BE TESTED 
 		
 		

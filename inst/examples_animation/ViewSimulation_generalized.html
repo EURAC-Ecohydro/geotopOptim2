@@ -216,7 +216,9 @@ if(!require(&quot;ggplot2&quot;))
 
 
 #wpath &lt;-  &#39;/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1&#39; 
-wpath &lt;-  &#39;/home/ecor/Dropbox/activity/2016/geotop_simulation/Latsch1_Calib_001&#39; 
+wpath &lt;-  &#39;/home/ecor/Dropbox/activity/2016/geotop_simulation/Latsch1_Calib_001&#39;
+
+wpath &lt;- &quot;C:/Users/GBertoldi/Documents/Simulations_local/geotopOptim2_tests/DOMEF_1500_Optim_001_PSO&quot;
 
 alldata &lt;- geotopLookUpTable(wpath = wpath)
 
@@ -233,19 +235,19 @@ fun_names &lt;- c(&quot;min&quot;,&quot;mean&quot;,&quot;max&quot;,&quot;sum&quo
 
 
 
-  fluidRow(textInput(inputId=&quot;wpath&quot;, label = h3(&quot;GEOtop working directory:&quot;),value = wpath)),  
 
-  fluidRow(selectInput(inputId = &quot;variable&quot;, label = &quot;discover variable&quot;, choices = obsnames,selected=obsnames[8]),
+
+  selectInput(inputId = &quot;variable&quot;, label = &quot;discover variable&quot;, choices = obsnames,selected=obsnames[8]),
 
 #  #####selectInput(inputId = &quot;add_variable&quot;, label = &quot;additional variable (sim)&quot;, choices = simnames, selected = simnames[2]),
 
   radioButtons(inputId = &quot;aggregation&quot;, label = &quot;aggregation&quot;, choices = c(&quot;hourly&quot;,&quot;daily&quot;,&quot;monthly&quot;), selected = &quot;hourly&quot;, inline = FALSE),
 
-  selectInput(inputId = &quot;aggregation_function_var&quot;, label = &quot;Aggregation Function&quot;, choices = fun_names, selected = &quot;mean&quot;)
-  )
+  selectInput(inputId = &quot;aggregation_function_var&quot;, label = &quot;Aggregation Function&quot;, choices = fun_names, selected = &quot;mean&quot;),
+
 #  selectInput(inputId = &quot;aggregation_function_add_var&quot;, label = &quot;Aggregation Function (add_var)&quot;, choices = fun_names, selected = &quot;sum&quot;)
 
-
+  textInput(inputId=&quot;wpath&quot;, label = h3(&quot;GEOtop working directory:&quot;),value = wpath)
 
 
 #  radioButtons(inputId = &quot;flux_amount&quot;, label = &quot;flux or amount&quot;, choices = c(&quot;flux&quot;,&quot;amount&quot;), selected = &quot;flux&quot;, inline = FALSE)

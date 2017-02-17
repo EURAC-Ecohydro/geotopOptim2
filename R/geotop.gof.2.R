@@ -21,7 +21,7 @@ NULL
 #' 
 #  formals(geotopGOF)
 #$x
-#NULL
+#NULLE
 #
 #$run.geotop
 #[1] TRUE
