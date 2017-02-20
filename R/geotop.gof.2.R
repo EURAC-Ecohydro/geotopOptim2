@@ -16,7 +16,7 @@ NULL
 #' @param gof.mes measure (index) of godness of fit. The measure must be one of the row names of \code{\link{gof}}   
 #' @param np exponent for te p-norm used. It must be an integer greater or equal to 1. It can be 1 (Manhattan), 2 (Euclidean) or \code{Inf} (Component of the Maximum absoulte value).  Default is 2.
 #' @param nosuccess.return value thet function returns in case of non-0 (e.g. 1) exit of GEOtop simulation. Default is \code{Inf}.
-#' @param ... further arguments
+#' @param ... further arguments (see \code{\link{geotopExec}} and \code{\link{gof}}. 
 #' 
 #' 
 #  formals(geotopGOF)
@@ -344,7 +344,7 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 	
 	## INSERT whenGOF here 
 	
-	out <- gof(obs=obs,sim=sim)
+	out <- gof(obs=obs,sim=sim,...)
 	if (length(gof.mes)==1)  {
 		
 		
