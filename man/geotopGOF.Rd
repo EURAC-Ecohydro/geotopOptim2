@@ -24,7 +24,7 @@ geotopGOF(x = NULL, run.geotop = TRUE, target = NULL, uscale = NULL,
 
 \item{nosuccess.return}{value thet function returns in case of non-0 (e.g. 1) exit of GEOtop simulation. Default is \code{Inf}.}
 
-\item{...}{further arguments}
+\item{...}{further arguments (see \code{\link{geotopExec}} and \code{\link{gof}}.}
 }
 \description{
 GEOtop Goodnes of fit

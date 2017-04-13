@@ -62,12 +62,8 @@ if(!require("ggplot2"))
 #wpath <-  '/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1' 
 #wpath <-  '/home/ecor/Dropbox/activity/2016/geotop_simulation/Latsch1_Calib_001'
 
-#wpath <- "C:/Users/GBertoldi/Documents/Simulations_local/geotopOptim2_tests/DOMEF_1500_Optim_001_PSO"
-
-wpath <- "C:\\Users\\GBertoldi\\Documents\\Simulations_local\\MonaLisaSims_20170207\\DOMEF_1500_Optim_003"
-
-#wpath <- "C:/Users/GBertoldi/Documents/Simulations_local/MonaLisaSims_20170203/DOMEF_1500_Optim_001_20170203_1028/geotopOtim2_tempdir/DOMEF_1500_Optim_001"
-
+#wpath <- "C:/Users/GBertoldi/Documents/Simulations_local/geotopOptim2_tests/DOMEF_1500_Optim_001_PSO" 
+wpath <-  "/home/ecor/temp/geotopOptim_tests/DOMEF_1500_Optim_005/xxfb21f1a553d/DOMEF_1500_Optim_005"
 alldata <- geotopLookUpTable(wpath = wpath)
 
 obsnames <- attr(alldata,"observation_var")
