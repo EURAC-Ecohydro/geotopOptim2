@@ -60,9 +60,22 @@ if(!require("ggplot2"))
 
 
 #wpath <-  '/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1' 
-wpath <-  '/home/ecor/Dropbox/activity/2016/geotop_simulation/Latsch1_Calib_001'
+#wpath <-  '/home/ecor/Dropbox/activity/2016/geotop_simulation/Latsch1_Calib_001'
 
-wpath <- "C:/Users/GBertoldi/Documents/Simulations_local/geotopOptim2_tests/DOMEF_1500_Optim_001_PSO"
+#wpath <- "C:/Users/GBertoldi/Documents/Simulations_local/geotopOptim2_tests/DOMEF_1500_Optim_001_PSO"
+
+#wpath <- "C:\\Users\\GBertoldi\\Documents\\Simulations_local\\MonaLisaSims_20170207\\DOMEF_1500_Optim_005"
+
+wpath <- "C:\\Users\\GBertoldi\\Documents\\Simulations_local\\MonaLisaSims_20170207\\DOMEF_1500_Optim_007\\geotopOtim2_tempdir\\DOMEF_1500_Optim_007"
+
+#wpath <- "C:/Users/GBertoldi/Documents/Simulations_local/geotopOptim2_tests/NEPAS_2000_001"
+
+#wpath <- "C:\\Users\\GBertoldi\\Documents\\Simulations_local\\geotopOptim2_tests\\Matsch_B2_Optim_001"
+
+#wpath <- "C:\\Users\\GBertoldi\\Documents\\Simulations_local\\MonaLisaSims_20170207\\NEPAS_2000_Optim_001\\geotopOtim2_tempdir\\NEPAS_2000_Optim_001"
+
+#wpath <- "C:\\Users\\GBertoldi\\Documents\\Simulations_local\\MonaLisaSims_20170207\\DOMEF_1500_Optim_005_v1"
+
 
 alldata <- geotopLookUpTable(wpath = wpath)
 
