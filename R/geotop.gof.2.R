@@ -235,11 +235,11 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 		
 			status <- attr(exit,"status")
 	}
-	##print("status:")
-	##print(status)
-	if (is.null(status)) status <- 0
-	if (is.na(status))   status <- 0
 	
+	if (is.null(status)) status <- -1234
+	if (is.na(status))   status <- -1235
+	print("status:")
+	print(status)
 	
 	wpath_ <- args[["wpath"]]
 	filelog <- paste(wpath_,"_START_EVALUATION.log",sep="") 
@@ -334,7 +334,8 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 	 #### http://stackoverflow.com/questions/18382883/what-is-the-right-way-to-multiply-data-frame-by-vector
 	
 	 ##sim <- data.frame(mapply(`*`,sim,uscale))
-	if (length(uscale)>1) for (it in names(uscale)) {
+	
+	 if (length(uscale)>1) for (it in names(uscale)) {
 		
 		obs[,it] <- obs[,it]*uscale[it]
 		sim[,it] <- sim[,it]*uscale[it]
@@ -345,6 +346,7 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 	## INSERT whenGOF here 
 	
 	out <- gof(obs=obs,sim=sim,...)
+	
 	if (length(gof.mes)==1)  {
 		
 		
