@@ -7,7 +7,7 @@ NULL
 #' @param simpath directory containg the \code{inpts.file}.
 #' @param runpath directory where to run GEOtop
 #' @param temporary.runpath logical value. If it \code{TRUE} GEOtop is running in a sub-directory of \code{runpath} made with randomly generated name.  Default is \code{FALSE}.
-#' @param intern logical value, see \code{\link{system}}.
+#' @param intern logical value, see \code{\link{system}}. OBSOLETE
 #' @param clean logical value. If it is \code{TRUE} previous simulations and other stuff in \code{runpath} were removed. See \code{\link{file.remove}} for functionality.
 #' @param recovery logical value. If it is \code{TRUE}, GEOtop simulation are recovered or overwriiten according to the GEOtop settings in \code{inpts.file}. 
 #' @param getKeywords character vector containing the keywords of \code{inpts.file} which can be imported after the GEOtop run. Default is \code{NULL}, nothing is imported.
@@ -716,7 +716,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 			z <- dz/2
 			for(i in 2:length(z)) {
 				z[i] <- z[i-1]+dz[i]/2+dz[i-1]/2
-				
+				intern
 			}
 			
 			zm <- (z-z[1])/(z[length(z)]-z[1])
@@ -810,7 +810,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 	message(msg)
 	command.line <- paste(bin,rundir,sep=" ")
 	
-	cc <- system(command.line,intern=intern)
+	cc <- system(command.line,intern=FALSE) ## NOT MORE INTERN+TRUE
 	######cca <- cc
 	msg <- sprintf("FINISH rundir:%s at %s",rundir,Sys.time())
 	message(msg)
