@@ -16,10 +16,21 @@ way to visualize the results. Finally, an exercise to analyze in details modeled
 evapotranspiration in some alpine agricultural sites with this interactive web visualization is
 presented.
 
-R packages: geotopbricks,stringr, ggplot2,shiny,geotopOptim2(github)
+R packages: geotopbricks,stringr, ggplot2,shiny,geotopOptim2(github),hydroPSO,hydroGOF
 
 References:
-- Foo et al (2018): Bars and bars. URL
+
+- Endrizzi, S., Gruber, S., Dall'Amico, M., and Rigon, R. (2014): GEOtop 2.0: simulating the combined energy and water balance at and below the land surface accounting for soil freezing, snow cover and terrain effects, Geosci. Model Dev., 7, 2831-2857, doi:10.5194/gmd-7-2831-2014, 2014, http://www.geosci-model-dev.net/7/2831/2014/gmd-7-2831-2014.html
+
+- Zambrano-Bigiarini, M.; R. Rojas (2013), A model-independent Particle Swarm Optimisation software for model
+ calibration, Environmental Modelling & Software, 43, 5-25, doi:10.1016/j.envsoft.2013.01.004
+
+-  Zambrano-Bigiarini, M., Rojas, R.(2014). hydroPSO: Particle Swarm Optimisation, with focus on Environmental Models. R
+  package version 0.3-4.
+
+- Cordano E.,  Andreis D. and Zottele F. (2015). geotopbricks: An R Plug-in for the Distributed
+  Hydrological Model GEOtop. R package version 1.3.6. http://CRAN.R-project.org/package=geotopbricks
+
 
 
 
