@@ -1,3 +1,6 @@
+R and  Hydrology: an example with GEOtop Hydrological Model
+
+Author: Emanuele Cordano, Giacomo, Bertoldi, Samuel Senoner
 
 Nowadays distributed eco-hydrolsharepointogical models are increasingly used in the context of precision agriculture, since they allow to account for a detailed description of the water cycle at various scales: local scale, where the analysis is performed on a specific site, or spatially distributed scale, where the analysis is performed over a larger area, e.g. an
 hillslope or a watershed. In these contexts, working in hydrological modeling one produces bigger and bigger amount of raw data. Therefore the need to develop flexible and user-oriented interfaces to visualize multiple outputs, perform sensitivity analyzes and compare
@@ -16,7 +19,7 @@ way to visualize the results. Finally, an exercise to analyze in details modeled
 evapotranspiration in some alpine agricultural sites with this interactive web visualization is
 presented.
 
-R packages: geotopbricks,stringr, ggplot2,shiny,geotopOptim2(github),hydroPSO,hydroGOF
+R packages: geotopbricks,stringr,geotopOptim2(github),hydroPSO,hydroGOF,shiny and leaflet (for visualizion)
 
 References:
 
