@@ -1,13 +1,90 @@
 ---
-title: "GEOtop Calibration through Optimization (geotopOptim2)"
-author: "Emanuele Cordano"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{geotopOptim2}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "**Short title:** Flexdashboard poster template"
+output: 
+  postr::flex_dashboard_poster:
+    render_print: true
 ---
+
+
+## Header row {data-height=15}
+
+###
+
+<table style="width:100%">
+<tr>
+  <td><center><h3>
+  **Poster title**
+  </h3></center></td>
+  <td rowspan="2">
+  <img src="resources/logo.png" style="width:128px"></img>
+  </td>
+</tr>
+<tr><td><center>
+  **Emanuele Cordano**
+  </center></td>
+</tr>
+</table> 
+
+<hr>
+
+**Abstract** 
+Eco-hydrological models are increasingly used in the contexts of hydrology, ecology, precision agriculture for a detailed description of the water cycle at various scales: local scale, an hillslope or a watershed. However, with increasing computing power and observations available, bigger and bigger amount of raw data are produced. Therefore the need to develop flexible and user-oriented interfaces to visualize multiple outputs, perform sensitivity analyzes and compare against observations emerges.
+This work presents two R open-source packages: **geotopbricks** and **geotopOptim2**. They offer an I/0 interface and R visualization tools the GEOtop hydrological distributed model (http://geotopmodel.github.io/geotop/), which solves water mass and energy budget equations
+to describe water cycle in the Earth´s critical zone.
+The package *geotopbricks* (https://github.com/ecor/geotopbricks and https://CRAN.R-project.org/package=geotopbricks ) is able to to read the GEOtop I/O data of the model. The package *geotopOptim2* (https://github.com/EURAC-Ecohydro/geotopOptim2) calling the **hydroPSO** (https://CRAN.R-project.org/package=hydroPSO) package can be used for model calibration against observations. Further details and complete R package dependencies are listed in *geotopOtim2* description file. 
+As a demonstration example, an analysis of modeled and observed soil moisture and evapotranspiration time series in some alpine agricultural sites (https://github.com/EURAC-Ecohydro/MonaLisa) are presented.
+
+
+
+
+## Body row {data-height=75}
+
+### **GEOtop Hydrological Model**
+
+
+[GEOtop](http://geotopmodel.github.io/geotop/) (Endrizzi et al, 2014 and references therein) is a distributed model of the mass and energy balance of the hydrological cycle. GEOtop is applicable to simulations in continuum in small or relatively large montain catchments. GEOtop deals with the effects of topography on the interaction between energy balance and hydrological cycle (water, glacier and snow) with peculiar solutions. The source code of GEOtop 2.0 with detailed documentation is available for researchers and environmental/software engineers through the following links:
+
+
+* https://github.com/geotopmodel/geotop
+* https://github.com/se27xx/GEOtop/
+
+#### Heading
+
+
+
+
+
+This section defines the first column of the body row of the poster.
+You can include regular markdown text and R `code chunks`.
+
+```{r}
+hist(volcano)
+```
+
+
+### **geotopbricks**
+
+Content for the second column.
+
+To show the code in the chunks you have to ask for it with `echo=TRUE`.
+
+```{r volcano-heat, echo=TRUE, eval=FALSE}
+filled.contour(volcano, color.palette = terrain.colors, asp = 1)
+```
+
+You can also include data frames as tables just by printing them
+
+```{r}
+head(iris)
+```
+
+
+
+### **geotopOptim2**
+
+This template shows 3 columns in the body row, you can change this by adding
+or removing third level headings (i.e. lines starting with ###).
+
 
 
 ## Introduction
@@ -386,7 +463,7 @@ In most cases, geotopOptim2 copies the simulation folder and run GEOtop with mod
 ```{r echo=TRUE,eval=TRUE,collapse=TRUE}
 
 
-## LOcal path where to write output for PSO
+## Local path where to write output for PSO
 runpath <- "/home/lv70864/ecordano/temp/geotopOptim_tests"
 runpath <- "/home/ecor/temp/geotopOptim_tests"
 
@@ -512,4 +589,16 @@ R-based graphical visualization tool of the optimized simulations could be found
 
 
 
+
+
+
+
+
+
+## Footer row {data-height=10} 
+
+### {data-width=50}
+
+
+### {data-width=50 .small}
 

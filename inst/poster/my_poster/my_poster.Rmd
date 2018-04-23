@@ -35,6 +35,12 @@ document (see `help("flex_dashboard_poster", package = postr)`).
 To disable this (recommended in the initial stages of poster development)
 set the `render_print` option to `FALSE`.
 
+Eco-hydrological models are increasingly used in the contexts of hydrology, ecology, precision agriculture for a detailed description of the water cycle at various scales: local scale, an hillslope or a watershed. However, with increasing computing power and observations available, bigger and bigger amount of raw data are produced. Therefore the need to develop flexible and user-oriented interfaces to visualize multiple outputs, perform sensitivity analyzes and compare against observations emerges.
+This work presents two R open-source packages: **geotopbricks** and **geotopOptim2**. They offer an I/0 interface and R visualization tools the GEOtop hydrological distributed model (http://geotopmodel.github.io/geotop/), which solves water mass and energy budget equations
+to describe water cycle in the Earth´s critical zone.
+The package *geotopbricks* (https://github.com/ecor/geotopbricks and https://CRAN.R-project.org/package=geotopbricks ) is able to to read the GEOtop I/O data of the model. The package *geotopOptim2* (https://github.com/EURAC-Ecohydro/geotopOptim2) calling the **hydroPSO** (https://CRAN.R-project.org/package=hydroPSO) package can be used for model calibration against observations. Further details and complete R package dependencies are listed in *geotopOtim2* description file. 
+As a demonstration example, an analysis of modeled and observed soil moisture and evapotranspiration time series in some alpine agricultural sites (https://github.com/EURAC-Ecohydro/MonaLisa) are presented.
+
 
 
 
@@ -42,7 +48,22 @@ set the `render_print` option to `FALSE`.
 
 ### **Column 1 title**
 
+
+
+### GEOtop Hydrological Model
+
+
+[GEOtop](http://geotopmodel.github.io/geotop/) (Endrizzi et al, 2014 and references therein) is a distributed model of the mass and energy balance of the hydrological cycle. GEOtop is applicable to simulations in continuum in small or relatively large montain catchments. GEOtop deals with the effects of topography on the interaction between energy balance and hydrological cycle (water, glacier and snow) with peculiar solutions. The source code of GEOtop 2.0 with detailed documentation is available for researchers and environmental/software engineers through the following links:
+
+
+* https://github.com/geotopmodel/geotop
+* https://github.com/se27xx/GEOtop/
+
 #### Heading
+
+
+
+
 
 This section defines the first column of the body row of the poster.
 You can include regular markdown text and R `code chunks`.
