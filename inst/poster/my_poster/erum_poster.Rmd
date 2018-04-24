@@ -82,8 +82,7 @@ head(iris)
 
 ### **geotopOptim2**
 
-This template shows 3 columns in the body row, you can change this by adding
-or removing third level headings (i.e. lines starting with ###).
+
 
 
 
@@ -574,18 +573,6 @@ R-based graphical visualization tool of the optimized simulations could be found
 <https://github.com/EURAC-Ecohydro/geotopOptim2/tree/master/inst/examples_animation>
 
 
-## References: 
-
-* Endrizzi, S., Gruber, S., Dall'Amico, M., and Rigon, R. (2014): GEOtop 2.0: simulating the combined energy and water balance at and below the land surface accounting for soil freezing, snow cover and terrain effects, Geosci. Model Dev., 7, 2831-2857, doi:10.5194/gmd-7-2831-2014, 2014, http://www.geosci-model-dev.net/7/2831/2014/gmd-7-2831-2014.html
-
-* Zambrano-Bigiarini, M.; R. Rojas (2013), A model-independent Particle Swarm Optimisation software for model
- calibration, Environmental Modelling & Software, 43, 5-25, doi:10.1016/j.envsoft.2013.01.004
-
-*  Zambrano-Bigiarini, M., Rojas, R.(2014). hydroPSO: Particle Swarm Optimisation, with focus on Environmental Models. R
-  package version 0.3-4.
-
-* Cordano E.,  Andreis D. and Zottele F. (2015). geotopbricks: An R Plug-in for the Distributed
-  Hydrological Model GEOtop. R package version 1.3.6. http://CRAN.R-project.org/package=geotopbricks
 
 
 
@@ -596,6 +583,26 @@ R-based graphical visualization tool of the optimized simulations could be found
 
 
 ## Footer row {data-height=10} 
+
+
+### References: 
+
+* Endrizzi, S., Gruber, S., Dall'Amico, M., and Rigon, R. (2014): GEOtop 2.0:
+  simulating the combined energy and water balance at and below the land surface
+  accounting for soil freezing, snow cover and terrain effects, Geosci. Model
+  Dev., 7, 2831-2857, doi:10.5194/gmd-7-2831-2014, 2014,
+  http://www.geosci-model-dev.net/7/2831/2014/gmd-7-2831-2014.html
+
+* Zambrano-Bigiarini, M.; R. Rojas (2013), A model-independent Particle Swarm
+  Optimisation software for model  calibration, Environmental Modelling &
+  Software, 43, 5-25, doi:10.1016/j.envsoft.2013.01.004
+
+*  Zambrano-Bigiarini, M., Rojas, R.(2014). hydroPSO: Particle Swarm
+   Optimisation, with focus on Environmental Models. R   package version 0.3-4.
+
+* Cordano E.,  Andreis D. and Zottele F. (2015). geotopbricks: An R Plug-in for
+  the Distributed Hydrological Model GEOtop. R package version 1.3.6.
+  http://CRAN.R-project.org/package=geotopbricks
 
 ### {data-width=50}
 
