@@ -20,12 +20,12 @@ From R console:
 >install.packages("hydroGOF")
 >install.packages("hydroPSO")
 ```
-In alternative, if you need to run the optimization on  MPI over HPC cluster you need to install:
+In alternative, if you need to run the optimization on  MPI over HPC cluster you need to install this modified version of hydroPSO
 ```
 >install_git("https://gitlab.inf.unibz.it/Samuel.Senoner/hydroPSO")
 
 ```
-
+Then, finally:
 ```
 >install_github("EURAC-Ecohydro/geotopOptim2")
 ```
