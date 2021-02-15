@@ -4,8 +4,13 @@
 \alias{aggregateVar}
 \title{Extract variable from an object returend by \code{\link{geotopLookUpTable}}}
 \usage{
-aggregateVar(x, InputVar = NULL, aggregate = c("hourly", "daily", "monthly",
-  "yearly"), aggregate_fun = c("mean", "sum"), ...)
+aggregateVar(
+  x,
+  InputVar = NULL,
+  aggregate = c("hourly", "daily", "monthly", "yearly"),
+  aggregate_fun = c("mean", "sum"),
+  ...
+)
 }
 \arguments{
 \item{x}{objectect returned by \code{\link{geotopLookUpTable}} with \code{merge==TRUE}}
@@ -39,4 +44,3 @@ mout <-  aggregateVar(ex,aggregate="monthly")
 \seealso{
 \code{\link{geotopLookUpTable}}
 }
-

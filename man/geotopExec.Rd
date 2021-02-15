@@ -4,14 +4,28 @@
 \alias{geotopExec}
 \title{Execution of GEOtop Hydrological Model}
 \usage{
-geotopExec(param = NULL,
-  bin = "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0", simpath,
+geotopExec(
+  param = NULL,
+  bin = "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0",
+  simpath,
   inpts.file = "geotop.inpts",
-  runpath = "/home/ecor/temp/geotopOptim_tests", temporary.runpath = FALSE,
-  clean = TRUE, recovery = !clean, getKeywords = NULL,
-  data.frame = TRUE, date_field = "Date12.DDMMYYYYhhmm.", intern = FALSE,
-  param.soil = TRUE, formatter = "\%04d", paramPrefix = "Header",
-  names_par = NULL, SoilType = 1, level = 1, time.aggregate = NULL, ...)
+  runpath = "/home/ecor/temp/geotopOptim_tests",
+  temporary.runpath = FALSE,
+  clean = TRUE,
+  recovery = !clean,
+  getKeywords = NULL,
+  data.frame = TRUE,
+  date_field = "Date12.DDMMYYYYhhmm.",
+  intern = FALSE,
+  param.soil = TRUE,
+  formatter = "\%04d",
+  paramPrefix = "Header",
+  names_par = NULL,
+  SoilType = 1,
+  level = 1,
+  time.aggregate = NULL,
+  ...
+)
 }
 \arguments{
 \item{param}{vector of parameters to set for GEOtop simulation. Actually implemented only for soil type parameters. Deafault is \code{NULL}.}
@@ -36,7 +50,7 @@ geotopExec(param = NULL,
 
 \item{date_field}{character vaue, see  \code{\link{get.geotop.inpts.keyword.value}}. Default is \code{"Date12.DDMMYYYYhhmm."}, is enabled if \code{getKeywords} is not \code{NULL}.}
 
-\item{intern}{logical value, see \code{\link{system}}.}
+\item{intern}{logical value, see \code{\link{system}}. OBSOLETE}
 
 \item{param.soil}{logical value If it \code{TRUE} (default) the vaues in \code{param} concerns soil parameters.}
 
@@ -109,4 +123,3 @@ out4 <- geotopExec(param=param,bin=bin,simpath=simpath,
 
 
 }
-

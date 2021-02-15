@@ -4,8 +4,7 @@
 \alias{approxfunDataFrame}
 \title{Interpolation on the soil layers}
 \usage{
-approxfunDataFrame(df, z = NULL, zout, formatter = "z\%04d", factor = 10,
-  ...)
+approxfunDataFrame(df, z = NULL, zout, formatter = "z\%04d", factor = 10, ...)
 }
 \arguments{
 \item{df}{data frame or 'zoo' object with (modeled) time series.}
@@ -32,4 +31,3 @@ This function interpolates the values of a \code{zt}-variable quantity in layers
 \seealso{
 \code{\link{approx}}
 }
-

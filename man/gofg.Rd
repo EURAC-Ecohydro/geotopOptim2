@@ -18,4 +18,3 @@ This functio is a wrapper of \code{\link{gof}}. In case \code{obs} or \code{sim}
 \seealso{
 \code{\link{gof}}
 }
-

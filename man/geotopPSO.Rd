@@ -5,9 +5,17 @@
 \alias{geotoplhoat}
 \title{GEOtop calibration through Particle Swam Optimization}
 \usage{
-geotopPSO(par = NULL, fn = geotopGOF, gof.mes = "KGE", final.run = TRUE,
-  upper, lower, temporary.runpath = TRUE, ..., hydroPSOfun = c("hydroPSO",
-  "lhoat"))
+geotopPSO(
+  par = NULL,
+  fn = geotopGOF,
+  gof.mes = "KGE",
+  final.run = TRUE,
+  upper,
+  lower,
+  temporary.runpath = TRUE,
+  ...,
+  hydroPSOfun = c("hydroPSO", "lhoat")
+)
 
 geotoplhoat(...)
 }
@@ -82,4 +90,3 @@ pso <- geotopPSO(par=x,run.geotop=TRUE,bin=bin,
 \seealso{
 \code{\link{hydroPSO}},\code{\link{gof}}\code{\link{lhoat}}
 }
-

@@ -4,9 +4,13 @@
 \alias{extract.geotop.value.fromMap}
 \title{Getting values from a GEOtop Simulation Map}
 \usage{
-extract.geotop.value.fromMap(key, xykeys = c("PointFile",
-  "HeaderCoordinatePointX", "HeaderCoordinatePointY"), wpath,
-  inpts.file = "geotop.inpts", ...)
+extract.geotop.value.fromMap(
+  key,
+  xykeys = c("PointFile", "HeaderCoordinatePointX", "HeaderCoordinatePointY"),
+  wpath,
+  inpts.file = "geotop.inpts",
+  ...
+)
 }
 \arguments{
 \item{key}{keywords related to the maps}
@@ -33,4 +37,3 @@ nopoints1 <- extract.geotop.value.fromMap(key=c("NoSoilMapFile","NoDemFile"),wpa
 \seealso{
 \code{\link{get.geotop.inpts.keyword.value}}
 }
-
