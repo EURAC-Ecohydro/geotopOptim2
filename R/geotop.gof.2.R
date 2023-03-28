@@ -199,6 +199,11 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 		
 	
 		out <- try(do.call(what=geotopExec,args=args[names(args) %in% geotop_exec_names]),silent=TRUE)
+		
+		if (class(out)=="try-error") {
+		  str(args[names(args) %in% geotop_exec_names])      
+		  stop(sprintf("geotopGOF: (line 201) geotopExec returns an error: %s",as.character(out))) 
+		}  
 		str(out)
 		print("markpoint")
 	###print("exit exec") COMMENTED BY EC ON 20170207
@@ -278,7 +283,7 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 		
 		cnt <- which(!(target %in% nvar))
 		tamsg <- paste(target[cnt],collapse=" ")
-		msg <- sprintf("The target vars %s are not included in the lookup table or observation is nissing and than removed!!",tamsg)
+		msg <- sprintf("The target vars %s are not included in the lookup table or observation is missing and than removed!!",tamsg)
 		
 		warning(msg)
 		if (length(uscale)==length(target)) uscale <- uscale[-cnt]
@@ -319,7 +324,9 @@ geotopGOF <- function(x=NULL,run.geotop=TRUE,target=NULL,uscale=NULL,when=NULL,g
 		nn <- c(nobs,nsim)
 		cnt <- which(!(nn %in% names(out)))
 		tmasg <- paste(nn[cnt],collapse=" ")
-		msg <- sprintf("The column %s are not present!!")
+		targetv <- paste(target,collapse=" ")
+		nnout <- paste(names(out),collapse=" ")
+		msg <- sprintf("The column %s are not present (target:%s out:%s) !!",tmasg,targetv,nnout)
 		
 		stop(msg)
 		

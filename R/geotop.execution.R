@@ -124,6 +124,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 	message(msg)
 	
 	t <- str_split(simpath,"/")[[1]]
+	t <- t[t!=""] ## EC 20210206
 	simdir <- t[length(t)]
 	
 ##	rundir <- paste(runpath,simdir,sep="/")
@@ -329,7 +330,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 				writeLines(inpts.vv,con=inpts.path)
 				
 				
-				stop("THIS IS STILL TO DO!!!!")
+				##stop("THIS IS STILL TO DO!!!!")## 20210206
 				param <- param[!(names(param) %in% integernames)]
 				
 				
@@ -472,7 +473,7 @@ geotopExec <- function (param=NULL,bin="/home/ecor/local/geotop/GEOtop/bin/geoto
 			if (!all(str_detect(names(param),SoilPrefix))) {
 				
 				
-				xxxx <- paste(names(param),sep=";")
+				xxxx <- paste(names(param),collapse=";") ## EC 20210213
 				msg <- sprintf("Add SOIL__ prefix for the keywords referring to soil properties: %s !!!",xxxx)
 				
 				warning(msg)

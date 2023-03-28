@@ -4,8 +4,17 @@
 \alias{geotopGOF}
 \title{GEOtop Goodnes of fit}
 \usage{
-geotopGOF(x = NULL, run.geotop = TRUE, target = NULL, uscale = NULL,
-  when = NULL, gof.mes = "RMSE", np = 2, nosuccess.return = Inf, ...)
+geotopGOF(
+  x = NULL,
+  run.geotop = TRUE,
+  target = NULL,
+  uscale = NULL,
+  when = NULL,
+  gof.mes = "RMSE",
+  np = 2,
+  nosuccess.return = Inf,
+  ...
+)
 }
 \arguments{
 \item{x}{vector with parameters to calibrate. See \code{param} in \code{\link{geotopExec}}.}
@@ -48,4 +57,3 @@ ssout <- geotopGOF(x=param,run.geotop=TRUE,bin=bin,
 \seealso{
 \code{\link{geotopExec}},\code{\link{gof}}
 }
-

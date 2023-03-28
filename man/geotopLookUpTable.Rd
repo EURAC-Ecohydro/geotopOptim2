@@ -4,10 +4,19 @@
 \alias{geotopLookUpTable}
 \title{Read point output from GEOtop for verification of the model results}
 \usage{
-geotopLookUpTable(wpath, obs = "ObservationProfileFile",
-  lookup_tbl_observation = "ObservationLookupTblFile", soil_files = TRUE,
-  save_rData = TRUE, tz = "Etc/GMT-1", level = 1,
-  inpts.file = "geotop.inpts", merge.output = TRUE, when = NULL, ...)
+geotopLookUpTable(
+  wpath,
+  obs = "ObservationProfileFile",
+  lookup_tbl_observation = "ObservationLookupTblFile",
+  soil_files = TRUE,
+  save_rData = TRUE,
+  tz = "Etc/GMT-1",
+  level = 1,
+  inpts.file = "geotop.inpts",
+  merge.output = TRUE,
+  when = NULL,
+  ...
+)
 }
 \arguments{
 \item{wpath}{path into simulation folder}
@@ -47,10 +56,9 @@ out <- geotopLookUpTable(wpath = wpath , save_rData = TRUE)
 
 
 }
-\author{
-Johannes Brenner,Emanuele Cordano
-}
 \seealso{
 \code{\link{get.geotop.inpts.keyword.value}}, \code{\link{approxfunDataFrame}}
 }
-
+\author{
+Johannes Brenner,Emanuele Cordano
+}

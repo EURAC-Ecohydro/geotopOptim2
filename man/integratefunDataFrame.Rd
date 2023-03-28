@@ -4,8 +4,15 @@
 \alias{integratefunDataFrame}
 \title{Integration on the soil layers}
 \usage{
-integratefunDataFrame(df, z = NULL, zrange = c(0, 500),
-  formatter = "z\%04d", factor = 10, rescaleWithDz = FALSE, ...)
+integratefunDataFrame(
+  df,
+  z = NULL,
+  zrange = c(0, 500),
+  formatter = "z\%04d",
+  factor = 10,
+  rescaleWithDz = FALSE,
+  ...
+)
 }
 \arguments{
 \item{df}{data frame or 'zoo' object with (modeled) time series.}
@@ -35,4 +42,3 @@ This function integrates the values of a \code{zt}-variable quantity  within a c
 \seealso{
 \code{\link{approx}},\code{\link{integrate}}
 }
-

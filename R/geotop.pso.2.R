@@ -135,7 +135,8 @@ geotopPSO <- function(par=NULL,fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,l
 		###
 		
 		NLAYER <- upper["NumberOfSoilLayers"]
-		
+		if (length(NLAYER)==0) NLAYER <- NA ## EC 20200111
+		print(NLAYER)
 		geotop.model <- list(...)  #### [["geotop.model"]]
 		#temporary.runpath <- geotop.model[["temporary.runpath"]]
 		## ec 20160822
@@ -177,8 +178,14 @@ geotopPSO <- function(par=NULL,fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,l
 				 ####SoilType <- formals(geotopExec)$SoilType
 				
 				soil.df <- get.geotop.inpts.keyword.value("SoilParFile",wpath=simpath,inpts.file=inpts.file,data.frame=TRUE,level=SoilType)
-				NLAYER <- nrow(soil.df)
-				
+				if (is.null(soil.df)) {
+				  
+				   NLAYER <- 20 
+				   ## print a message here
+				} else {
+				  
+				  NLAYER <- nrow(soil.df)
+				}
 				
 				
 			} else {
@@ -217,7 +224,7 @@ geotopPSO <- function(par=NULL,fn=geotopGOF,gof.mes="KGE",final.run=TRUE,upper,l
 			names_all <- names(lower_all)
 			
 			for (it in names_all) {
-			
+			  print(NLAYER) ##
 				itl <- sprintf(it,1:NLAYER)
 				upper[itl] <- upper_all[it]
 				lower[itl] <- lower_all[it]

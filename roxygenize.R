@@ -26,6 +26,9 @@ options(repos = c(CRAN="http://cran.r-project.org"))
 
 
 path <- "/home/ecor/Dropbox/R-packages" 
+path <- "/home/ecor/local/rpackages" 
+
+
 pkg_name <- "geotopOptim2"
 pkg_dir <- paste(path,pkg_name,sep="/")
 cran_pkg_path <- paste(path,"toCran",sep="/")
