@@ -78,17 +78,25 @@ In the observation section, two now keywords are set (the symbols *!>>!* means t
   
   obs <- get.geotop.inpts.keyword.value("ObservationProfileFile",wpath=wpath_sim,data.frame=TRUE,date_field='Date12.DDMMYYYYhhmm.')
  	str(obs)
- ```
+```
+
+ 
+ 	
+ 	
+ 	
  The second one refers to a txt file containing a table with the correspondance between the observation variables and the variables simulated by GEOtop: 
  (NOTE: here there is no formatter in the file neme and the seperator is *;* , so please set *formatter="",col_sep=";"* instead of default values):
   
- ```{r echo=TRUE,eval=TRUE} 
+```{r echo=TRUE,eval=TRUE} 
   ltk <- get.geotop.inpts.keyword.value("ObservationLookupTblFile",wpath=wpath_sim,data.frame=TRUE,formatter="",col_sep=";")
   head(ltk)
   knitr::kable(ltk)
 
   
 ```
+
+
+
 
 This table contains the following columns: 
 dl>
@@ -148,7 +156,7 @@ These functions call other functions and methods of **geotopOptim2** and its dep
  
  
 ```{r,fig.height=8, fig.width=6,echo=TRUE,results='hide',collapse=TRUE}
-#!/usr/bin/env Rscript
+#########/usr/bin/env Rscript
 # file appendSmetData.R
 #
 # This script creates a graph of the package function and thair main external depencies
@@ -172,18 +180,21 @@ These functions call other functions and methods of **geotopOptim2** and its dep
 rm(list=ls())
 
 library(geotopOptim2)
+library(raster)
 library(igraph)
 set.seed(123)
 list_envs <- list(environment(geotopExec),environment(get.geotop.inpts.keyword.value),environment(gof),environment(hydroPSO),environment(writeLines),environment(read.table),environment(terrain))
-names(list_envs) <- c("geotopOptim2","geotopbricks","hydroGOF","hydroPSO","base","utils","raster")
+list_envs <- c("geotopExec","get.geotop.inpts.keyword.value","gof","hydroPSO","writeLines","read.table") #,"terrain")
+names(list_envs) <- c("geotopOptim2","geotopbricks","hydroGOF","hydroPSO","base","utils") #,"raster")
 color <- c("red","green","blue","orange","yellow","white","brown")
 names(color) <- names(list_envs)
 
-list_names <- lapply(X=list_envs,FUN=function(x){ls(env=x)})
+###list_names <- lapply(X=list_envs,FUN=function(x){ls(env=x)})
+list_names <- lapply(X=list_envs,FUN=function(x){ls(env=environment(get(x)))})## EC 20230405
 list_df <- list()
 
 for (it in names(list_envs)) {
-	
+	  
 		list_df[[it]]	<- data.frame(funx=list_names[[it]],env=it,color=color[it],stringsAsFactors=FALSE)
 	
 	
@@ -233,7 +244,7 @@ lfunx <- lapply(X=fun_names,FUN=function(x,nx) {
 			o <- o[o %in% nx]
 			
 			src <-  as.character(body(x))
-			src <-  unlist(str_split(src, boundary("word")))
+			src <-  unlist(str_split(src, stringr::boundary("word")))
 			nx <-  src[src %in% nx]
 		
 			o <- c(o,nx)
@@ -276,7 +287,7 @@ V(gg)$color <- color_[vnames]
 vcodes <- sprintf("%02d",1:length(vnames))
 names(vcodes) <- vnames
 V(gg)$name <- vcodes
-main <- "geeotopOptim2  Internal Functions"
+main <- "geotopOptim2  Internal Functions"
 plot(gg,main=main)
 legend("bottomleft",legend=unique(env_),fill=unique(color_),ncol=2)
 legend("topleft",legend=paste(vcodes,vnames,sep=" : "),ncol=3,cex=0.6)
@@ -364,7 +375,7 @@ if (USE_RMPI==TRUE) {
 
 Here is a GEOtop simulation  folder with observation: 
 
-```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+```{r echo=TRUE,eval=TRUE,collapse=TRUE}
 tz <- "Etc/GMT-1"
 
 wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
@@ -377,8 +388,8 @@ Here is the full name (with complete path) of GEOtop executable built file:
 ```{r echo=TRUE,eval=TRUE,collapse=TRUE}
 
 
-bin  <-'/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
-
+##bin  <-'/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
+bin <-  "/home/ecor/local/sw/rendena100/geotop/geotop" 
 ```
 
 In most cases, geotopOptim2 copies the simulation folder and run GEOtop with modified calibration input parameters in temporary directories:  
@@ -387,7 +398,7 @@ In most cases, geotopOptim2 copies the simulation folder and run GEOtop with mod
 
 
 ## LOcal path where to write output for PSO
-runpath <- "/home/lv70864/ecordano/temp/geotopOptim_tests"
+#runpath <- "/home/lv70864/ecordano/temp/geotopOptim_tests"
 runpath <- tempdir() ##"/home/ecor/temp/geotopOptim_tests"
 
 
@@ -404,7 +415,7 @@ Here is an example that can be downloaded by package examples:
 
 ```{r echo=TRUE,eval=TRUE,collapse=TRUE}
 
-geotop.soil.param.file <-  system.file('examples-script/param/param_pso_c003.csv',package="geotopOptim2") 
+geotop.soil.param.file <-  system.file('examples_script/param/param_pso_c003.csv',package="geotopOptim2") 
 geotop.soil.param <- read.table(geotop.soil.param.file,header=TRUE,sep=",",stringsAsFactors=FALSE)
 lower <- geotop.soil.param$lower
 upper <- geotop.soil.param$upper
@@ -419,7 +430,12 @@ knitr::kable(geotop.soil.param)
 
 ```
 
+
+
 Here is the columns **lower** and **upper** stand for lower and upper values whereas the **suggested** column contains initial guess values for **geotopPSO**.  Generally a good practical examples on how to set  these parameters is given below: 
+
+
+
 
 ```
 prefix__name,lower,upperGrenarally 
@@ -455,7 +471,7 @@ Then,the target variables are here set :
 
 
 
-```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+```{r echo=TRUE,eval=TRUE,collapse=TRUE}
 
 
 var <- 'soil_moisture_content_50'
