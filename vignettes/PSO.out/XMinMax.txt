@@ -1,0 +1,18 @@
+lower  upper
+SOIL__N   1.2e+00   2.5e+00
+SOIL__Alpha   1.0e-05   1.0e-01
+SOIL__ThetaSat   4.5e-01   7.0e-01
+SOIL__ThetaRes   5.0e-02   7.0e-02
+SOIL__LateralHydrConductivity   1.0e-03   1.0e+00
+SOIL__NormalHydrConductivity   1.0e-03   1.0e+00
+SOIL__SoilDepth   3.0e+03   3.0e+04
+SOIL__NumberOfSoilLayers   9.0e+00   2.0e+01
+SOIL__SoilInitPres_V_L0001  -5.0e+03   1.0e+03
+SOIL__SoilInitPres_V_L0002  -5.0e+03   1.0e+03
+SOIL__SoilInitPres_V_L0003  -5.0e+03   1.0e+03
+SOIL__SoilInitPres_V_L0004  -5.0e+03   1.0e+03
+SOIL__SoilInitPres_V_L0005  -5.0e+03   1.0e+03
+SOIL__SoilInitPres_V_L0006  -5.0e+03   1.0e+03
+SOIL__SoilInitPres_V_L0007  -5.0e+03   1.0e+03
+SOIL__SoilInitPres_V_L0008  -5.0e+03   1.0e+03
+SOIL__SoilInitPres_V_L0009  -5.0e+03   1.0e+03
