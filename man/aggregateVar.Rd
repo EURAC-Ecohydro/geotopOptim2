@@ -30,8 +30,8 @@ Extract variable from an object returend by \code{\link{geotopLookUpTable}}
 It is assumed that \code{x} already contains hourly aggregated time series, so in case \code{aggregare=="hourly"} no aggragetion is calculated.
 }
 \examples{
+wpath <- system.file('geotop-simulation/B2_BeG_017',package="geotopOptim2")
 wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
-
 ex <- geotopLookUpTable(wpath = wpath)
  
 eout <- aggregateVar(ex)

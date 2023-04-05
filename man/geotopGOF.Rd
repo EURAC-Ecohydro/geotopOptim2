@@ -42,7 +42,7 @@ GEOtop Goodnes of fit
 
 wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
 bin <-   "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0"
-runpath <- "/home/ecor/temp/geotopOptim_tests"
+runpath <- tempdir() ##"/home/ecor/temp/geotopOptim_tests"
 
 var <- 'soil_moisture_content_50'
 

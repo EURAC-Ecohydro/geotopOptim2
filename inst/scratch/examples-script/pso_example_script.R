@@ -71,7 +71,7 @@ bin  <-'/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0'
 
 ## LOcal path where to write output for PSO
 runpath <- "/home/lv70864/ecordano/temp/geotopOptim_tests"
-runpath <- "/home/ecor/temp/geotopOptim_tests"
+runpath <- tempdir() #"/home/ecor/temp/geotopOptim_tests"
 
 geotop.soil.param.file <-  system.file('examples-script/param/param_pso_c001.csv',package="geotopOptim2") ###'/home/ecor/Dropbox/R-packages/geotopOptim/inst/examples_2rd/param/param_pso_test3.csv' 
 geotop.soil.param <- read.table(geotop.soil.param.file,header=TRUE,sep=",",stringsAsFactors=FALSE)

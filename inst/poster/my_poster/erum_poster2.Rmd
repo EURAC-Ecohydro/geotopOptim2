@@ -464,7 +464,7 @@ In most cases, geotopOptim2 copies the simulation folder and run GEOtop with mod
 
 ## Local path where to write output for PSO
 runpath <- "/home/lv70864/ecordano/temp/geotopOptim_tests"
-runpath <- "/home/ecor/temp/geotopOptim_tests"
+runpath <- tempdir() ##"/home/ecor/temp/geotopOptim_tests"
 
 
 ```

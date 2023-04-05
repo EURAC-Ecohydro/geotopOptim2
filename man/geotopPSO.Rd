@@ -50,8 +50,8 @@ The function \code{fn}, in case it is different from the default value \code{\li
 
 
 wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2") ####'/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1'
-bin <-   "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0"
-runpath <- "/home/ecor/temp/geotopOptim_tests"
+bin <-  "/home/ecor/local/sw/rendena100/geotop/geotop" ### "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0"
+runpath <- tempdir() ###"/home/ecor/temp/geotopOptim_tests"
 
 var <- 'soil_moisture_content_50'
 

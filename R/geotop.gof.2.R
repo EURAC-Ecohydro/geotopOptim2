@@ -71,7 +71,7 @@ NULL
 #' 
 #' wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
 #' bin <-   "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0"
-#' runpath <- "/home/ecor/temp/geotopOptim_tests"
+#' runpath <- tempdir() ##"/home/ecor/temp/geotopOptim_tests"
 #' 
 #' var <- 'soil_moisture_content_50'
 #' 
@@ -125,9 +125,9 @@ NULL
 # 
 # 
 # simpath <- system.file("Muntatschini_pnt_1_225_B2_004",package="geotopOptim")
-# bin <-   '/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
+# bin <-  "/home/ecor/local/sw/rendena100/geotop/geotop" ### "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0"
 ###### '/Ubsers/ecor/local/bin/geotop_zh'
-# runpath <- "/home/ecor/temp/geotopOptim_tests"
+# runpath <- ...
 # 
 # vars <- "SoilLiqContentProfileFile"
 # 

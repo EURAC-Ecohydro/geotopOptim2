@@ -67,8 +67,8 @@ NULL
 # 
 # 
 # simpath <- system.file("Muntatschini_pnt_1_225_B2_004",package="geotopOptim")
-# bin <-   "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0"
-# runpath <- "/home/ecor/temp/geotopOptim_tests"
+# bin <-  "/home/ecor/local/sw/rendena100/geotop/geotop" ### "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0"
+# runpath <- ...
 # 
 # vars <- "SoilLiqContentProfileFile"
 # 

@@ -48,8 +48,9 @@ Read point output from GEOtop for verification of the model results
  ## TO DO 
 
 
-wpath <- '/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1' 
-
+##wpath <- '/home/ecor/activity/2016/eurac2016/idra/B2_BeG_017_DVM_001_test_1' 
+##wpath <- system.file("Muntatschini_pnt_1_225_B2_004",package="geotopOptim2")
+wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2") 
 out <- geotopLookUpTable(wpath = wpath , save_rData = TRUE)
 
 
