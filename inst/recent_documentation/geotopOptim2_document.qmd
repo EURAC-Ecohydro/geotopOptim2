@@ -1,0 +1,509 @@
+---
+title: "GEOtop Calibration through Optimization (geotopOptim2)"
+author: 
+  - name: "Emanuele Cordano, John Wani"
+    role: "Developer and creator of geotopOptim2 Package"
+date: "10-10-2016"
+date-modified: "`r Sys.Date()`"
+format: 
+  html:
+    code-copy: true
+    toc: true
+    toc-location: left
+editor: visual
+---
+
+::: callout-warning
+If you encounter errors while rendering this Quarto document, set `eval=FALSE` for the code blocks in the document. Otherwise, you will need to manually configure the file paths and other settings.
+:::
+
+## Introduction
+
+The `geotopOptim2` package has been built to perform a PSO Calibration through [hydroPSO](https://cran.r-project.org/web/packages/hydroPSO/index.html){target="_blank"} package of the the results of the physically-based hydrological model GEOtop. The package makes use of the GEOtop-R plugin [geotopbricks](https://cran.r-project.org/package=geotopbricks){target="_blank"}, which import/export GEOtop Data into R.
+
+::: callout-warning
+At the time of modification, the `hydroPSO` package was archived from CRAN repository since `2023-10-16` and is no longer available. However, you can still install this package into R from the [github](https://github.com/hzambran/hydroPSO){target="_blank"} using the following method:
+
+```         
+library(devtools)
+install_github("hzambran/hydroPSO")
+```
+:::
+
+Before using the `geotopOptim2`, You need to have the following software installed:
+
+1.  [R](https://www.r-project.org){target="_blank"}
+2.  [Git](https://git-scm.com){target="_blank"}
+3.  [GEOtop](http://geotopmodel.github.io/geotop/){target="_blank"}
+
+## GEOtop Hydrological Model
+
+[GEOtop](http://geotopmodel.github.io/geotop/){target="_blank"} (Endrizzi et al, 2014 and references therein) is a distributed model of the mass and energy balance of the hydrological cycle. GEOtop is applicable to simulations in continuum in small or relatively large mountain catchments. GEOtop deals with the effects of topography on the interaction between energy balance and hydrological cycle (water, glacier and snow) with peculiar solutions. The source code of GEOtop 2.0 with detailed documentation is available for researchers and environmental/software engineers through the following links:
+
+-   [https://github.com/geotopmodel/geotop](https://github.com/geotopmodel/geotop){target="_blank"}
+-   [https://github.com/se27xx/GEOtop/](https://github.com/se27xx/GEOtop/){target="_blank"}
+
+So far, goeotpOpintm2 has been used only with the [se27xx](https://github.com/se27xx/GEOtop){target="_blank"} version under linux.
+
+For Unix-like OS users, the GEOtop 2.0 version can be rapidly downloaded and compiled with the following instructions ([https://github.com/se27xx/GEOtop/](https://github.com/se27xx/GEOtop/){target="_blank"}):
+
+1.  Open a console/terminal and go to the directory where to clone the GEOtop source code
+2.  Clone the source code by typing the following:
+
+``` cmd
+git clone https://github.com/se27xx/GEOtop.git
+```
+
+3.  Enter GEOtop directory by typing the following:
+
+``` cmd
+cd geotop-se27xx
+```
+
+4.  Create the sub directory for the executable file
+
+``` cmd
+mkdir bin
+```
+
+5.  Build and create GEOtop executale file:
+
+``` cmd
+make -f geotop.make
+```
+
+Once compilation is finished, the GEOtop executable will be created in the sub directory `bin`. For compiling other versions of GEOtop, please see the related URLs.
+
+Additionally, If you want to use [GEOtop 3.0](https://github.com/geotopmodel/geotop){target="_blank"} version supported by a larger community, then please refer to the detailed instructions on [installation](https://github.com/geotopmodel/geotop#compiling){target="_blank"}.
+
+## Overview of the main function
+
+`geotopOptim2` is a R package which is able to enter a GEOtop simulation folder and calibrate some parameters (set by the user) by optimizing a Goodnes-of-Fit measure between point results and point observations. geotopOptim2 is a set of functions that call dependency functions, and allowing the user to work with all or some of these functions based on his or her preferences. Before entering `geotopOptim2`, here is a list of the main functions:
+
+-   **geotopExec** : This function executes a simulation of GEOtop given a certain set of parameters:
+
+```{r echo=TRUE,eval=FALSE}
+  library(geotopOptim2)
+  help(geotopExec,help_type="html")
+  help(get.geotop.keyword.inpts.value,help_type = "html")
+```
+
+-   **geotopLookUpTable**: It read the lookup table that can be inserted within a GEOtop point simulation according Read point output from GEOtop for verification of the model results:
+
+```{r echo=TRUE,eval=FALSE}
+  
+  help(geotopLookUpTable,help_type="html")
+```
+
+To use this function, the observation point value must be set in the GEOtop simulation and inserted as additional keywords in the **geotop.inpts** file , see the following file for the package example simulation (look at the final OBSERVATION section):
+
+```{r echo=TRUE,eval=TRUE}
+  wpath_sim <- paste('geotopOptim2/inst/geotop-simulation/B2site')
+  inpts.file.path <- paste(wpath_sim,"geotop.inpts",sep="/")
+  inpts <- readLines(inpts.file.path)
+  writeLines(inpts)
+```
+
+In the observation section, two new keywords are set (the symbols `!>>!` means that the keyword is not read by GEOtop!): `ObservationProfileFile`, `ObservationLookupTblFile`. The first is similar to `PointFile` or `SoilLiqContentProfileFile` and refers to a set of csv files containing time series of observed variable values.
+
+```{r echo=TRUE,eval=TRUE}
+library(geotopbricks)
+obs <- get.geotop.inpts.keyword.value("ObservationProfileFile",wpath=wpath_sim,data.frame=TRUE,date_field='Date12.DDMMYYYYhhmm.')
+str(obs)
+```
+
+The second one refers to a txt file containing a table with the correspondance between the observation variables and the variables simulated by GEOtop:
+
+::: callout-note
+there is no formatter in the file name and the separator is `;` , so please set `formatter="", col_sep=";"` instead of default values):
+:::
+
+```{r echo=TRUE,eval=TRUE}
+ltk <- get.geotop.inpts.keyword.value("ObservationLookupTblFile",wpath=wpath_sim,data.frame=TRUE,formatter="",col_sep=";")
+head(ltk)
+knitr::kable(ltk)
+```
+
+The description of headers in the above table is as below: <!-- dl> --> <!--   <dt>**obs_var**</dt> --> <!--   <dd>name of the observed variables as reported in the csv file for observations;</dd> -->
+
+<!--   <dt>**geotop_what**</dt> -->
+
+<!--   <dd>GEOtop keyword corresponding for the oitput point file where the variable is written;</dd> -->
+
+<!--   <dt>**geotop_here**</dt> -->
+
+<!--   <dd>name of the corresponding variable simulated by GEOtop as reported in the output csv file;</dd> -->
+
+<!--   <dt>**unit**</dt> -->
+
+<!--   <dd>measurement unit.</dd> -->
+
+<!-- </dl> -->
+
+| **Variable**    | **Description**                                                                            |
+|--------------------|----------------------------------------------------|
+| **obs_var**     | Name of the observed variables as reported in the CSV file for observations.               |
+| **geotop_what** | GEOtop keyword corresponding to the output point file where the variable is written.       |
+| **geotop_here** | Name of the corresponding variable simulated by GEOtop as reported in the output CSV file. |
+| **unit**        | Measurement unit.                                                                          |
+
+The keywords in `geotop_where` or `geotop_what` can be more than one and can be operated through simple mathematical operations.
+
+-   **geotoGOF** : It is a wrapper for gof function, it calculates the goodness of fit index for the variables choosen in the data frame returned by `geotopLookUpTable`; it includes `geotopExec` and `geotopLookukUpTale`. Main arguments of `geotopGOF` are passed to `geotopExec` as main arguments.
+
+```{r echo=TRUE,eval=FALSE}
+  
+  help(geotoGOF,help_type="html")
+  help(gof,help_type="gof")
+  
+```
+
+-   **geotopPSO** : It is a wrapper for `hydroPSO` function, it calculates the goodness of fit index for the variables choosen in the data frame returned by `geotopLookUpTable`:
+
+```{r echo=TRUE,eval=FALSE}
+  
+  help(geotoGOF,help_type="html")
+  help(gof,help_type="gof")
+  
+```
+
+These functions call other functions and methods of **geotopOptim2** and its dependencies. Before delving into the details of `geotopOptim2`, the readers attention must be focused on the main dependencies of `geotopOptim2`, as follows:
+
+-   [geotopbricks](https://cran.r-project.org/web/packages/geotopbricks/index.html){target="_blank"}: This package reads the configuration file 'geotop.inpts' of a GEOtop Hydrological Model simulation and get or set information on the date used or generated by the simulation (e.g. soil properties, weather time series, soil moisture and evapotranspiration, etc.);
+
+-   [hydroGOF](https://cran.r-project.org/web/packages/hydroGOF/index.html){target="_blank"}: It is a set of S3 functions implementing both statistical and graphical goodness-of-fit measures between observed and simulated values, mainly oriented to be used during the calibration, validation, and application of hydrological models;
+
+-   [hydroPSO](https://github.com/hzambran/hydroPSO){target="_blank"}: This package implements a state-of-the-art version of the Particle Swarm Optimisation (PSO) algorithm (SPSO-2011 and SPSO-2007 capable). hydroPSO can be used as a replacement of the 'optim' R function for (global) optimization of non-smooth and non-linear functions. However, the main focus of hydroPSO is the calibration of environmental and other real-world models that need to be executed from the system console. hydroPSO is model-independent, allowing the user to easily interface any computer simulation model with the calibration engine (PSO). hydroPSO communicates with the model through the model's own input and output files, without requiring access to the model's source code. Several PSO variants and controlling options are included to fine-tune the performance of the calibration engine to different calibration problems. An advanced sensitivity analysis function together with user-friendly plotting summaries facilitate the interpretation and assessment of the calibration results. hydroPSO is parallel-capable, to alleviate the computational burden of complex models with "long" execution time. Bugs reports/comments/questions are very welcome (in English, Spanish or Italian)." (Zambrano & Rojas, 2013)
+
+A package can be drawn as a citation graph in whch functions depend on others. In the following the code lines can reproduce the dependency graph of **geotopOptim2** package and the main functions belong to dependency packages.
+
+```{r,fig.height=8, fig.width=6,echo=TRUE,results='hide',collapse=FALSE}
+#!/usr/bin/env Rscript
+# file appendSmetData.R
+#
+# This script creates a graph of the package function and thair main external depencies
+#
+# author: Emanuele Cordano on 09-09-2015
+
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+###############################################################################
+# rm(list=ls())
+# 
+# library(geotopOptim2)
+# library(igraph)
+# set.seed(123)
+# list_envs <- list(environment(geotopExec),environment(get.geotop.inpts.keyword.value),environment(gof),environment(hydroPSO),environment(writeLines),environment(read.table),environment(terrain))
+# names(list_envs) <- c("geotopOptim2","geotopbricks","hydroGOF","hydroPSO","base","utils","raster")
+# color <- c("red","green","blue","orange","yellow","white","brown")
+# names(color) <- names(list_envs)
+# 
+# list_names <- lapply(X=list_envs,FUN=function(x){ls(env=x)})
+# list_df <- list()
+# 
+# for (it in names(list_envs)) {
+# 
+# 		list_df[[it]]	<- data.frame(funx=list_names[[it]],env=it,color=color[it],stringsAsFactors=FALSE)
+# 
+# 
+# }
+# df <- do.call(what=rbind,args=list_df)
+# 
+# ##### SEMPLIFICATE DF
+# 
+# onlyfun <- list(hydroGOF=c("gof"),hydroPSO=c("hydroPSO","lhoat"),geotopbricks=c("get.geotop.inpts.keyword.value"),
+# 		base=c("writeLines","readLines"),utils=c("read.table"),raster="raster") ### read.table was removed
+# 
+# for (it in names(onlyfun)) {
+# 
+# 	cond  <- ((df$env==it) & (df$funx %in% onlyfun[[it]])) | (df$env!=it)
+# 	df    <- df[cond,]
+# 
+# 
+# }
+# 
+# 
+# fun_names <- df$funx
+# 
+# 
+# names(fun_names) <- fun_names
+# 
+# ########################################
+# ########################################
+# ########################################
+# ########################################
+# ########################################
+# lfunx <- lapply(X=fun_names,FUN=function(x,nx) {
+# 			o <- try(get(x),silent=TRUE)
+# 
+# 			if (class(o)=="try-error") {
+# 
+# 				o <- NA ### "It looks like a method!"
+# 				return(o)
+# 
+# 			}
+# 			o <- formals(o)
+# 
+# 			o <- lapply(X=o,FUN=as.character)
+# 
+# 			o <- unlist(o)
+# 
+# 
+# 			o <- o[o %in% nx]
+# 
+# 			src <-  as.character(body(x))
+# 			src <-  unlist(str_split(src, boundary("word")))
+# 			nx <-  src[src %in% nx]
+# 
+# 			o <- c(o,nx)
+# 			o <- unique(o)
+# 
+# 
+# 
+# 
+# 			return(o)
+# 
+# 		},nx=fun_names)
+# 
+# 
+# for (it in names(lfunx)) {
+# 
+# 	temp <- lfunx[[it]]
+# 	ii <- which(temp!=it)
+# 	temp <- temp[ii]
+# 	nl <- length(temp)
+# 	lfunx[[it]] <- array(c(rep(it,nl),temp),c(nl,2))
+# 
+# }
+# #####edges
+# edges <- do.call(rbind,lfunx)
+# vertices <- unique(edges)
+# #####
+# env_base <- "base;utils"
+# df$env[df$env=="base"]  <- env_base
+# df$env[df$env=="utils"] <- env_base
+# df$color[df$env==env_base] <- "white"
+# #####
+# color_ <- df$color
+# env_   <- df$env
+# names(color_) <- df$funx
+# names(env_) <- df$funx
+# ######
+# gg <- graph_from_edgelist(edges)
+# vnames <- V(gg)$name
+# V(gg)$color <- color_[vnames]
+# vcodes <- sprintf("%02d",1:length(vnames))
+# names(vcodes) <- vnames
+# V(gg)$name <- vcodes
+# main <- "geeotopOptim2  Internal Functions"
+# plot(gg,main=main)
+# legend("bottomleft",legend=unique(env_),fill=unique(color_),ncol=2)
+# legend("topleft",legend=paste(vcodes,vnames,sep=" : "),ncol=3,cex=0.6)
+```
+
+The graph show
+
+-   geotopExec
+-   geotopGOF
+-   geotopLook
+-   geotopPSO
+
+Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+
+## Exercise
+
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+
+#!/usr/bin/env Rscript
+# file pso_example_script.R
+#
+# This script is an examples of a GEOtop calibration via geotopOptim2
+#
+# author: Emanuele Cordano on 09-09-2015
+
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+###############################################################################
+
+
+
+rm(list=ls())
+
+
+library(zoo)
+library(geotopOptim2)
+set.seed(7988)
+
+USE_RMPI <- FALSE
+
+if (USE_RMPI==TRUE) {
+	library("parallel")
+
+	library(Rmpi)
+	require(snow)
+
+	if (mpi.comm.rank(0) > 0) {
+	    sink(file="/dev/null")
+	#runMPIslave()
+		slaveLoop(makeMPImaster())
+		mpi.quit()
+
+
+	}
+
+	parallel <- "parallel"
+    npart <- 16
+	control <- list(maxit=5,npart=npart,parallel=parallel)
+
+} else {
+
+	parellel <- "none"
+	npart <- 4
+	control <- list(maxit=2,npart=npart)
+
+}
+
+
+```
+
+Here is a GEOtop simulation folder with observation:
+
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+tz <- "Etc/GMT-1"
+wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
+
+```
+
+Here is the full name (with complete path) of GEOtop executable built file:
+
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+bin  <- '/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
+
+```
+
+In most cases, geotopOptim2 copies the simulation folder and run GEOtop with modified calibration input parameters in temporary directories:
+
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+## LOcal path where to write output for PSO
+runpath <- "/home/lv70864/ecordano/temp/geotopOptim_tests"
+runpath <- "/home/ecor/temp/geotopOptim_tests"
+
+```
+
+The function **geotopExec** running a GEOtop simulation can enter a vector of paratemers which are replaced with the ones formerly set in the original simulation directory **wpath** . Analogously the function **geotopPSO** performing a PSO calibration of GEOtop through **geotopExec** and **geotopGOF** needs two vectors: one for upper values, the other for lower values. A set of soil calibration parameters can be set though a csv file.
+
+```{r,eval=FALSE}
+
+help(geotopExec,help_type="html")
+help(geotopGOF,help_type="html")
+help(geotopPSO,help_type="html")
+
+```
+
+Here is an example that can be downloaded from the package examples:
+
+```{r echo=TRUE,eval=TRUE,collapse=TRUE}
+geotop.soil.param.file <-  paste("geotopOptim2/inst/examples_script/param/param_pso_c003.csv")
+geotop.soil.param <- read.table(geotop.soil.param.file,header=TRUE,sep=",",stringsAsFactors=FALSE)
+lower <- geotop.soil.param$lower
+upper <- geotop.soil.param$upper
+suggested <- geotop.soil.param$suggested
+names(lower) <- geotop.soil.param$name
+names(upper) <- geotop.soil.param$name
+names(suggested) <-  geotop.soil.param$name
+
+knitr::kable(geotop.soil.param)
+
+```
+
+Here the columns `lower` and `upper` stand for lower and upper values whereas the `suggested` column contains initial guess values for `geotopPSO`. Generally a good practical examples on how to set these parameters is given below:
+
+```         
+prefix__name,lower,upperGrenarally 
+SOIL__N,1.45,1.89
+SOIL__Alpha,0.00131,0.0131
+SOIL__ThetaSat,0.41,0.53
+SOIL__ThetaSat_bottomlayer,0.08,0.09
+SOIL__ThetaRes,0.05,0.07
+SOIL__LateralHydrConductivity,0.0923,0.1
+SOIL__NormalHydrConductivity,0.0923,0.1
+SOIL__LateralHydrConductivity_bottomlayer,0.00923,0.01
+SOIL__NormalHydrConductivity_bottomlayer,0.00923,0.01
+SOIL__SoilInitPresL0001,-10000,100
+SOIL__SoilInitPresL0002,-10000,100
+SOIL__SoilInitPresL0003,-10000,100
+SOIL__SoilInitPresL0004,-10000,100
+SOIL__SoilInitPresL0005,-10000,100
+SOIL__SoilInitPresL0006,-10000,100
+SOIL__SoilInitPresL0007,-10000,1000
+SOIL__SoilInitPresL0008,-10000,1000
+SOIL__SoilInitPresL0009,-10000,0
+SOIL__PsiGamma,0.5,1
+SOIL__SoilDepth,3000,30000
+SOIL__NumberOfSoilLayers,9,20
+VECTOR_1_LSAI,2,4
+```
+
+where `N`, `Alpha`, `ThetaSat`, `LateralHydrConductivity`, `NormalHydrConductivity`, `ThetaRes`, are GEOtop keywords referred to the respective soil parameters. By default, `geotopPSO` considers soil parameters uniformly distributed within the soil profile unless they are repated in the CSV file with some suffixes, like `_bottomlayer` or `_ALL`. In `_bottomlayer` case, the parameter (upper and lower) values are referred to the first (near surface) layer and the last (bottom) layer and the values of internal layers are exponentially interpolated. In this case a decrease of hydraulic conductivity or soil porosity can be modeled. In `_ALL` case, soil parameter is taken as variables with soil layers. So the reported values refer to a range for so many soil parameter of the same type how many the soil layers are. If the keywords contains the suffix `_V_L%04d` with the decimal formatter, the soil parameter is calibrated only for the soil specific layer. The keyword `SoilInitPres` refers to the initial soil water pressure head. If the formatter `L%04d` is appended as a suffix, the value is referred to the indicated layer. The keyword `PsiGamma` refers to the soil water pressure gradient along the terrain-normal downward direction and is applied to calculate initial soil water pressure head in the above layers assuming a continuous profile. `SoilDepth` and `NumberOfSoilLayers` refer to the whole soil depth (which now corresponds to the whole soil column used as domain for balance equation integration) and the number of soil layers in which the soil column is divided. Soil layer thickness increase with depth following a geometric progression.
+
+Then, the target variables are set here:
+
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+var <- 'soil_moisture_content_50'
+x <- (upper+lower)/2
+
+```
+
+```{r echo=TRUE,eval=FALSE,collapse=TRUE}
+pso <- geotopPSO(par=suggested,run.geotop=TRUE,bin=bin,
+		simpath=wpath,runpath=runpath,clean=TRUE,data.frame=TRUE,
+		level=1,intern=TRUE,target=var,gof.mes="RMSE",lower=lower,upper=upper,control=control)
+
+
+if (USE_RMPI==TRUE) mpi.finalize()
+
+```
+
+Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `VignetteIndexEntry` to match the title of your vignette.
+
+## Examples
+
+Examples of simulations to optimize could be found here [https://github.com/EURAC-Ecohydro/geotopOptim2/tree/master/inst/examples_script](https://github.com/EURAC-Ecohydro/geotopOptim2/tree/master/inst/examples_script){target="_blank"}
+
+Examples of scripts to launch optimization in background on a cluster for the EURAC Monalisa dataset could be found here: [https://github.com/EURAC-Ecohydro/MonaLisa/tree/master/Rscript](https://github.com/EURAC-Ecohydro/MonaLisa/tree/master/Rscript){target="_blank"}
+
+## Visulatization tools
+
+R-based graphical visualization tool of the optimized simulations could be found here: [https://github.com/EURAC-Ecohydro/geotopOptim2/tree/master/inst/examples_animation](https://github.com/EURAC-Ecohydro/geotopOptim2/tree/master/inst/examples_animation){target="_blank"}
+
+## References
+
+-   Endrizzi, S., Gruber, S., Dall'Amico, M., and Rigon, R. (2014): GEOtop 2.0: simulating the combined energy and water balance at and below the land surface accounting for soil freezing, snow cover and terrain effects, Geosci. Model Dev., 7, 2831-2857, doi: [https://doi.org/10.5194/gmd-7-2831-2014](https://doi.org/10.5194/gmd-7-2831-2014){target="_blank"}
+
+-   Zambrano-Bigiarini, M.; R. Rojas (2013), A model-independent Particle Swarm Optimisation software for model calibration, Environmental Modelling & Software, 43, 5-25, doi: [https://doi.org/10.1016/j.envsoft.2013.01.004](https://doi.org/10.1016/j.envsoft.2013.01.004){target="_blank"}
+
+-   Zambrano-Bigiarini, M., Rojas, R. (2014). hydroPSO: Particle Swarm Optimisation, with focus on Environmental Models. R package version 0.3-4. [https://github.com/hzambran/hydroPSO](https://github.com/hzambran/hydroPSO){target="_blank"}
+
+-   Cordano E., Andreis D. and Zottele F. (2015). geotopbricks: An R Plug-in for the Distributed Hydrological Model GEOtop. R package version 1.3.6. [http://CRAN.R-project.org/package=geotopbricks](http://CRAN.R-project.org/package=geotopbricks){target="_blank"}

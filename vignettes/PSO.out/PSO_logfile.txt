@@ -1,0 +1,42 @@
+================================================================================
+hydroPSO version  :  0.5-1  
+hydroPSO Built    :  R 4.1.2; ; 2023-04-04 18:01:47 UTC; unix  
+R version         :  R version 4.1.2 (2021-11-01)  
+Platform          :  x86_64-pc-linux-gnu  
+================================================================================
+Starting Time     : Wed Apr  5 16:02:31 2023 
+================================================================================
+Objective Function: fn 
+MinMax            : min 
+Dimension         : 17 
+Nmbr of Particles : 4 
+Max Iterations    : 2 
+Method            : spso2011 
+Topology          : random 
+K                 : 3 
+iter.ini          : 0 
+Boundary wall     : absorbing2011 
+normalise         : FALSE 
+Xini.type         : random 
+Vini.type         : random2011 
+Best update method: sync 
+Random update     : TRUE 
+c1                : 1.19314718055995 
+c2                : 1.19314718055995 
+use.IW            : TRUE 
+IW.w              : 0.721347520444482 
+lambda            : 1 
+use.RG            : FALSE 
+maxfn             : Inf 
+abstol            : -Inf 
+reltol            : 1.49011611938477e-08 
+parallel          : none 
+================================================================================
+Total fn calls    :  8  
+Nmbr of Iterations:  2  
+Regroupings       :  0  
+================================================================================
+Ending Time       :  Wed Apr  5 16:05:14 2023  
+================================================================================
+Elapsed Time      :  2.73 mins  
+================================================================================

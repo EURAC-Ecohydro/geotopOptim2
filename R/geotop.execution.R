@@ -36,9 +36,10 @@ NULL
 #' 
 #' @examples
 #' 
-#' simpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")  #######system.file("Muntatschini_pnt_1_225_B2_004",package="geotopOptim")
-#' bin <-   "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0"
-#' runpath <- "/home/ecor/temp/geotopOptim_tests"
+#' simpath <- system.file('geotop-simulation/B2site',package="geotopOptim2
+#' bin <-  "/home/ecor/local/sw/rendena100/geotop/geotop" 
+#' 
+#' runpath <- tempdir() 
 #' 
 #' vars <- c("SoilAveragedTempProfileFile",	"SoilLiqWaterPressProfileFile",
 #' "SoilLiqContentProfileFile","SoilIceContentProfileFile",

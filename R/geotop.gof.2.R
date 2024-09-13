@@ -60,18 +60,19 @@ NULL
 # @param output_simulation logical value. If it is \code{TRUE}, function returns a list with the GOF values and the simulated time series
 # @param names_par names of \code{x}
 # @param temporary.runpath logical value. If it \code{TRUE} GEOtop is running in a temporary sub-directory, see \code{\link{geotopExec}}.  Default is \code{FALSE}.
-# @param useSoilIntegratedValues logical values. Default is \code{FALSE}. If it is \code{TRUE} output is integrated with a soil thckness through \code{\link{integratefunDataFrame}}.
+# @param useSoilIntegratedValues logical values. Default is \code{FALSE}. If it is \code{TRUE} output is integrated with a soil thickness through \code{\link{integratefunDataFrame}}.
 # @param ... further aguments for \code{\link{gof}} .
 #' 
 #' @export
 #' @seealso \code{\link{geotopExec}},\code{\link{gof}}
 #' 
 #' @importFrom hydroGOF gof 
+#' @importFrom utils str
 #' @examples 
 #' 
 #' wpath <- system.file('geotop-simulation/B2site',package="geotopOptim2")
 #' bin <-   "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0"
-#' runpath <- "/home/ecor/temp/geotopOptim_tests"
+#' runpath <- tempdir() ##"/home/ecor/temp/geotopOptim_tests"
 #' 
 #' var <- 'soil_moisture_content_50'
 #' 
@@ -125,9 +126,9 @@ NULL
 # 
 # 
 # simpath <- system.file("Muntatschini_pnt_1_225_B2_004",package="geotopOptim")
-# bin <-   '/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0' 
+# bin <-  "/home/ecor/local/sw/rendena100/geotop/geotop" ### "/home/ecor/local/geotop/GEOtop/bin/geotop-2.0.0"
 ###### '/Ubsers/ecor/local/bin/geotop_zh'
-# runpath <- "/home/ecor/temp/geotopOptim_tests"
+# runpath <- ...
 # 
 # vars <- "SoilLiqContentProfileFile"
 # 
